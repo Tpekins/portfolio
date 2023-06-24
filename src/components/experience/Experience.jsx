@@ -1,10 +1,57 @@
 import React from 'react'
 import './experience.css'
+import{BsPatchCheckFill} from 'react-icons/bs'
 
-export const Experience = () => {
+ const Experience = () => {
 return (
-<div>
+<section id='experience'>
+    <h5> The Skills I Have</h5>
+    <h2> My Experience</h2>
+
+   <div className="container experience__container">
+
+    <div className="experience__frontend">
+         <h3>Frontend Developement</h3>
+            <div className="experience__content">
+
+        <article className='experience__details'>
+            <BsPatchCheckFill/>
+             <h4>HTML</h4>
+               <small className='text-light'>Intermediate</small>
+         </article> 
+
+
+    <article className='experience__details'>
+<BsPatchCheckFill/>
+<h4>javascript</h4>
+<small className='text-light'>Intermediate</small>
+</article>
+ </div>
+    </div>
+    </div>
+
+{/*end of frontend*/}
+<div className="container experience__container">
+
+    <div className="experience__backend">
+    <h3>Backend Developement</h3>
+    <div className="experience__content">
+    <article className='experience__details'>
+        <BsPatchCheckFill />
+        <h4>MYSQL</h4>
+        <small className='text-light'>Experienced</small>
+    </article> 
+
+    <article className='experience__details'>
+<BsPatchCheckFill/>
+<h4>c++</h4>
+<small className='text-light'>Intermediate</small>
+</article>  
+    </div>
 </div>
-)
+</div>
+     </section>
+ )
 }
+
 export default Experience;

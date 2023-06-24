@@ -47,8 +47,8 @@ header{
     right: -2rem;
     bottom: 5rem;
     transform: rotate(90deg);
-    font-weight: 300;
-    font-weight: 0.9rem;
+    font-weight: 400;
+    font-size: 0.9rem;
     }
     /*This is what we call media query: here we define the css that will be apply for a
     specific screen*/

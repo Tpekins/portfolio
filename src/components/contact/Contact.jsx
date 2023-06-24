@@ -5,12 +5,14 @@ import {AiOutlineLinkedin} from 'react-icons/ai'
 import {BsWhatsapp} from 'react-icons/bs'
 import {useRef} from 'react'
 import emailjs from 'emailjs-com'
+
+
+
 const Contact = () => {
 const form = useRef();
 const sendEmail = (e) => {
 e.preventDefault();
-emailjs.sendForm('service_5vuauza', 'template_fdnnl56', form.current,
-'EmSdUNQzQuxkUqGWx')
+emailjs.sendForm('service_4wuig0m','template_lm54rhg', form.current,'FWW3Bak3miyjnSGaV')
 e.target.reset()
 .then((result) => {
 console.log(result.text)
@@ -28,26 +30,26 @@ return (
 <MdOutlineEmail className='contact__option__icon'/>
 <h4>Email</h4>
 <h5>myEmail@gmail.com</h5>
-<a href='mailto:aldenovpoutine99@gmail.com' target='_blank'>send a
+<a href='mailto:tianipekins5@gmail.com'target='_blank'>send a
 message</a>
 </article>
 <article className='contact__option'>
 <AiOutlineLinkedin className='contact__option__icon'/>
 <h4>LinkedIn</h4>
 <h5>Profile</h5>
-<a href='https://www.linkedin.com/in/brown-djomo-844b96164/'
+<a href='http://www.linkedin.com/in/tiani-pekins-821488277'
 target='_blank'>Tape me on LinkedIn</a>
 </article>
 <article className='contact__option'>
 <BsWhatsapp className='contact__option__icon'/>
 <h4>Whatsapp</h4>
 <h5>Direct message</h5>
-<a href='https://web.whatsapp.com/send?phone=+237657268549'
+<a href='https://web.whatsapp.com/send?phone=+670902508'
 target='_blank'>Whatsapp me</a>
 </article>
 </div>
 <form ref={form} onSubmit={sendEmail}>
-<input type="text" name='name' placeholder='full name' required/>
+<input type="text" name='name' placeholder='Your full name' required/>
 <input type="email" name='email' placeholder='your email' required/>
 <textarea name="message" id="message" cols="30" rows="10"
 placeholder='your message' required></textarea>
@@ -55,6 +57,6 @@ placeholder='your message' required></textarea>
 </form>
 </div>
 </section>
-)
+) 
 }
 export default Contact
