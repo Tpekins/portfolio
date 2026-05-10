@@ -1,0 +1,103 @@
+@import url("https://fonts.googleapis.com/css2?family=Cedarville+Cursive&family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap");
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Poppins", sans-serif;
+  --font-script: "Cedarville Cursive", cursive;
+
+  --color-primary: #2e7d32;
+  --color-primary-light: #f1f8f1;
+  --color-bg-primary: #ffffff;
+  --color-bg-secondary: #fafafa;
+  --color-text-primary: #000000;
+  --color-text-secondary: #666666;
+  --color-card: #ffffff;
+  --color-border-subtle: #eeeeee;
+}
+
+@layer base {
+  body {
+    @apply bg-bg-primary text-text-primary font-sans antialiased;
+  }
+}
+
+.nav-link {
+  @apply text-text-primary hover:text-primary transition-all duration-300 font-bold px-5 py-2.5 rounded-lg relative text-[17px];
+}
+
+.nav-link:hover,
+.nav-link.active {
+  @apply bg-[#f5f5f5] text-primary;
+}
+
+.btn-primary {
+  @apply bg-primary text-white px-10 py-5 rounded-full font-bold hover:shadow-2xl hover:shadow-primary/30 hover:-translate-y-1 transition-all duration-500 inline-block text-center tracking-tight;
+}
+
+.card {
+  @apply bg-card border border-border-subtle rounded-[2.5rem] p-10 transition-all duration-700 hover:shadow-2xl hover:shadow-black/[0.02] hover:-translate-y-2;
+}
+
+.section-title {
+  @apply text-3xl md:text-4xl lg:text-5xl font-display font-black tracking-tighter leading-tight text-text-primary;
+}
+
+.section-subtitle {
+  @apply text-base md:text-lg text-text-secondary max-w-2xl leading-relaxed;
+}
+
+.section-label {
+  @apply text-[11px] font-bold uppercase tracking-widest text-[#6366f1] bg-[#f0f0ff] px-4 py-1.5 rounded-md inline-block;
+}
+
+.green-underline {
+  @apply relative inline-block;
+}
+
+.green-underline::after {
+  content: "";
+  @apply absolute bottom-2 left-0 w-full h-[6px] bg-[#2e7d32] -z-10;
+}
+
+.heading-hero {
+  @apply text-4xl md:text-5xl lg:text-6xl font-display font-black leading-[1.1] tracking-tighter;
+}
+
+.heading-card {
+  @apply text-xl md:text-2xl font-bold tracking-tight font-display;
+}
+
+.text-body {
+  @apply text-base md:text-lg text-text-secondary leading-relaxed;
+}
+
+/* Content wrapper — flat bottom edge */
+.site-wrapper {
+  position: relative;
+  z-index: 10;
+  background: #ffffff;
+  border-radius: 0;
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  @apply shadow-2xl;
+}
+
+/* Footer — starts slightly invisible, fades in as revealed */
+.sticky-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 0;
+  opacity: 0;
+  transition: opacity 0.8s ease; /* fades in softly */
+}
+
+/* Footer becomes visible only when near bottom of page */
+.sticky-footer.visible {
+  opacity: 1;
+}
+
+.btn-outline {
+  @apply bg-white text-primary border-2 border-primary px-10 py-3 rounded-lg font-bold hover:bg-primary hover:text-white transition-all duration-300 inline-block text-center;
+}
