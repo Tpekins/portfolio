@@ -143,7 +143,7 @@ export default function Contact() {
           <div className="w-full max-w-lg flex flex-col md:flex-row items-center md:items-start gap-8 mt-10">
             <div className="w-48 h-56 shrink-0 bg-[#e0e0e0] overflow-hidden grayscale">
               <img
-                src="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+                src="https://www.google.com/search?sca_esv=af156264804c4707&sxsrf=ANbL-n623JpI9VzA15TbNsmqfIIGW_o-1w:1778448205901&udm=2&fbs=ADc_l-aN0CWEZBOHjofHoaMMDiKpaEWjvZ2Py1XXV8d8KvlI3tR7kVu8a3MULVA9bsoO0mDOYo1Op43RZtSZfMAIjjMXe56pB_aL142yP4pL80ZFmyzYrat0Efv8hXshBiJ5TfhOMG3w0FmGlZ1BLOCTvT_P43D6EmZ7TWPYnrRO_xYz4jrF0cQ2F55zVnsWABiTjOfUsFs7rGHy2yFqH3hFZCRPrCEK8w&q=Contact+details+for+managing+email+or+phone+number+%2B12235331449&sa=X&ved=2ahUKEwjKucHs06-UAxWjdUEAHbSaDwgQtKgLegQIFRAB&biw=2400&bih=1181&dpr=1#sv=CAMSVhoyKhBlLW1HbXM3YVF2S2w2NzlNMg5tR21zN2FRdktsNjc5TToOejAzUGwyRHFtdEg3NE0gBCocCgZtb3NhaWMSEGUtbUdtczdhUXZLbDY3OU0YADABGAcg2rnk0Q1KCBABGAEgASgB"
                 alt="Tiani Pekins"
                 className="w-full h-full object-cover"
                 referrerPolicy="no-referrer"
