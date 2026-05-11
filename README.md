@@ -49,7 +49,7 @@ Without global `turbo`, use your package manager:
 cd my-turborepo
 npx turbo build
 yarn dlx turbo build
-yarn exec turbo build
+yarn   exec turbo build
 ```
 
 You can build a specific package by using a [filter](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters):

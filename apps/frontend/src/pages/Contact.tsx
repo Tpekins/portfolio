@@ -171,72 +171,8 @@ export default function Contact() {
         </div>
       </div>
 
-      {/* Footer Section */}
-      <motion.section
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.8 }}
-        className="border-t border-[#7eb686] pt-16 pb-12 px-6 md:px-12 bg-[#8ecc91]"
-      >
-        <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-8">
-            {/* Left - Scroll to top button */}
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={scrollToTop}
-              className="w-12 h-12 border-2 border-[#1c1c1c] rounded-lg flex items-center justify-center hover:bg-[#1c1c1c] hover:text-white transition-all group shadow-sm bg-white"
-              aria-label="Back to top"
-            >
-              <ChevronUp size={24} />
-            </motion.button>
-
-            {/* Center - Copyright */}
-            <div className="text-center space-y-3">
-              <p className="text-sm font-medium text-[#1c1c1c]">
-                © 2026 | All rights reserved | Made with ❤️ by Tiani Pekins.
-              </p>
-            </div>
-
-            {/* Right - Social Links */}
-            <div className="flex justify-center gap-6">
-              <a
-                href="https://facebook.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-[#1c1c1c] hover:text-[#2e7d32] transition-colors"
-              >
-                <Facebook size={20} />
-              </a>
-              <a
-                href="https://twitter.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-[#1c1c1c] hover:text-[#2e7d32] transition-colors"
-              >
-                <Twitter size={20} />
-              </a>
-              <a
-                href="https://linkedin.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-[#1c1c1c] hover:text-[#2e7d32] transition-colors"
-              >
-                <Linkedin size={20} />
-              </a>
-              <a
-                href="https://instagram.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-[#1c1c1c] hover:text-[#2e7d32] transition-colors"
-              >
-                <Instagram size={20} />
-              </a>
-            </div>
-          </div>
-        </div>
-      </motion.section>
+     
     </div>
   );
 }
+

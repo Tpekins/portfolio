@@ -110,6 +110,7 @@ export default function About() {
           </motion.div>
         </div>
       </section>
+
       {/* About Me & Stats */}
       <section className="py-24 px-6 md:px-12">
         <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-start">
@@ -136,10 +137,10 @@ export default function About() {
                 and a severe trust gap, relying on inefficient word-of-mouth or
                 paper flyers to find work.{" "}
                 <span className="font-bold">LocalHands</span> bridges this gap
-                by providing a digital space where everyday artisans and
-                labourers, from diggers to cocoa harvesters can digitally
-                showcase their skills, build visibility, and seamlessly connect
-                with clients.
+                by providing a digital space where everyday artisans and labourers,
+                from diggers
+                to cocoa harvesters can digitally showcase their skills, build
+                visibility, and seamlessly connect with clients.
               </p>
             </div>
           </div>
@@ -175,6 +176,7 @@ export default function About() {
           </div>
         </div>
       </section>
+
       <section className="pt-24 pb-16 px-6 md:px-12 border-t border-border-subtle">
         <div className="max-w-7xl mx-auto flex flex-col items-start text-left">
           <span className="section-label">My Experience</span>
@@ -184,6 +186,7 @@ export default function About() {
           </h2>
         </div>
       </section>
+
       {/* Experience List Cards */}
       <section className="pb-32 px-6 md:px-12">
         <div className="max-w-7xl mx-auto flex flex-col gap-24">
@@ -273,7 +276,8 @@ export default function About() {
           ))}
         </div>
       </section>
-      Footer Section
+
+     { /* Footer Section 
       <motion.section
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -281,9 +285,10 @@ export default function About() {
         transition={{ duration: 0.8 }}
         className="border-t border-border-subtle pt-16 pb-12 px-6 md:px-12 bg-white"
       >
+        
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-center gap-8">
-            {/* Left - Scroll to top button */}
+            {/* Left - Scroll to top button 
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -294,14 +299,13 @@ export default function About() {
               <ChevronUp size={24} />
             </motion.button>
 
-            {/* Center - Copyright */}
+           
             <div className="text-center space-y-3">
               <p className="text-sm font-medium text-text-secondary">
                 © 2026 | All rights reserved | Made with ❤️ by Tiani Pekins.
               </p>
             </div>
 
-            {/* Right - Social Links */}
             <div className="flex justify-center gap-6">
               <a
                 href="https://facebook.com"
@@ -339,6 +343,8 @@ export default function About() {
           </div>
         </div>
       </motion.section>
+      */}
+    
     </div>
   );
 }

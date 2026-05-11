@@ -33,11 +33,12 @@ export function Footer() {
             </h2>
             <div className="space-y-4 text-body text-base font-medium text-text-secondary">
               <p>
-                I'm a full-stack software engineer with experience in mobile and
-                web development, product management, system design, and UI/UX
-                design. I am also a founder of a tech community called Ongea
-                Tech where I mentor aspiring developers in data structures and
-                algorithms as well as software development.
+                I'm Tiani a full-stack engineer and founder building at the
+                intersection of tech and community. Based in Silicon Mountain
+                and grounded in its spirit, I developed LocalHands to give
+                Africa's artisans and labourers the digital visibility they
+                deserve. Fueled by ambition, I write code, think in systems, and
+                believe Africa's builders are just getting started
               </p>
             </div>
           </div>
@@ -83,7 +84,7 @@ export function Footer() {
         </div>
 
         {/* Bottom Section */}
-        <div className="mt-20 flex flex-col items-center space-y-6">
+        <div className="mt-10 flex flex-col items-center space-y-6">
           <button
             onClick={scrollToTop}
             className="w-12 h-12 border-2 border-text-primary rounded-lg flex items-center justify-center hover:bg-text-primary hover:text-white transition-all group shadow-sm bg-white"
@@ -94,7 +95,7 @@ export function Footer() {
 
           <div className="text-center space-y-4">
             <p className="text-sm font-medium text-text-secondary">
-              © 2025 | All rights reserved | Made with ❤️ by Tiani Pekins.
+              © 2026 | All rights reserved | Made with ❤️ by Tiani Pekins.
             </p>
 
             <div className="flex justify-center gap-6">
