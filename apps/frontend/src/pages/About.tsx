@@ -1,24 +1,29 @@
 import { motion } from "motion/react";
 import {
   Linkedin,
-  CheckCircle2,
-  Building,
-  Users,
   HelpingHand,
+  ChevronUp,
+  Facebook,
+  Twitter,
+  Instagram,
 } from "lucide-react";
 
 export default function About() {
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
   const experiences = [
     {
-      role: "University of Michigan",
+      role: "University of Buea",
       subtitle: "MS Software Engineering",
-      period: "Sept 2024 - to date",
-      desc: "I am pursuing an MS in Software Engineering as a Fulbright Scholar, with additional support from the UM-Dearborn Scholarship. This opportunity has allowed me to deepen my expertise in software engineering, contribute to impactful research, and proudly represent both prestigious scholarship programs on an international stage. My focus is on becoming an exceptional software engineer, honing my skills in building scalable, innovative solutions. I am dedicated to making a meaningful impact on my community, the tech industry, and beyond.",
+      period: "Sept 2021 - to date",
+      desc: "As an MS Software Engineering student, I am dedicated to deepening my technical expertise and mastering modern software architecture. My focus is on becoming an exceptional software engineer, continuously honing my skills to design, build, and deploy scalable solutions to complex challenges. Driven by a passion for technology, I am committed to using these skills to make a tangible, positive impact on my community and the tech industry.",
       logoText: "M",
       logoBg: "bg-[#00274c]",
       quote:
         "The future belongs to those who believe in the beauty of their dreams and work relentlessly to turn them into reality. — Eleanor Roosevelt",
     },
+    /*
     {
       role: "Microsoft",
       subtitle: "Software Engineer",
@@ -28,6 +33,7 @@ export default function About() {
       logoBg: "bg-white border-2 border-slate-100",
       quote: "The best way to predict the future is to invent it — Alan Kay",
     },
+    
     {
       role: "Microsoft LEAP",
       subtitle: "Apprenticeship",
@@ -38,6 +44,7 @@ export default function About() {
       quote:
         "Success is the sum of small efforts, repeated day in and day out — Robert Collier",
     },
+    */
   ];
 
   return (
@@ -103,7 +110,6 @@ export default function About() {
           </motion.div>
         </div>
       </section>
-
       {/* About Me & Stats */}
       <section className="py-24 px-6 md:px-12">
         <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-start">
@@ -113,20 +119,27 @@ export default function About() {
               <p>
                 I'm a passionate{" "}
                 <span className="font-bold">software engineer</span> and{" "}
-                <span className="font-bold">Fulbright Scholar</span> pursuing my
-                masters in Software Engineering at the University of Michigan.
-                As the founder of <span className="font-bold">Ongea Tech</span>,
-                a coding community, I aim to empower aspiring developers and
-                create impactful tech solutions. I've contributed to innovative
-                projects like <span className="font-bold">DreamShorts</span> and
-                actively volunteer at the University of Michigan pantry.
+                pursuing my masters in Software Engineering at the{" "}
+                <span className="font-bold">University of Buea</span>.As an
+                active participant in{" "}
+                <span className="font-bold">Silicon Mountain</span> tech
+                community. I thrive on collaborating to build scalable,
+                innovative solutions that push the boundaries of technology in
+                our region and beyond.
               </p>
               <p>
                 I have also founded{" "}
-                <span className="font-bold">The Mary Jepmaiyo Foundation</span>,
-                a non-profit dedicated to empowering children with special needs
-                by improving their education, healthcare, and overall
-                well-being, inspired by the legacy of my late mother.
+                <span className="font-bold">LocalHands</span>, a non-profit
+                service exchange platform dedicated to empowering the informal
+                economy in Cameroon and across Africa. With 90% of our active
+                population working informally, many face "information poverty"
+                and a severe trust gap, relying on inefficient word-of-mouth or
+                paper flyers to find work.{" "}
+                <span className="font-bold">LocalHands</span> bridges this gap
+                by providing a digital space where everyday artisans and
+                labourers, from diggers to cocoa harvesters can digitally
+                showcase their skills, build visibility, and seamlessly connect
+                with clients.
               </p>
             </div>
           </div>
@@ -138,7 +151,7 @@ export default function About() {
               </div>
               <div className="space-y-0.5">
                 <p className="text-4xl md:text-5xl font-display font-black tracking-tighter text-[#1c1c1c]">
-                  7k+
+                  50+
                 </p>
                 <p className="text-[11px] font-bold uppercase tracking-widest text-[#1c1c1c] opacity-60">
                   Connections
@@ -152,7 +165,7 @@ export default function About() {
               </div>
               <div className="space-y-0.5">
                 <p className="text-4xl md:text-5xl font-display font-black tracking-tighter text-[#1c1c1c]">
-                  10+
+                  15+
                 </p>
                 <p className="text-[11px] font-bold uppercase tracking-widest text-[#1c1c1c] opacity-60">
                   People Mentored
@@ -162,17 +175,15 @@ export default function About() {
           </div>
         </div>
       </section>
-
       <section className="pt-24 pb-16 px-6 md:px-12 border-t border-border-subtle">
         <div className="max-w-7xl mx-auto flex flex-col items-start text-left">
           <span className="section-label">My Experience</span>
           <h2 className="text-3xl md:text-4xl font-display font-black tracking-tight text-[#1c1c1c] mt-8">
-            These are my <span className="green-underline">professional</span>{" "}
+            These are my <span className="text-green-400">professional</span>{" "}
             experiences.
           </h2>
         </div>
       </section>
-
       {/* Experience List Cards */}
       <section className="pb-32 px-6 md:px-12">
         <div className="max-w-7xl mx-auto flex flex-col gap-24">
@@ -262,6 +273,72 @@ export default function About() {
           ))}
         </div>
       </section>
+      Footer Section
+      <motion.section
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8 }}
+        className="border-t border-border-subtle pt-16 pb-12 px-6 md:px-12 bg-white"
+      >
+        <div className="max-w-7xl mx-auto">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-8">
+            {/* Left - Scroll to top button */}
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={scrollToTop}
+              className="w-12 h-12 border-2 border-text-primary rounded-lg flex items-center justify-center hover:bg-text-primary hover:text-white transition-all group shadow-sm bg-white"
+              aria-label="Back to top"
+            >
+              <ChevronUp size={24} />
+            </motion.button>
+
+            {/* Center - Copyright */}
+            <div className="text-center space-y-3">
+              <p className="text-sm font-medium text-text-secondary">
+                © 2026 | All rights reserved | Made with ❤️ by Tiani Pekins.
+              </p>
+            </div>
+
+            {/* Right - Social Links */}
+            <div className="flex justify-center gap-6">
+              <a
+                href="https://facebook.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-text-primary hover:text-primary transition-colors"
+              >
+                <Facebook size={20} />
+              </a>
+              <a
+                href="https://twitter.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-text-primary hover:text-primary transition-colors"
+              >
+                <Twitter size={20} />
+              </a>
+              <a
+                href="https://linkedin.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-text-primary hover:text-primary transition-colors"
+              >
+                <Linkedin size={20} />
+              </a>
+              <a
+                href="https://instagram.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-text-primary hover:text-primary transition-colors"
+              >
+                <Instagram size={20} />
+              </a>
+            </div>
+          </div>
+        </div>
+      </motion.section>
     </div>
   );
 }

@@ -4,7 +4,7 @@ import {
   Route,
   useLocation,
 } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, } from "react";
 import { Navbar, Footer } from "@repo/ui";
 import Home from "./pages/Home";
 import Projects from "./pages/Projects";

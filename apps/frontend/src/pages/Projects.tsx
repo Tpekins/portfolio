@@ -13,29 +13,29 @@ import { Link } from "react-router-dom";
 
 export default function Projects() {
   const projects = [
-    {
-      name: "DreamShorts",
-      subtitle: "AI-Powered Content Creation Platform",
-      category: "AI Platform · Saas",
-      description:
-        "DreamShorts is an innovative platform that leverages artificial intelligence to generate scripts, videos, and audio content effortlessly.",
-      responsibilities: [
-        "Brainstorming: Conceptualizing the platform's vision and defining its core functionalities",
-        "Wireframing: Designing the structure and flow of user interactions",
-        "UI/UX Design: Crafting an intuitive and visually appealing interface for a seamless user experience",
-        "Front-End Development: Building and implementing responsive, dynamic front-end components using modern web technologies",
-      ],
-      tools: [
-        "Excalidraw: Used for brainstorming ideas and creating initial wireframes",
-        "Figma: Utilized for both wireframing and crafting high-fidelity UI/UX designs",
-        "React & TypeScript: Developed the front-end of the platform, ensuring a dynamic and responsive experience",
-        "Shadcn & Tailwind CSS: Implemented modern, scalable design elements to enhance usability and visual appeal",
-      ],
-      github: "https://github.com/Tpekins",
-      live: "https://localhands-cm.vercel.app",
-      imageText: "d.",
-      isLive: true,
-    },
+    // {
+    //   name: "DreamShorts",
+    //   subtitle: "AI-Powered Content Creation Platform",
+    //   category: "AI Platform · Saas",
+    //   description:
+    //     "DreamShorts is an innovative platform that leverages artificial intelligence to generate scripts, videos, and audio content effortlessly.",
+    //   responsibilities: [
+    //     "Brainstorming: Conceptualizing the platform's vision and defining its core functionalities",
+    //     "Wireframing: Designing the structure and flow of user interactions",
+    //     "UI/UX Design: Crafting an intuitive and visually appealing interface for a seamless user experience",
+    //     "Front-End Development: Building and implementing responsive, dynamic front-end components using modern web technologies",
+    //   ],
+    //   tools: [
+    //     "Excalidraw: Used for brainstorming ideas and creating initial wireframes",
+    //     "Figma: Utilized for both wireframing and crafting high-fidelity UI/UX designs",
+    //     "React & TypeScript: Developed the front-end of the platform, ensuring a dynamic and responsive experience",
+    //     "Shadcn & Tailwind CSS: Implemented modern, scalable design elements to enhance usability and visual appeal",
+    //   ],
+    //   github: "https://github.com/Tpekins",
+    //   live: "https://localhands-cm.vercel.app",
+    //   imageText: "d.",
+    //   isLive: true,
+    // },
     {
       name: "LocalHands",
       subtitle: "Connecting Communities with Skilled Hands",
