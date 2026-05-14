@@ -4,15 +4,15 @@ import { IsString, IsEmail, IsOptional, IsPhoneNumber } from 'class-validator';
 export class CreateContactSubmissionDto {
   @ApiProperty({ example: 'John' })
   @IsString()
-  name: string;
+  name!: string;
 
   @ApiProperty({ example: 'Doe' })
   @IsString()
-  surname: string;
+  surname!: string;
 
   @ApiProperty({ example: 'john@example.com' })
   @IsEmail()
-  email: string;
+  email!: string;
 
   @ApiProperty({ example: '+1234567890', required: false })
   @IsOptional()
@@ -21,7 +21,7 @@ export class CreateContactSubmissionDto {
 
   @ApiProperty({ example: 'This is my message...' })
   @IsString()
-  message: string;
+  message!: string;
 }
 
 export class ContactQueryDto {

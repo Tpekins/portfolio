@@ -1,7 +1,5 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable prettier/prettier */
 import { Injectable, OnModuleInit, OnModuleDestroy } from '@nestjs/common';
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from '@generated';
 import { PrismaPg } from '@prisma/adapter-pg';
 
 @Injectable()
@@ -9,6 +7,7 @@ export class PrismaService
   extends PrismaClient
   implements OnModuleInit, OnModuleDestroy
 {
+  project: any;
   constructor() {
     // Setup the Neon Driver Adapter
     const adapter = new PrismaPg({

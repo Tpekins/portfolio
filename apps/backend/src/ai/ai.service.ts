@@ -2,13 +2,14 @@
 /* eslint-disable @typescript-eslint/require-await */
 import { Injectable, BadRequestException, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { AppEnv } from '../config/configuration';
 
 @Injectable()
 export class AiService {
   private readonly logger = new Logger(AiService.name);
-  private apiKey: string;
+  private apiKey: string | undefined;
 
-  constructor(private configService: ConfigService) {
+  constructor(private configService: ConfigService<AppEnv>) {
     this.apiKey = this.configService.get<string>('GOOGLE_GENAI_API_KEY');
 
     if (!this.apiKey) {

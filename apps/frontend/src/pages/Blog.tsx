@@ -1,8 +1,8 @@
 import { motion } from "motion/react";
 import { ArrowRight, Search } from "lucide-react";
+import { CategoryType } from "@repo/categories";
 
 export default function Blog() {
-  const categories = ["All", "Software", "Tech", "Life", "Programming"];
   const posts = [
     {
       title: "Building for the Next Billion Users: A Cameroonian Perspective",
@@ -43,7 +43,7 @@ export default function Blog() {
           </div>
 
           <div className="flex flex-wrap items-center gap-4 pt-12">
-            {categories.map((cat, i) => (
+            {Object.values(CategoryType).map((cat, i) => (
               <button
                 key={i}
                 className={`text-[10px] font-black uppercase tracking-widest px-8 py-4 rounded-full border transition-all ${i === 0 ? "bg-primary text-white border-primary" : "bg-white text-text-secondary border-border-subtle hover:border-primary hover:text-primary"}`}

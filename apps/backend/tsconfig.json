@@ -1,6 +1,8 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
+    "module": "Node16",
+    "moduleResolution": "Node16",
+    "types": ["node", "jest", "multer"],
     "declaration": true,
     "removeComments": true,
     "emitDecoratorMetadata": true,
@@ -8,8 +10,8 @@
     "allowSyntheticDefaultImports": true,
     "target": "ES2023",
     "sourceMap": true,
+    "rootDir": "./src",
     "outDir": "./dist",
-
     "incremental": true,
     "skipLibCheck": true,
     "strictNullChecks": true,
@@ -19,7 +21,9 @@
     "noFallthroughCasesInSwitch": false,
     "paths": {
       "@generated/*": ["./src/generated/prisma/*"],
-      "@generated": ["./src/generated/prisma/client"]
+      "@generated": ["./src/generated/prisma/client"],
+      "@repo/categories": ["../../packages/categories/dist/index.d.ts"]
     }
-  }
+  },
+  "include": ["src/**/*"]
 }

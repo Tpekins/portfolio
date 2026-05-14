@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 import { Injectable, BadRequestException } from '@nestjs/common';
 import { promises as fs } from 'fs';
 import * as path from 'path';
@@ -61,7 +62,7 @@ export class FileUploadService {
 
     try {
       await fs.unlink(filepath);
-    } catch (error) {
+    } catch {
       throw new BadRequestException('Failed to delete file');
     }
   }

@@ -10,15 +10,15 @@ import {
 export class CreateProjectDto {
   @ApiProperty({ example: 'My Awesome Project' })
   @IsString()
-  title: string;
+  title!: string;
 
   @ApiProperty({ example: 'my-awesome-project' })
   @IsString()
-  slug: string;
+  slug!: string;
 
   @ApiProperty({ example: 'A detailed description of the project...' })
   @IsString()
-  description: string;
+  description!: string;
 
   @ApiProperty({
     example: ['TypeScript', 'React', 'Node.js', 'PostgreSQL'],

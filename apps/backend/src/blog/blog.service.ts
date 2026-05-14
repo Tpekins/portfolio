@@ -1,7 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   Injectable,
@@ -14,7 +10,7 @@ import {
   UpdateBlogPostDto,
   BlogPostQueryDto,
 } from './dto/blog.dto';
-import { Prisma } from '@prisma/client';
+import { Prisma } from '@generated';
 
 @Injectable()
 export class BlogService {
@@ -202,12 +198,23 @@ export class BlogService {
       throw new BadRequestException('A post with this slug already exists');
     }
 
-    const post = await this.prisma.blogPost.create({
-      data: {
-        ...createBlogPostDto,
-        publishedAt: createBlogPostDto.published ? new Date() : null,
-        authorId: userId,
+    const data: Prisma.BlogPostCreateInput = {
+      title: createBlogPostDto.title,
+      slug: createBlogPostDto.slug,
+      content: createBlogPostDto.content,
+      category: createBlogPostDto.category,
+      excerpt: createBlogPostDto.excerpt,
+      thumbnail: createBlogPostDto.thumbnail,
+      featured: createBlogPostDto.featured,
+      published: createBlogPostDto.published,
+      publishedAt: createBlogPostDto.published ? new Date() : null,
+      author: {
+        connect: { id: userId },
       },
+    };
+
+    const post = await this.prisma.blogPost.create({
+      data,
       include: {
         author: {
           select: {

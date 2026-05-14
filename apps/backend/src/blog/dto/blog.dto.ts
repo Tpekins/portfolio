@@ -5,25 +5,28 @@ import {
   IsArray,
   IsBoolean,
   IsDateString,
+  IsEnum,
 } from 'class-validator';
+import { CategoryType } from '@repo/categories';
 
 export class CreateBlogPostDto {
   @ApiProperty({ example: 'My First Blog Post' })
   @IsString()
-  title: string;
+  title!: string;
 
   @ApiProperty({ example: 'my-first-blog-post' })
   @IsString()
-  slug: string;
+  slug!: string;
 
   @ApiProperty({ example: 'This is the content of the blog post...' })
   @IsString()
-  content: string;
+  content!: string;
 
-  @ApiProperty({ example: 'Programming', required: false })
-  @IsOptional()
-  @IsString()
-  category?: string;
+  @ApiProperty({ example: 'Programming', enum: CategoryType })
+  @IsEnum(CategoryType, {
+    message: `Category must be one of: ${Object.values(CategoryType).join(', ')}`,
+  })
+  category!: CategoryType;
 
   @ApiProperty({ example: 'A brief excerpt', required: false })
   @IsOptional()
@@ -32,7 +35,7 @@ export class CreateBlogPostDto {
 
   @ApiProperty({ example: ['typescript', 'nestjs'], required: false })
   @IsOptional()
-  @IsArray()
+  @IsString({ each: true })
   tags?: string[];
 
   @ApiProperty({ required: false })
@@ -69,8 +72,10 @@ export class UpdateBlogPostDto {
 
   @ApiProperty({ required: false })
   @IsOptional()
-  @IsString()
-  category?: string;
+  @IsEnum(CategoryType, {
+    message: `Category must be one of: ${Object.values(CategoryType).join(', ')}`,
+  })
+  category?: CategoryType;
 
   @ApiProperty({ required: false })
   @IsOptional()
@@ -104,10 +109,16 @@ export class UpdateBlogPostDto {
 }
 
 export class BlogPostQueryDto {
-  @ApiProperty({ required: false, description: 'Filter by category' })
+  @ApiProperty({
+    required: false,
+    description: 'Filter by category',
+    enum: CategoryType,
+  })
   @IsOptional()
-  @IsString()
-  category?: string;
+  @IsEnum(CategoryType, {
+    message: `Category must be one of: ${Object.values(CategoryType).join(', ')}`,
+  })
+  category?: CategoryType;
 
   @ApiProperty({ required: false, description: 'Filter by featured status' })
   @IsOptional()

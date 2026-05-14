@@ -11,6 +11,7 @@ const appEnvSchema = z.object({
     .string()
     .transform((val) => parseInt(val, 10))
     .default(7000),
+  GOOGLE_GENAI_API_KEY: z.string().optional(),
 });
 
 export type AppEnv = z.infer<typeof appEnvSchema>;

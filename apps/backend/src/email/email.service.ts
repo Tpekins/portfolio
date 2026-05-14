@@ -5,7 +5,7 @@ import * as nodemailer from 'nodemailer';
 @Injectable()
 export class EmailService {
   private readonly logger = new Logger(EmailService.name);
-  private transporter: nodemailer.Transporter;
+  private transporter!: nodemailer.Transporter;
 
   constructor(private configService: ConfigService) {
     this.initializeTransporter();
@@ -20,6 +20,7 @@ export class EmailService {
     const smtpPort = this.configService.get<number>('SMTP_PORT') || 587;
     const smtpUser = this.configService.get<string>('SMTP_USER');
     const smtpPassword = this.configService.get<string>('SMTP_PASSWORD');
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const fromEmail = this.configService.get<string>('SMTP_FROM_EMAIL');
 
     if (!smtpHost || !smtpUser || !smtpPassword) {
