@@ -1,17 +1,17 @@
 import React, { useState, useRef } from "react";
-import { motion } from "motion/react";
-import {
-  ChevronUp,
-  Facebook,
-  Twitter,
-  Linkedin,
-  Instagram,
-} from "lucide-react";
+// import { motion } from "motion/react";
+// import {
+//   ChevronUp,
+//   Facebook,
+//   Twitter,
+//   Linkedin,
+//   Instagram,
+// } from "lucide-react";
 
 export default function Contact() {
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
+  // const scrollToTop = () => {
+  //   window.scrollTo({ top: 0, behavior: "smooth" });
+  // };
 
   const form = useRef<HTMLFormElement>(null);
   const [status, setStatus] = useState<

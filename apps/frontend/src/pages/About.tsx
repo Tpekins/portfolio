@@ -2,16 +2,12 @@ import { motion } from "motion/react";
 import {
   Linkedin,
   HelpingHand,
-  ChevronUp,
-  Facebook,
-  Twitter,
-  Instagram,
 } from "lucide-react";
 
 export default function About() {
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
+  // const scrollToTop = () => {
+  //   window.scrollTo({ top: 0, behavior: "smooth" });
+  // };
   const experiences = [
     {
       role: "University of Buea",

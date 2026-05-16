@@ -1,10 +1,10 @@
 import { motion } from "motion/react";
 import {
-  Github,
-  ExternalLink,
+  // Github,
+  // ExternalLink,
   Linkedin,
   Facebook,
-  ArrowRight,
+  // ArrowRight,
   Twitter,
   Check,
   Minus,

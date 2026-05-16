@@ -1,6 +1,6 @@
 import { Link, useLocation } from 'react-router-dom';
-import { Github, Linkedin, Facebook, FileText, Menu, X, ArrowRight, Twitter, Instagram, ChevronUp } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { Linkedin, Facebook, Menu, X, Twitter, Instagram, ChevronUp } from 'lucide-react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 
 export function Navbar() {

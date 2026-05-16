@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { motion } from "motion/react";
 import {
-  ArrowRight,
+  // ArrowRight,
   CheckCircle2,
   Layers,
   Lightbulb,
