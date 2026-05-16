@@ -1,11 +1,11 @@
 {
   "name": "backend",
-  
   "version": "0.0.1",
   "description": "",
   "author": "",
   "private": true,
   "license": "UNLICENSED",
+  "main": "dist/main.js",
   "prisma": {
     "seed": "ts-node prisma/seed.ts"
   },
