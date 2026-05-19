@@ -1,25 +1,22 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "motion/react";
 import { ArrowRight, Search } from "lucide-react";
 
-const ALL_POSTS = [
+const POSTS = [
   {
     title: "Engineering Trust in the African Gig Economy: A Data-Driven Approach to Service Exchange Platforms",
-    date: "MAY 26, 2026",
     category: "Software",
     readTime: "8 min read",
     url: "https://medium.com/@TianiPekinsEbika/engineering-trust-in-the-african-gig-economy-a-data-driven-approach-to-service-exchange-platforms-0b27b40ad9a2"
   },
   {
     title: "Architecting Digital Trust: A Relational Deep Dive into the LocalHands Prisma Schema",
-    date: "APR 15, 2026",
     category: "Tech",
     readTime: "5 min read",
     url: "https://dev.to/tianipekinsebika/architecting-digital-trust-a-relational-deep-dive-into-the-localhands-prisma-schema-12dk"
   },
   {
     title: "Why I Built LocalHands: The Problem Behind the Platform",
-    date: "MAR 10, 2026",
     category: "Software",
     readTime: "12 min read",
     url: "https://medium.com/@TianiPekinsEbika/why-i-built-localhands-the-problem-behind-the-platform-9f3c4ed0a00a"
@@ -28,11 +25,59 @@ const ALL_POSTS = [
 
 const CATEGORIES = ["All", "Software", "Tech", "Life", "Programming"];
 
+async function fetchPublishDate(url: string): Promise<string> {
+  try {
+    if (url.includes("medium.com")) {
+      const match = url.match(/medium\.com\/@([^/]+)/);
+      if (!match) return "";
+      const username = match[1];
+      const rssUrl = `https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@${username}`;
+      const res = await fetch(rssUrl);
+      const data = await res.json();
+      const slug = url.split("/").pop();
+      const item = data.items?.find((i: { link: string }) =>
+        i.link.includes(slug ?? "")
+      );
+      if (item?.pubDate) {
+        return new Date(item.pubDate).toLocaleDateString("en-US", {
+          month: "short",
+          day: "2-digit",
+          year: "numeric",
+        }).toUpperCase();
+      }
+    } else if (url.includes("dev.to")) {
+      const match = url.match(/dev\.to\/([^/]+)\/([^/]+)/);
+      if (!match) return "";
+      const res = await fetch(`https://dev.to/api/articles/${match[1]}/${match[2]}`);
+      const data = await res.json();
+      if (data.published_at) {
+        return new Date(data.published_at).toLocaleDateString("en-US", {
+          month: "short",
+          day: "2-digit",
+          year: "numeric",
+        }).toUpperCase();
+      }
+    }
+  } catch {
+    return "";
+  }
+  return "";
+}
+
 export default function Blog() {
   const [activeCategory, setActiveCategory] = useState("All");
   const [search, setSearch] = useState("");
+  const [dates, setDates] = useState<string[]>(POSTS.map(() => "Loading..."));
 
-  const filteredPosts = ALL_POSTS.filter((post) => {
+  useEffect(() => {
+    Promise.all(POSTS.map((post) => fetchPublishDate(post.url))).then(
+      (fetchedDates) => {
+        setDates(fetchedDates.map((d) => d || "—"));
+      }
+    );
+  }, []);
+
+  const filteredPosts = POSTS.filter((post) => {
     const matchesCategory =
       activeCategory === "All" || post.category === activeCategory;
     const matchesSearch = post.title
@@ -104,7 +149,7 @@ export default function Blog() {
               >
                 <div className="grid md:grid-cols-12 gap-12 items-center relative z-10 px-6">
                   <div className="md:col-span-2 text-[10px] font-black uppercase tracking-[0.3em] text-primary italic opacity-60">
-                    {post.date}
+                    {dates[POSTS.indexOf(post)]}
                   </div>
                   <div className="md:col-span-1 text-[10px] font-black uppercase tracking-[0.3em] text-text-secondary opacity-40">
                     {post.category}
