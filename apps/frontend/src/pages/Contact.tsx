@@ -141,31 +141,34 @@ export default function Contact() {
 
           {/* Profile Card */}
           <div className="w-full max-w-lg flex flex-col md:flex-row items-center md:items-start gap-8 mt-10">
-            <div className="w-48 h-56 shrink-0 bg-[#e0e0e0] overflow-hidden grayscale">
+          <div className="w-59 h-69 shrink-0 overflow-hidden rounded-lg">
               <img
-                src=""
+                src="/Tiani.jpg"
                 alt="Tiani Pekins"
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover object-top"
                 referrerPolicy="no-referrer"
               />
             </div>
             <div className="space-y-4 pt-4 md:pt-10">
               <div className="space-y-1 text-center md:text-left">
-                <h2 className="text-2xl font-display font-medium text-[#1c1c1c]">
+                <h2 className="text-3xl font-display font-medium text-[#1c1c1c]">
                   Tiani Pekins
                 </h2>
-                <p className="text-[10px] font-bold uppercase tracking-widest text-[#1c1c1c]/60 italic font-mono">
+                <p className="text-[13px] font-bold uppercase tracking-widest text-[#1c1c1c]/60 italic font-mono">
                   Software Engineer
                 </p>
               </div>
-              <p className="text-[11px] leading-relaxed text-[#1c1c1c] font-medium opacity-80 max-w-sm text-center md:text-left">
+              <p className="text-[14px] leading-relaxed text-[#1c1c1c] font-medium opacity-80 max-w-sm text-center md:text-left">
                 Passionate software engineer dedicated to transforming complex
                 challenges into innovative, user-friendly solutions and inspiring
                 others through mentorship.
               </p>
-              <p className="text-[11px] font-black text-[#1c1c1c] text-center md:text-left pt-2">
-                tiani@localhands.africa
-              </p>
+              <a 
+  href="mailto:tiani@localhands.africa"
+  className="text-lg font-black text-[#1c1c1c] text-center md:text-left pt-2 hover:underline block"
+>
+  tiani@localhands.africa
+</a>
             </div>
           </div>
         </div>

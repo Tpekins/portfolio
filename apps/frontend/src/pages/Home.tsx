@@ -99,12 +99,33 @@ export default function Home() {
               </p>
             </div>
 
-            <Link
-              to="/contact"
-              className="inline-block px-12 py-5 bg-text-primary text-white hover:bg-primary rounded-xl font-bold text-xl transition-all duration-500 shadow-xl"
-            >
-              Let's Talk
-            </Link>
+            {/* Buttons Row */}
+            <div className="flex flex-wrap items-center gap-4">
+              <Link
+                to="/contact"
+                className="inline-block px-12 py-5 bg-text-primary text-white hover:bg-primary rounded-xl font-bold text-xl transition-all duration-500 shadow-xl"
+              >
+                Let's Talk
+              </Link>
+
+              <a
+                href="/cv.pdf"
+                download="Tiani_Pekins_CV.pdf"
+                className="inline-flex items-center gap-2 px-3 py-5 border-2 border-text-primary text-text-primary hover:bg-text-primary hover:text-white rounded-xl font-bold text-xl transition-all duration-500"
+              >
+                Download CV
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  fill="currentColor"
+                  viewBox="0 0 16 16"
+                >
+                  <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
+                  <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
+                </svg>
+              </a>
+            </div>
           </motion.div>
 
           <motion.div
@@ -334,13 +355,15 @@ export default function Home() {
             {[
               {
                 title:
-                  "How I Got Into Microsoft through the Microsoft LEAP Apprenticeship Program — Nairobi Cohort 1",
-                date: "May 10, 2026",
+                  "Why I Built LocalHands: The Problem Behind the Platform",
+                date: "MAR 10, 2026",
                 author: "Tiani",
+                url: "https://medium.com/@TianiPekinsEbika/why-i-built-localhands-the-problem-behind-the-platform-9f3c4ed0a00a",
               },
+
               {
                 title: "Preparing For The Software Engineering Interview",
-                date: "January 20, 2023",
+                date: "January 20, 2025",
                 author: "Tiani",
               },
               {
