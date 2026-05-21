@@ -4,22 +4,24 @@ import { ArrowRight, Search } from "lucide-react";
 
 const POSTS = [
   {
-    title: "Engineering Trust in the African Gig Economy: A Data-Driven Approach to Service Exchange Platforms",
+    title:
+      "Engineering Trust in the African Gig Economy: A Data-Driven Approach to Service Exchange Platforms",
     category: "Software",
     readTime: "8 min read",
-    url: "https://medium.com/@TianiPekinsEbika/engineering-trust-in-the-african-gig-economy-a-data-driven-approach-to-service-exchange-platforms-0b27b40ad9a2"
+    url: "https://medium.com/@TianiPekinsEbika/engineering-trust-in-the-african-gig-economy-a-data-driven-approach-to-service-exchange-platforms-0b27b40ad9a2",
   },
   {
-    title: "Architecting Digital Trust: A Relational Deep Dive into the LocalHands Prisma Schema",
+    title:
+      "Architecting Digital Trust: A Relational Deep Dive into the LocalHands Prisma Schema",
     category: "Tech",
     readTime: "5 min read",
-    url: "https://dev.to/tianipekinsebika/architecting-digital-trust-a-relational-deep-dive-into-the-localhands-prisma-schema-12dk"
+    url: "https://dev.to/tianipekinsebika/architecting-digital-trust-a-relational-deep-dive-into-the-localhands-prisma-schema-12dk",
   },
   {
     title: "Why I Built LocalHands: The Problem Behind the Platform",
     category: "Software",
     readTime: "12 min read",
-    url: "https://medium.com/@TianiPekinsEbika/why-i-built-localhands-the-problem-behind-the-platform-9f3c4ed0a00a"
+    url: "https://medium.com/@TianiPekinsEbika/why-i-built-localhands-the-problem-behind-the-platform-9f3c4ed0a00a",
   },
 ];
 
@@ -36,26 +38,32 @@ async function fetchPublishDate(url: string): Promise<string> {
       const data = await res.json();
       const slug = url.split("/").pop();
       const item = data.items?.find((i: { link: string }) =>
-        i.link.includes(slug ?? "")
+        i.link.includes(slug ?? ""),
       );
       if (item?.pubDate) {
-        return new Date(item.pubDate).toLocaleDateString("en-US", {
-          month: "short",
-          day: "2-digit",
-          year: "numeric",
-        }).toUpperCase();
+        return new Date(item.pubDate)
+          .toLocaleDateString("en-US", {
+            month: "short",
+            day: "2-digit",
+            year: "numeric",
+          })
+          .toUpperCase();
       }
     } else if (url.includes("dev.to")) {
       const match = url.match(/dev\.to\/([^/]+)\/([^/]+)/);
       if (!match) return "";
-      const res = await fetch(`https://dev.to/api/articles/${match[1]}/${match[2]}`);
+      const res = await fetch(
+        `https://dev.to/api/articles/${match[1]}/${match[2]}`,
+      );
       const data = await res.json();
       if (data.published_at) {
-        return new Date(data.published_at).toLocaleDateString("en-US", {
-          month: "short",
-          day: "2-digit",
-          year: "numeric",
-        }).toUpperCase();
+        return new Date(data.published_at)
+          .toLocaleDateString("en-US", {
+            month: "short",
+            day: "2-digit",
+            year: "numeric",
+          })
+          .toUpperCase();
       }
     }
   } catch {
@@ -73,7 +81,7 @@ export default function Blog() {
     Promise.all(POSTS.map((post) => fetchPublishDate(post.url))).then(
       (fetchedDates) => {
         setDates(fetchedDates.map((d) => d || "—"));
-      }
+      },
     );
   }, []);
 

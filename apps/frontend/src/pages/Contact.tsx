@@ -1,18 +1,7 @@
 import React, { useState, useRef } from "react";
-// import { motion } from "motion/react";
-// import {
-//   ChevronUp,
-//   Facebook,
-//   Twitter,
-//   Linkedin,
-//   Instagram,
-// } from "lucide-react";
+import emailjs from '@emailjs/browser';
 
 export default function Contact() {
-  // const scrollToTop = () => {
-  //   window.scrollTo({ top: 0, behavior: "smooth" });
-  // };
-
   const form = useRef<HTMLFormElement>(null);
   const [status, setStatus] = useState<
     "idle" | "sending" | "success" | "error"
@@ -21,11 +10,31 @@ export default function Contact() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.current) return;
+
     setStatus("sending");
-    setTimeout(() => {
+
+    // Replace these strings with your actual credentials when you have them
+    const SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+    const TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+    const PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+
+    emailjs.sendForm(
+      SERVICE_ID,
+      TEMPLATE_ID,
+      form.current,
+      PUBLIC_KEY
+    )
+    .then(() => {
       setStatus("success");
       form.current?.reset();
-    }, 1500);
+      // Reset status back to idle after 5 seconds so they can send another message if needed
+      setTimeout(() => setStatus("idle"), 5000);
+    })
+    .catch((error) => {
+      console.error("EmailJS Error:", error);
+      setStatus("error");
+      setTimeout(() => setStatus("idle"), 5000);
+    });
   };
 
   return (
@@ -58,7 +67,7 @@ export default function Contact() {
                   </label>
                   <input
                     type="text"
-                    placeholder=""
+                    name="from_name" // ADDED NAME
                     required
                     className="w-full bg-white border-none py-4 px-4 rounded-md focus:ring-0 transition-all font-medium text-base text-[#1c1c1c] outline-none h-10 shadow-sm"
                   />
@@ -69,7 +78,7 @@ export default function Contact() {
                   </label>
                   <input
                     type="text"
-                    placeholder=""
+                    name="from_surname" // ADDED NAME
                     required
                     className="w-full bg-white border-none py-4 px-4 rounded-md focus:ring-0 transition-all font-medium text-base text-[#1c1c1c] outline-none h-10 shadow-sm"
                   />
@@ -83,7 +92,7 @@ export default function Contact() {
                   </label>
                   <input
                     type="email"
-                    placeholder=""
+                    name="reply_to" // ADDED NAME (Commonly used for the user's email)
                     required
                     className="w-full bg-white border-none py-4 px-4 rounded-md focus:ring-0 transition-all font-medium text-base text-[#1c1c1c] outline-none h-10 shadow-sm"
                   />
@@ -94,7 +103,7 @@ export default function Contact() {
                   </label>
                   <input
                     type="tel"
-                    placeholder=""
+                    name="phone_number" // ADDED NAME
                     className="w-full bg-white border-none py-4 px-4 rounded-md focus:ring-0 transition-all font-medium text-base text-[#1c1c1c] outline-none h-10 shadow-sm"
                   />
                 </div>
@@ -106,7 +115,7 @@ export default function Contact() {
                 </label>
                 <input
                   type="text"
-                  placeholder=""
+                  name="subject" // ADDED NAME
                   className="w-full bg-white border-none py-4 px-4 rounded-md focus:ring-0 transition-all font-medium text-base text-[#1c1c1c] outline-none h-10 shadow-sm"
                 />
               </div>
@@ -117,7 +126,7 @@ export default function Contact() {
                 </label>
                 <textarea
                   rows={4}
-                  placeholder=""
+                  name="message" // ADDED NAME
                   required
                   className="w-full bg-white border-none py-4 px-4 rounded-md focus:ring-0 transition-all font-medium text-base text-[#1c1c1c] resize-none outline-none shadow-sm"
                 ></textarea>
@@ -132,7 +141,9 @@ export default function Contact() {
                   {status === "sending"
                     ? "Sending..."
                     : status === "success"
-                      ? "Message Sent"
+                      ? "Message Sent!"
+                      : status === "error"
+                      ? "Error! Try Again"
                       : "Send a message"}
                 </button>
               </div>
@@ -164,18 +175,15 @@ export default function Contact() {
                 others through mentorship.
               </p>
               <a 
-  href="mailto:tiani@localhands.africa"
-  className="text-lg font-black text-[#1c1c1c] text-center md:text-left pt-2 hover:underline block"
->
-  tiani@localhands.africa
-</a>
+                href="mailto:tiani@localhands.africa"
+                className="text-lg font-black text-[#1c1c1c] text-center md:text-left pt-2 hover:underline block"
+              >
+                tiani@localhands.africa
+              </a>
             </div>
           </div>
         </div>
       </div>
-
-     
     </div>
   );
 }
-
