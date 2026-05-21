@@ -1,18 +1,16 @@
 import { useState, useEffect } from "react";
 import { motion } from "motion/react";
-import { ArrowRight, Search } from "lucide-react";
+import { ArrowRight, Search, ExternalLink } from "lucide-react";
 
 const POSTS = [
   {
-    title:
-      "Engineering Trust in the African Gig Economy: A Data-Driven Approach to Service Exchange Platforms",
+    title: "Engineering Trust in the African Gig Economy: A Data-Driven Approach to Service Exchange Platforms",
     category: "Software",
     readTime: "8 min read",
     url: "https://medium.com/@TianiPekinsEbika/engineering-trust-in-the-african-gig-economy-a-data-driven-approach-to-service-exchange-platforms-0b27b40ad9a2",
   },
   {
-    title:
-      "Architecting Digital Trust: A Relational Deep Dive into the LocalHands Prisma Schema",
+    title: "Architecting Digital Trust: A Relational Deep Dive into the LocalHands Prisma Schema",
     category: "Tech",
     readTime: "5 min read",
     url: "https://dev.to/tianipekinsebika/architecting-digital-trust-a-relational-deep-dive-into-the-localhands-prisma-schema-12dk",
@@ -27,70 +25,112 @@ const POSTS = [
 
 const CATEGORIES = ["All", "Software", "Tech", "Life", "Programming"];
 
-async function fetchPublishDate(url: string): Promise<string> {
-  try {
-    if (url.includes("medium.com")) {
-      const match = url.match(/medium\.com\/@([^/]+)/);
-      if (!match) return "";
-      const username = match[1];
-      const rssUrl = `https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@${username}`;
-      const res = await fetch(rssUrl);
-      const data = await res.json();
-      const slug = url.split("/").pop();
-      const item = data.items?.find((i: { link: string }) =>
-        i.link.includes(slug ?? ""),
-      );
-      if (item?.pubDate) {
-        return new Date(item.pubDate)
-          .toLocaleDateString("en-US", {
-            month: "short",
-            day: "2-digit",
-            year: "numeric",
-          })
-          .toUpperCase();
-      }
-    } else if (url.includes("dev.to")) {
-      const match = url.match(/dev\.to\/([^/]+)\/([^/]+)/);
-      if (!match) return "";
-      const res = await fetch(
-        `https://dev.to/api/articles/${match[1]}/${match[2]}`,
-      );
-      const data = await res.json();
-      if (data.published_at) {
-        return new Date(data.published_at)
-          .toLocaleDateString("en-US", {
-            month: "short",
-            day: "2-digit",
-            year: "numeric",
-          })
-          .toUpperCase();
-      }
-    }
-  } catch {
-    return "";
+// Detect platform name from any URL — add new platforms here as needed
+function getPlatformLabel(url: string): string {
+  if (url.includes("medium.com")) return "Medium";
+  if (url.includes("dev.to")) return "Dev.to";
+  if (url.includes("quora.com")) return "Quora";
+  if (url.includes("reddit.com")) return "Reddit";
+  if (url.includes("ssrn.com")) return "SSRN";
+  if (url.includes("hashnode.com")) return "Hashnode";
+  if (url.includes("substack.com")) return "Substack";
+  const host = new URL(url).hostname.replace("www.", "");
+  return host.charAt(0).toUpperCase() + host.slice(1);
+}
+
+// Races a fetch against a 3s timeout — never hangs forever
+function withTimeout<T>(promise: Promise<T>, ms: number): Promise<T> {
+  return Promise.race([
+    promise,
+    new Promise<T>((_, reject) =>
+      setTimeout(() => reject(new Error("timeout")), ms)
+    ),
+  ]);
+}
+
+type PostMeta = {
+  date: string;
+  platform: string;
+};
+
+// Fallback dates keyed by URL slug — shown if API times out or fails
+const FALLBACK_DATES: Record<string, string> = {
+  "0b27b40ad9a2": "2025",
+  "12dk": "MAY 2025",
+  "9f3c4ed0a00a": "MAR 10, 2026",
+};
+
+function getFallbackDate(url: string): string {
+  for (const [slug, date] of Object.entries(FALLBACK_DATES)) {
+    if (url.includes(slug)) return date;
   }
-  return "";
+  return "—";
+}
+
+async function fetchPostMeta(url: string): Promise<PostMeta> {
+  const platform = getPlatformLabel(url);
+
+  if (url.includes("dev.to")) {
+    try {
+      const match = url.match(/dev\.to\/([^/]+)\/([^/]+)/);
+      if (!match) throw new Error("no match");
+      const res = await withTimeout(
+        fetch(`https://dev.to/api/articles/${match[1]}/${match[2]}`),
+        3000
+      );
+      if (!res.ok) throw new Error("bad response");
+      const data = await res.json();
+      const date = data.published_at
+        ? new Date(data.published_at)
+            .toLocaleDateString("en-US", { month: "short", day: "2-digit", year: "numeric" })
+            .toUpperCase()
+        : getFallbackDate(url);
+      return { date, platform };
+    } catch {
+      return { date: getFallbackDate(url), platform };
+    }
+  }
+
+  if (url.includes("medium.com")) {
+    try {
+      const match = url.match(/medium\.com\/@([^/]+)/);
+      if (!match) throw new Error("no match");
+      const username = match[1];
+      const slug = url.split("/").pop() ?? "";
+      const rssUrl = `https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@${username}`;
+      const res = await withTimeout(fetch(rssUrl), 3000);
+      const data = await res.json();
+      const item = data.items?.find((i: { link: string }) => i.link.includes(slug));
+      const date = item?.pubDate
+        ? new Date(item.pubDate)
+            .toLocaleDateString("en-US", { month: "short", day: "2-digit", year: "numeric" })
+            .toUpperCase()
+        : getFallbackDate(url);
+      return { date, platform };
+    } catch {
+      return { date: getFallbackDate(url), platform };
+    }
+  }
+
+  // Any other platform — just show fallback date, platform label still works
+  return { date: getFallbackDate(url), platform };
 }
 
 export default function Blog() {
   const [activeCategory, setActiveCategory] = useState("All");
   const [search, setSearch] = useState("");
-  const [dates, setDates] = useState<string[]>(POSTS.map(() => "Loading..."));
+  const [postMeta, setPostMeta] = useState<PostMeta[]>(
+    POSTS.map((p) => ({ date: "Loading...", platform: getPlatformLabel(p.url) }))
+  );
 
   useEffect(() => {
-    Promise.all(POSTS.map((post) => fetchPublishDate(post.url))).then(
-      (fetchedDates) => {
-        setDates(fetchedDates.map((d) => d || "—"));
-      },
-    );
+    Promise.all(POSTS.map((post) => fetchPostMeta(post.url))).then(setPostMeta);
   }, []);
 
   const filteredPosts = POSTS.filter((post) => {
     const matchesCategory =
       activeCategory === "All" || post.category === activeCategory;
-    const matchesSearch = post.title
-      .toLowerCase()
-      .includes(search.toLowerCase());
+    const matchesSearch = post.title.toLowerCase().includes(search.toLowerCase());
     return matchesCategory && matchesSearch;
   });
 
@@ -146,36 +186,49 @@ export default function Blog() {
       <section className="pb-48 px-6">
         <div className="max-w-7xl mx-auto space-y-px">
           {filteredPosts.length > 0 ? (
-            filteredPosts.map((post, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="group relative py-16 md:py-20 border-b border-border-subtle hover:bg-primary/5 transition-colors duration-700 cursor-pointer"
-                onClick={() => window.open(post.url, "_blank")}
-              >
-                <div className="grid md:grid-cols-12 gap-12 items-center relative z-10 px-6">
-                  <div className="md:col-span-2 text-[10px] font-black uppercase tracking-[0.3em] text-primary italic opacity-60">
-                    {dates[POSTS.indexOf(post)]}
-                  </div>
-                  <div className="md:col-span-1 text-[10px] font-black uppercase tracking-[0.3em] text-text-secondary opacity-40">
-                    {post.category}
-                  </div>
-                  <div className="md:col-span-7">
-                    <h3 className="section-title !text-2xl md:!text-3xl lg:!text-4xl group-hover:text-primary transition-colors duration-500">
-                      {post.title}
-                    </h3>
-                  </div>
-                  <div className="md:col-span-2 flex justify-end">
-                    <div className="w-16 h-16 rounded-2xl bg-white shadow-xl shadow-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all duration-500 group-hover:scale-110">
-                      <ArrowRight size={24} />
+            filteredPosts.map((post, i) => {
+              const realIndex = POSTS.indexOf(post);
+              const meta = postMeta[realIndex];
+              return (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  className="group relative py-16 md:py-20 border-b border-border-subtle hover:bg-primary/5 transition-colors duration-700 cursor-pointer"
+                  onClick={() => window.open(post.url, "_blank")}
+                >
+                  <div className="grid md:grid-cols-12 gap-12 items-center relative z-10 px-6">
+                    <div className="md:col-span-2 text-[10px] font-black uppercase tracking-[0.3em] text-primary italic opacity-60">
+                      {meta.date}
+                    </div>
+                    <div className="md:col-span-1 text-[10px] font-black uppercase tracking-[0.3em] text-text-secondary opacity-40">
+                      {post.category}
+                    </div>
+                    <div className="md:col-span-7">
+                      <h3 className="section-title !text-2xl md:!text-3xl lg:!text-4xl group-hover:text-primary transition-colors duration-500">
+                        {post.title}
+                      </h3>
+                      <a
+                        href={post.url}
+                        target="_blank"
+                        rel="noreferrer"
+                        onClick={(e) => e.stopPropagation()}
+                        className="mt-3 inline-flex items-center gap-1 text-[10px] font-black uppercase tracking-widest text-primary opacity-40 hover:opacity-100 transition-opacity"
+                      >
+                        Read on {meta.platform} <ExternalLink size={10} />
+                      </a>
+                    </div>
+                    <div className="md:col-span-2 flex justify-end">
+                      <div className="w-16 h-16 rounded-2xl bg-white shadow-xl shadow-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all duration-500 group-hover:scale-110">
+                        <ArrowRight size={24} />
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div className="absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/5 to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-              </motion.div>
-            ))
+                  <div className="absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/5 to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                </motion.div>
+              );
+            })
           ) : (
             <div className="py-32 text-center text-text-secondary font-medium opacity-50">
               No posts found.
