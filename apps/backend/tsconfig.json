@@ -12,7 +12,6 @@
     "sourceMap": true,
     "rootDir": "./src",
     "outDir": "./dist",
-    "incremental": true,
     "skipLibCheck": true,
     "strictNullChecks": true,
     "forceConsistentCasingInFileNames": true,
@@ -20,8 +19,6 @@
     "strictBindCallApply": false,
     "noFallthroughCasesInSwitch": false,
     "paths": {
-      "@generated/*": ["./src/generated/prisma/*"],
-      "@generated": ["./src/generated/prisma/client"],
       "@repo/categories": ["../../packages/categories/dist/index.d.ts"]
     }
   },

@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateContactSubmissionDto, ContactQueryDto } from './dto/contact.dto';
-import { Prisma } from '@generated';
+import { Prisma } from '../generated/prisma/client';
 
 @Injectable()
 export class ContactService {

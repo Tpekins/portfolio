@@ -10,7 +10,7 @@ import {
   UpdateBlogPostDto,
   BlogPostQueryDto,
 } from './dto/blog.dto';
-import { Prisma } from '@generated';
+import { Prisma } from '../generated/prisma/client';
 
 @Injectable()
 export class BlogService {

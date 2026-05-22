@@ -13,7 +13,7 @@ import {
   UpdateProjectDto,
   ProjectQueryDto,
 } from './dto/project.dto';
-import { Prisma } from '@generated';
+import { Prisma } from '../generated/prisma/client';
 
 @Injectable()
 export class ProjectService {
