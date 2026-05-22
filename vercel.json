@@ -1,5 +1,5 @@
 {
-  "buildCommand": "yarn build",
+  "buildCommand": "npx turbo run build --filter=frontend...",
   "outputDirectory": "apps/frontend/dist",
   "installCommand": "yarn install",
   "rewrites": [
