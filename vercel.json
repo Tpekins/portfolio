@@ -1,0 +1,8 @@
+{
+  "buildCommand": "yarn build",
+  "outputDirectory": "apps/frontend/dist",
+  "installCommand": "yarn install",
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}
