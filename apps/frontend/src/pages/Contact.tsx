@@ -62,7 +62,7 @@ export default function Contact() {
             <form ref={form} onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
-                  <label className="text-[11px] font-bold text-white px-2">
+                  <label className="text-[12px] font-bold text-white px-2">
                     Name
                   </label>
                   <input
@@ -73,7 +73,7 @@ export default function Contact() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-[11px] font-bold text-white px-2">
+                  <label className="text-[1px] font-bold text-white px-2">
                     Surname
                   </label>
                   <input
@@ -87,7 +87,7 @@ export default function Contact() {
 
               <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-6">
                 <div className="space-y-2">
-                  <label className="text-[11px] font-bold text-white px-2">
+                  <label className="text-[12px] font-bold text-white px-2">
                     Email
                   </label>
                   <input
@@ -98,7 +98,7 @@ export default function Contact() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-[11px] font-bold text-white px-2">
+                  <label className="text-[12px] font-bold text-white px-2">
                     Phone
                   </label>
                   <input
@@ -110,7 +110,7 @@ export default function Contact() {
               </div>
 
               <div className="space-y-2">
-                <label className="text-[11px] font-bold text-white px-2">
+                <label className="text-[12px] font-bold text-white px-2">
                   Subject
                 </label>
                 <input
@@ -121,7 +121,7 @@ export default function Contact() {
               </div>
 
               <div className="space-y-2">
-                <label className="text-[11px] font-bold text-white px-2">
+                <label className="text-[12px] font-bold text-white px-2">
                   Message
                 </label>
                 <textarea
