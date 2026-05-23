@@ -1,10 +1,5 @@
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  useLocation,
-} from "react-router-dom";
-import { useState, useEffect, } from "react";
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
+import { useState, useEffect } from "react";
 import { Navbar, Footer } from "@repo/ui";
 import Home from "./pages/Home";
 import Projects from "./pages/Projects";
@@ -24,17 +19,24 @@ function ScrollToTop() {
 }
 
 export default function App() {
-  const [isFooterVisible, setIsFooterVisible] = useState(false);
+  const [footerOpacity, setFooterOpacity] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => {
-      const nearBottom =
-        window.innerHeight + window.scrollY >= document.body.offsetHeight - 300;
-      setIsFooterVisible(nearBottom);
+      const viewportBottom = window.scrollY + window.innerHeight;
+      const docHeight = document.body.offsetHeight;
+      const distanceFromBottom = docHeight - viewportBottom;
+      const revealZone = 600;
+
+      const progress = Math.max(
+        0,
+        Math.min(1, 1 - distanceFromBottom / revealZone)
+      );
+      setFooterOpacity(progress);
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll(); // Initial check
+    handleScroll();
 
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -44,7 +46,7 @@ export default function App() {
       <ScrollToTop />
       <div className="min-h-screen flex flex-col relative bg-white">
         <Navbar />
-        <main className="site-wrapper flex-grow mb-[550px]">
+        <main className="site-wrapper flex-grow">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/projects" element={<Projects />} />
@@ -54,8 +56,10 @@ export default function App() {
             <Route path="/contact" element={<Contact />} />
           </Routes>
         </main>
-        <div className={`sticky-footer ${isFooterVisible ? "visible" : ""}`}>
-          <Footer />
+        <div className="fixed bottom-0 left-0 right-0 z-10 pointer-events-none" style={{ opacity: footerOpacity }}>
+          <div className="pointer-events-auto">
+            <Footer />
+          </div>
         </div>
       </div>
     </Router>
