@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import {
   Github,
   Facebook,
@@ -50,36 +49,36 @@ export function Footer() {
               Shortcuts:
             </h2>
             <div className="flex flex-col gap-3 items-center md:items-start text-left">
-              <Link
-                to="/contact"
+              <a
+                href="/contact"
                 className="text-base font-bold text-text-primary hover:text-primary transition-colors flex items-center gap-3"
               >
                 <span className="text-primary font-black">−</span> Contact
-              </Link>
-              <Link
-                to="/"
+              </a>
+              <a
+                href="/"
                 className="text-base font-bold text-text-primary hover:text-primary transition-colors flex items-center gap-3"
               >
                 <span className="text-primary font-black">−</span> Home
-              </Link>
-              <Link
-                to="/projects"
+              </a>
+              <a
+                href="/projects"
                 className="text-base font-bold text-text-primary hover:text-primary transition-colors flex items-center gap-3"
               >
                 <span className="text-primary font-black">−</span> Projects
-              </Link>
-              <Link
-                to="/about"
+              </a>
+              <a
+                href="/about"
                 className="text-base font-bold text-text-primary hover:text-primary transition-colors flex items-center gap-3"
               >
                 <span className="text-primary font-black">−</span> About
-              </Link>
-              <Link
-                to="/blog"
+              </a>
+              <a
+                href="/blog"
                 className="text-base font-bold text-text-primary hover:text-primary transition-colors flex items-center gap-3"
               >
                 <span className="text-primary font-black">−</span> Blog
-              </Link>
+              </a>
             </div>
           </div>
         </div>

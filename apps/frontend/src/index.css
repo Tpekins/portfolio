@@ -105,3 +105,4 @@
 .btn-outline {
   @apply bg-white text-primary border-2 border-primary px-10 py-3 rounded-lg font-bold hover:bg-primary hover:text-white transition-all duration-300 inline-block text-center;
 }
+
