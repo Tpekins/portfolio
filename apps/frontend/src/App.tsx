@@ -46,7 +46,7 @@ export default function App() {
       <ScrollToTop />
       <div className="min-h-screen flex flex-col relative bg-white">
         <Navbar />
-        <main className="site-wrapper flex-grow">
+        <main className="site-wrapper flex-grow" style={{pointerEvents: footerOpacity === 0.95 ? 'none' : 'auto'}}>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/projects" element={<Projects />} />
