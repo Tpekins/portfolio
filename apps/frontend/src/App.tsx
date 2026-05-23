@@ -56,7 +56,10 @@ export default function App() {
             <Route path="/contact" element={<Contact />} />
           </Routes>
         </main>
-        <div className="fixed bottom-0 left-0 right-0 z-30 pointer-events-none" style={{ opacity: footerOpacity }}>
+        <div
+          className="fixed bottom-0 left-0 right-0 z-40"
+          style={{ opacity: footerOpacity, pointerEvents: footerOpacity === 100 ? 'none' : 'auto' }}
+        >
           <div className="pointer-events-auto">
             <Footer />
           </div>
