@@ -4,6 +4,14 @@ import { ArrowRight, Search } from "lucide-react";
 import { Link } from "react-router-dom";
 import { getBlogPosts, type BlogPost } from "../services/api";
 
+function wrapPost(post: BlogPost) {
+  const card = <PostCard post={post} />;
+  if (post.externalUrl) {
+    return <a href={post.externalUrl} target="_blank" rel="noreferrer" key={post.id}>{card}</a>;
+  }
+  return <Link to={`/blog/${post.slug}`} key={post.id}>{card}</Link>;
+}
+
 function PostCard({ post }: { post: BlogPost }) {
   return (
     <motion.div
@@ -134,20 +142,7 @@ export default function Blog() {
               Loading posts...
             </div>
           ) : filteredPosts.length > 0 ? (
-            filteredPosts.map((post) => {
-              if (post.externalUrl) {
-                return (
-                  <a href={post.externalUrl} target="_blank" rel="noreferrer" key={post.id}>
-                    <PostCard post={post} />
-                  </a>
-                );
-              }
-              return (
-                <Link to={`/blog/${post.slug}`} key={post.id}>
-                  <PostCard post={post} />
-                </Link>
-              );
-            })}
+            filteredPosts.map((post) => wrapPost(post))
           ) : (
             <div className="py-32 text-center text-text-secondary font-medium opacity-50">
               No posts found.
