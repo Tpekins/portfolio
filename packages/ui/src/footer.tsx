@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import {
+  Github,
   Facebook,
   Twitter,
   Linkedin,
@@ -13,7 +14,7 @@ export function Footer() {
   };
 
   return (
-    <footer className="fixed bottom-0 left-0 right-0 z-0 h-[550px] bg-white border-t border-border-subtle pt-24 pb-12 px-6 w-full overflow-hidden flex flex-col items-center">
+    <footer className="fixed bottom-0 left-0 right-0 z-20 h-[550px] bg-white border-t border-border-subtle pt-24 pb-12 px-6 w-full overflow-hidden flex flex-col items-center">
       <div className="max-w-7xl mx-auto w-full flex-grow flex flex-col justify-between">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 items-start text-center md:text-left">
           {/* Logo Section */}
@@ -99,30 +100,11 @@ export function Footer() {
             </p>
 
             <div className="flex justify-center gap-6">
-              <a
-                href="#"
-                className="text-text-primary hover:text-primary transition-colors"
-              >
-                <Facebook size={18} />
-              </a>
-              <a
-                href="#"
-                className="text-text-primary hover:text-primary transition-colors"
-              >
-                <Twitter size={18} />
-              </a>
-              <a
-                href="#"
-                className="text-text-primary hover:text-primary transition-colors"
-              >
-                <Linkedin size={18} />
-              </a>
-              <a
-                href="#"
-                className="text-text-primary hover:text-primary transition-colors"
-              >
-                <Instagram size={18} />
-              </a>
+              <a href="https://github.com/Tpekins" target="_blank" rel="noreferrer" className="text-text-primary hover:text-primary transition-colors"><Github size={18} /></a>
+              <a href="https://www.facebook.com/TianiPekins/" target="_blank" rel="noreferrer" className="text-text-primary hover:text-primary transition-colors"><Facebook size={18} /></a>
+              <a href="https://x.com/TianiPekins" target="_blank" rel="noreferrer" className="text-text-primary hover:text-primary transition-colors"><Twitter size={18} /></a>
+              <a href="https://www.linkedin.com/in/tiani-pekins-ebika/" target="_blank" rel="noreferrer" className="text-text-primary hover:text-primary transition-colors"><Linkedin size={18} /></a>
+              <a href="https://www.instagram.com/tianperkins/" target="_blank" rel="noreferrer" className="text-text-primary hover:text-primary transition-colors"><Instagram size={18} /></a>
             </div>
           </div>
         </div>
