@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import { Linkedin, Facebook, Menu, X, Twitter, Instagram, ChevronUp } from 'lucide-react';
+import { Linkedin, Facebook, Github, Menu, X, Twitter, Instagram, ChevronUp } from 'lucide-react';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 
@@ -146,10 +146,11 @@ export function Footer() {
             </p>
             
             <div className="flex justify-center gap-6">
-              <a href="#" className="text-text-primary hover:text-primary transition-colors"><Facebook size={18} /></a>
-              <a href="#" className="text-text-primary hover:text-primary transition-colors"><Twitter size={18} /></a>
-              <a href="#" className="text-text-primary hover:text-primary transition-colors"><Linkedin size={18} /></a>
-              <a href="#" className="text-text-primary hover:text-primary transition-colors"><Instagram size={18} /></a>
+              <a href="https://github.com/Tpekins" target="_blank" rel="noreferrer" className="text-text-primary hover:text-primary transition-colors"><Github size={18} /></a>
+              <a href="https://www.facebook.com/TianiPekins/" target="_blank" rel="noreferrer" className="text-text-primary hover:text-primary transition-colors"><Facebook size={18} /></a>
+              <a href="https://x.com/TianiPekins" target="_blank" rel="noreferrer" className="text-text-primary hover:text-primary transition-colors"><Twitter size={18} /></a>
+              <a href="https://www.linkedin.com/in/tiani-pekins-ebika/" target="_blank" rel="noreferrer" className="text-text-primary hover:text-primary transition-colors"><Linkedin size={18} /></a>
+              <a href="https://www.instagram.com/tianperkins/" target="_blank" rel="noreferrer" className="text-text-primary hover:text-primary transition-colors"><Instagram size={18} /></a>
             </div>
           </div>
         </div>

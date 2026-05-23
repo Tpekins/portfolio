@@ -1,10 +1,8 @@
 import { motion } from "motion/react";
 import {
-  // Github,
-  // ExternalLink,
+  Github,
   Linkedin,
   Facebook,
-  // ArrowRight,
   Twitter,
   Check,
   Minus,
@@ -32,7 +30,7 @@ export default function Projects() {
         "Vercel: Cloud platform for static sites and Serverless Functions",
       ],
       github: "https://github.com/Tpekins",
-      live: "https://localhands.clafrica",
+      live: "https://localhands.africa",
       imageText: "l.",
       isLive: true,
     },
@@ -65,13 +63,16 @@ export default function Projects() {
               </Link>
             </div>
             <div className="flex gap-6">
-              <a href="#" className="hover:text-white transition-colors">
+              <a href="https://github.com/Tpekins" target="_blank" rel="noreferrer" className="hover:text-white transition-colors">
+                <Github size={18} />
+              </a>
+              <a href="https://www.facebook.com/TianiPekins/" target="_blank" rel="noreferrer" className="hover:text-white transition-colors">
                 <Facebook size={18} />
               </a>
-              <a href="#" className="hover:text-white transition-colors">
+              <a href="https://x.com/TianiPekins" target="_blank" rel="noreferrer" className="hover:text-white transition-colors">
                 <Twitter size={18} />
               </a>
-              <a href="#" className="hover:text-white transition-colors">
+              <a href="https://www.linkedin.com/in/tiani-pekins-ebika/" target="_blank" rel="noreferrer" className="hover:text-white transition-colors">
                 <Linkedin size={18} />
               </a>
             </div>
