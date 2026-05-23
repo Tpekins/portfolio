@@ -1,8 +1,22 @@
 import { useState, useEffect } from "react";
 import { motion } from "motion/react";
-import { ArrowRight, Search } from "lucide-react";
+import { ArrowRight, Search, ExternalLink } from "lucide-react";
 import { Link } from "react-router-dom";
 import { getBlogPosts, type BlogPost } from "../services/api";
+
+function getPlatformLabel(url: string | null): string {
+  if (!url) return "";
+  if (url.includes("medium.com")) return "Medium";
+  if (url.includes("dev.to")) return "Dev.to";
+  if (url.includes("hashnode.com")) return "Hashnode";
+  if (url.includes("substack.com")) return "Substack";
+  try {
+    const host = new URL(url).hostname.replace("www.", "");
+    return host.charAt(0).toUpperCase() + host.slice(1);
+  } catch {
+    return "";
+  }
+}
 
 function wrapPost(post: BlogPost) {
   const card = <PostCard post={post} />;
@@ -35,6 +49,17 @@ function PostCard({ post }: { post: BlogPost }) {
             <p className="mt-4 text-body text-sm font-medium line-clamp-2">
               {post.excerpt}
             </p>
+          )}
+          {post.externalUrl && (
+            <a
+              href={post.externalUrl}
+              target="_blank"
+              rel="noreferrer"
+              onClick={(e) => e.stopPropagation()}
+              className="mt-3 inline-flex items-center gap-1 text-[10px] font-black uppercase tracking-widest text-primary opacity-40 hover:opacity-100 transition-opacity"
+            >
+              Read on {getPlatformLabel(post.externalUrl)} <ExternalLink size={10} />
+            </a>
           )}
         </div>
         <div className="md:col-span-2 flex justify-end">

@@ -7,8 +7,44 @@ import {
   Lightbulb,
   Code2,
   Users,
+  ExternalLink,
 } from "lucide-react";
 import { getBlogPosts, type BlogPost } from "../services/api";
+
+type PostStats = {
+  comments: number | null;
+  reactions: number | null;
+  source: "devto" | "medium" | "none";
+};
+
+async function fetchPostStats(url: string): Promise<PostStats> {
+  if (!url) return { comments: null, reactions: null, source: "none" };
+
+  if (url.includes("dev.to")) {
+    try {
+      const match = url.match(/dev\.to\/([^/]+)\/([^/]+)/);
+      if (!match) return { comments: null, reactions: null, source: "devto" };
+      const res = await fetch(
+        `https://dev.to/api/articles/${match[1]}/${match[2]}`
+      );
+      if (!res.ok) return { comments: null, reactions: null, source: "devto" };
+      const data = await res.json();
+      return {
+        comments: data.comments_count ?? null,
+        reactions: data.public_reactions_count ?? null,
+        source: "devto",
+      };
+    } catch {
+      return { comments: null, reactions: null, source: "devto" };
+    }
+  }
+
+  if (url.includes("medium.com")) {
+    return { comments: null, reactions: null, source: "medium" };
+  }
+
+  return { comments: null, reactions: null, source: "none" };
+}
 
 function ArrowDivider() {
   return (
@@ -48,11 +84,21 @@ function ArrowDivider() {
 
 export default function Home() {
   const [previewPosts, setPreviewPosts] = useState<BlogPost[]>([]);
+  const [postStats, setPostStats] = useState<PostStats[]>([]);
 
   useEffect(() => {
     getBlogPosts({ limit: 3 })
-      .then((res) => setPreviewPosts(res.data))
-      .catch(() => setPreviewPosts([]));
+      .then((res) => {
+        setPreviewPosts(res.data);
+        return Promise.all(
+          res.data.map((post) => fetchPostStats(post.externalUrl ?? ""))
+        );
+      })
+      .then(setPostStats)
+      .catch(() => {
+        setPreviewPosts([]);
+        setPostStats([]);
+      });
   }, []);
 
   const summarySections = [
@@ -388,9 +434,31 @@ export default function Home() {
                       <div className="flex items-center gap-2 text-xs font-bold uppercase opacity-40">
                         <CheckCircle2 size={14} /> {post.author.name}
                       </div>
-                      <span className="text-[10px] font-bold opacity-40">
-                        {post.category}
-                      </span>
+
+                      {postStats[i]?.source === "devto" && (
+                        <div className="flex gap-4 text-[10px] font-bold opacity-60">
+                          <span>{postStats[i].reactions !== null ? `${postStats[i].reactions} REACT` : "—"}</span>
+                          <span>{postStats[i].comments !== null ? `${postStats[i].comments} COMM` : "—"}</span>
+                        </div>
+                      )}
+
+                      {postStats[i]?.source === "medium" && post.externalUrl && (
+                        <a
+                          href={post.externalUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                          onClick={(e) => e.stopPropagation()}
+                          className="flex items-center gap-1 text-[10px] font-bold uppercase text-primary opacity-70 hover:opacity-100 transition-opacity"
+                        >
+                          Read on Medium <ExternalLink size={10} />
+                        </a>
+                      )}
+
+                      {(!postStats[i] || postStats[i]?.source === "none") && (
+                        <span className="text-[10px] font-bold opacity-40">
+                          {post.category}
+                        </span>
+                      )}
                     </div>
                   </div>
                 </motion.div>
