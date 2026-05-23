@@ -69,18 +69,18 @@ export default function Contact() {
                     type="text"
                     name="from_name" // ADDED NAME
                     required
-                    className="w-full bg-white border-none py-4 px-4 rounded-md focus:ring-0 transition-all font-medium text-base text-[#1c1c1c] outline-none h-10 shadow-sm"
+                    className="w-full bg-white border-none py-4 px-4 rounded-md focus:ring-0 transition-all font-medium text-base text-[#1c1c1c] outline-none shadow-sm"
                   />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-[1px] font-bold text-white px-2">
+                  <label className="text-[12px] font-bold text-white px-2">
                     Surname
                   </label>
                   <input
                     type="text"
-                    name="from_surname" // ADDED NAME
+                    name="from_surname"
                     required
-                    className="w-full bg-white border-none py-4 px-4 rounded-md focus:ring-0 transition-all font-medium text-base text-[#1c1c1c] outline-none h-10 shadow-sm"
+                    className="w-full bg-white border-none py-4 px-4 rounded-md focus:ring-0 transition-all font-medium text-base text-[#1c1c1c] outline-none shadow-sm"
                   />
                 </div>
               </div>
@@ -92,9 +92,9 @@ export default function Contact() {
                   </label>
                   <input
                     type="email"
-                    name="reply_to" // ADDED NAME (Commonly used for the user's email)
+                    name="reply_to"
                     required
-                    className="w-full bg-white border-none py-4 px-4 rounded-md focus:ring-0 transition-all font-medium text-base text-[#1c1c1c] outline-none h-10 shadow-sm"
+                    className="w-full bg-white border-none py-4 px-4 rounded-md focus:ring-0 transition-all font-medium text-base text-[#1c1c1c] outline-none shadow-sm"
                   />
                 </div>
                 <div className="space-y-2">
@@ -103,8 +103,8 @@ export default function Contact() {
                   </label>
                   <input
                     type="tel"
-                    name="phone_number" // ADDED NAME
-                    className="w-full bg-white border-none py-4 px-4 rounded-md focus:ring-0 transition-all font-medium text-base text-[#1c1c1c] outline-none h-10 shadow-sm"
+                    name="phone_number"
+                    className="w-full bg-white border-none py-4 px-4 rounded-md focus:ring-0 transition-all font-medium text-base text-[#1c1c1c] outline-none shadow-sm"
                   />
                 </div>
               </div>
@@ -115,8 +115,8 @@ export default function Contact() {
                 </label>
                 <input
                   type="text"
-                  name="subject" // ADDED NAME
-                  className="w-full bg-white border-none py-4 px-4 rounded-md focus:ring-0 transition-all font-medium text-base text-[#1c1c1c] outline-none h-10 shadow-sm"
+                  name="subject"
+                  className="w-full bg-white border-none py-4 px-4 rounded-md focus:ring-0 transition-all font-medium text-base text-[#1c1c1c] outline-none shadow-sm"
                 />
               </div>
 
