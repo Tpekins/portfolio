@@ -1,50 +1,14 @@
 import { Link } from "react-router-dom";
 import { motion } from "motion/react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import {
-  // ArrowRight,
   CheckCircle2,
   Layers,
   Lightbulb,
   Code2,
   Users,
-  ExternalLink,
 } from "lucide-react";
-
-type PostStats = {
-  comments: number | null;
-  reactions: number | null;
-  source: "devto" | "medium" | "none";
-};
-
-async function fetchPostStats(url: string): Promise<PostStats> {
-  if (!url) return { comments: null, reactions: null, source: "none" };
-
-  if (url.includes("dev.to")) {
-    try {
-      const match = url.match(/dev\.to\/([^/]+)\/([^/]+)/);
-      if (!match) return { comments: null, reactions: null, source: "devto" };
-      const res = await fetch(
-        `https://dev.to/api/articles/${match[1]}/${match[2]}`
-      );
-      if (!res.ok) return { comments: null, reactions: null, source: "devto" };
-      const data = await res.json();
-      return {
-        comments: data.comments_count ?? null,
-        reactions: data.public_reactions_count ?? null,
-        source: "devto",
-      };
-    } catch {
-      return { comments: null, reactions: null, source: "devto" };
-    }
-  }
-
-  if (url.includes("medium.com")) {
-    return { comments: null, reactions: null, source: "medium" };
-  }
-
-  return { comments: null, reactions: null, source: "none" };
-}
+import { getBlogPosts, type BlogPost } from "../services/api";
 
 function ArrowDivider() {
   return (
@@ -82,36 +46,13 @@ function ArrowDivider() {
   );
 }
 
-const PREVIEW_POSTS = [
-  {
-    title: "Why I Built LocalHands: The Problem Behind the Platform",
-    date: "MAR 10, 2026",
-    author: "Tiani",
-    url: "https://medium.com/@TianiPekinsEbika/why-i-built-localhands-the-problem-behind-the-platform-9f3c4ed0a00a",
-  },
-  {
-    title: "Architecting Digital Trust: A Relational Deep Dive into the LocalHands Prisma Schema",
-    date: "MAY 2025",
-    author: "Tiani",
-    url: "https://dev.to/tianipekinsebika/architecting-digital-trust-a-relational-deep-dive-into-the-localhands-prisma-schema-12dk",
-  },
-  {
-    title: "Engineering Trust in the African Gig Economy",
-    date: "2025",
-    author: "Tiani",
-    url: "https://medium.com/@TianiPekinsEbika/engineering-trust-in-the-african-gig-economy-a-data-driven-approach-to-service-exchange-platforms-0b27b40ad9a2",
-  },
-];
-
 export default function Home() {
-  const [postStats, setPostStats] = useState<PostStats[]>(
-    PREVIEW_POSTS.map(() => ({ comments: null, reactions: null, source: "none" as const }))
-  );
+  const [previewPosts, setPreviewPosts] = useState<BlogPost[]>([]);
 
   useEffect(() => {
-    Promise.all(PREVIEW_POSTS.map((post) => fetchPostStats(post.url))).then(
-      setPostStats
-    );
+    getBlogPosts({ limit: 3 })
+      .then((res) => setPreviewPosts(res.data))
+      .catch(() => setPreviewPosts([]));
   }, []);
 
   const summarySections = [
@@ -420,73 +361,46 @@ export default function Home() {
             </Link>
           </motion.div>
           <div className="grid md:grid-cols-3 gap-12">
-            {PREVIEW_POSTS.map((post, i) => {
-              const stats = postStats[i];
-              const isClickable = !!post.url;
-
+             {previewPosts.length > 0 ? previewPosts.map((post, i) => {
+              const Wrapper = post.externalUrl
+                ? ({ children }: { children: ReactNode }) => <a href={post.externalUrl!} target="_blank" rel="noreferrer">{children}</a>
+                : ({ children }: { children: ReactNode }) => <Link to={`/blog/${post.slug}`}>{children}</Link>;
               return (
+              <Wrapper key={post.id}>
                 <motion.div
-                  key={i}
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-50px" }}
                   transition={{ duration: 0.5, delay: i * 0.1 }}
-                  className={`bg-white border border-border-subtle rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 group ${isClickable ? "cursor-pointer" : "cursor-default"}`}
-                  onClick={() => isClickable && window.open(post.url, "_blank")}
+                  className="bg-white border border-border-subtle rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 group cursor-pointer"
                 >
                   <div className="aspect-video bg-bg-secondary animate-pulse opacity-40"></div>
                   <div className="p-8 space-y-6">
                     <span className="text-[10px] font-black italic text-primary uppercase opacity-60">
-                      {post.date}
+                      {post.publishedAt
+                        ? new Date(post.publishedAt).toLocaleDateString("en-US", { month: "short", day: "2-digit", year: "numeric" }).toUpperCase()
+                        : "—"}
                     </span>
                     <h4 className="text-2xl font-bold leading-tight group-hover:text-primary transition-colors line-clamp-3">
                       {post.title}
                     </h4>
                     <div className="flex items-center justify-between pt-4 border-t border-border-subtle">
                       <div className="flex items-center gap-2 text-xs font-bold uppercase opacity-40">
-                        <CheckCircle2 size={14} /> {post.author}
+                        <CheckCircle2 size={14} /> {post.author.name}
                       </div>
-
-                      {/* dev.to: show real stats */}
-                      {stats.source === "devto" && (
-                        <div className="flex gap-4 text-[10px] font-bold opacity-60">
-                          <span>
-                            {stats.reactions !== null
-                              ? `${stats.reactions} REACT`
-                              : "—"}
-                          </span>
-                          <span>
-                            {stats.comments !== null
-                              ? `${stats.comments} COMM`
-                              : "—"}
-                          </span>
-                        </div>
-                      )}
-
-                      {/* Medium: no public stats — show a read link instead */}
-                      {stats.source === "medium" && (
-                        <a
-                          href={post.url}
-                          target="_blank"
-                          rel="noreferrer"
-                          onClick={(e) => e.stopPropagation()}
-                          className="flex items-center gap-1 text-[10px] font-bold uppercase text-primary opacity-70 hover:opacity-100 transition-opacity"
-                        >
-                          Read on Medium <ExternalLink size={10} />
-                        </a>
-                      )}
-
-                      {/* No URL at all */}
-                      {stats.source === "none" && (
-                        <div className="flex gap-4 text-[10px] font-bold opacity-30">
-                          <span>COMING SOON</span>
-                        </div>
-                      )}
+                      <span className="text-[10px] font-bold opacity-40">
+                        {post.category}
+                      </span>
                     </div>
                   </div>
                 </motion.div>
+              </Wrapper>
               );
-            })}
+            }) : (
+              <div className="col-span-3 text-center py-16 text-text-secondary font-medium opacity-50">
+                No posts yet.
+              </div>
+            )}
           </div>
         </div>
       </section>

@@ -33,6 +33,11 @@ export class CreateBlogPostDto {
   @IsString()
   excerpt?: string;
 
+  @ApiProperty({ example: 'https://medium.com/...', required: false })
+  @IsOptional()
+  @IsString()
+  externalUrl?: string;
+
   @ApiProperty({ example: ['typescript', 'nestjs'], required: false })
   @IsOptional()
   @IsString({ each: true })
@@ -81,6 +86,11 @@ export class UpdateBlogPostDto {
   @IsOptional()
   @IsString()
   excerpt?: string;
+
+  @ApiProperty({ required: false })
+  @IsOptional()
+  @IsString()
+  externalUrl?: string;
 
   @ApiProperty({ required: false })
   @IsOptional()

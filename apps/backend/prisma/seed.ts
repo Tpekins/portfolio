@@ -23,44 +23,62 @@ async function main() {
 
   console.log('Admin user created:', admin);
 
-  // Create sample blog posts
+  // Create blog posts
   const blogPost1 = await prisma.blogPost.upsert({
-    where: { slug: 'getting-started-with-nestjs' },
+    where: { slug: 'why-i-built-localhands' },
     update: {},
     create: {
-      title: 'Getting Started with NestJS',
-      slug: 'getting-started-with-nestjs',
-      content:
-        'NestJS is a progressive Node.js framework for building efficient, reliable and scalable server-side applications...',
-      excerpt: 'Learn the basics of NestJS',
+      title: 'Why I Built LocalHands: The Problem Behind the Platform',
+      slug: 'why-i-built-localhands',
+      content: 'LocalHands was born from a simple observation...',
+      excerpt: 'The story behind LocalHands and the problem it solves for Africa\'s informal economy.',
+      externalUrl: 'https://medium.com/@TianiPekinsEbika/why-i-built-localhands-the-problem-behind-the-platform-9f3c4ed0a00a',
       category: 'Software',
-      tags: ['nestjs', 'nodejs', 'backend'],
+      tags: ['localhands', 'startup', 'africa'],
       featured: true,
       published: true,
-      publishedAt: new Date(),
+      publishedAt: new Date('2026-03-10'),
       authorId: admin.id,
     },
   });
 
   const blogPost2 = await prisma.blogPost.upsert({
-    where: { slug: 'react-hooks-explained' },
+    where: { slug: 'architecting-digital-trust-localhands-prisma-schema' },
     update: {},
     create: {
-      title: 'React Hooks Explained',
-      slug: 'react-hooks-explained',
-      content:
-        'Hooks let you use state and other React features without writing a class. Learn useState, useEffect, and more...',
-      excerpt: 'Understand React Hooks',
-      category: 'Programming',
-      tags: ['react', 'javascript', 'frontend'],
+      title: 'Architecting Digital Trust: A Relational Deep Dive into the LocalHands Prisma Schema',
+      slug: 'architecting-digital-trust-localhands-prisma-schema',
+      content: 'A deep dive into the Prisma schema that powers LocalHands...',
+      excerpt: 'A deep dive into the database architecture and relational design of the LocalHands platform.',
+      externalUrl: 'https://dev.to/tianipekinsebika/architecting-digital-trust-a-relational-deep-dive-into-the-localhands-prisma-schema-12dk',
+      category: 'Tech',
+      tags: ['prisma', 'database', 'localhands', 'architecture'],
       featured: true,
       published: true,
-      publishedAt: new Date(),
+      publishedAt: new Date('2025-05-01'),
       authorId: admin.id,
     },
   });
 
-  console.log('Blog posts created:', { blogPost1, blogPost2 });
+  const blogPost3 = await prisma.blogPost.upsert({
+    where: { slug: 'engineering-trust-african-gig-economy' },
+    update: {},
+    create: {
+      title: 'Engineering Trust in the African Gig Economy: A Data-Driven Approach to Service Exchange Platforms',
+      slug: 'engineering-trust-african-gig-economy',
+      content: 'Trust is the currency of the gig economy...',
+      excerpt: 'A data-driven approach to building trust in Africa\'s growing gig economy and service exchange platforms.',
+      externalUrl: 'https://medium.com/@TianiPekinsEbika/engineering-trust-in-the-african-gig-economy-a-data-driven-approach-to-service-exchange-platforms-0b27b40ad9a2',
+      category: 'Software',
+      tags: ['gig-economy', 'trust', 'africa', 'data'],
+      featured: true,
+      published: true,
+      publishedAt: new Date('2025-01-15'),
+      authorId: admin.id,
+    },
+  });
+
+  console.log('Blog posts created:', { blogPost1, blogPost2, blogPost3 });
 
   // Create sample projects
   const project1 = await prisma.project.upsert({

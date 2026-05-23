@@ -34,6 +34,7 @@ model BlogPost {
   slug        String    @unique
   content     String    @db.Text
   excerpt     String?
+  externalUrl String?
   category    String // "Software", "Tech", "Life", "Programming"
   thumbnail   String?
   tags        String[]  @default([])
