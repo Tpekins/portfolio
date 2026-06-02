@@ -19,28 +19,7 @@ export default function About() {
       quote:
         "The future belongs to those who believe in the beauty of their dreams and work relentlessly to turn them into reality. — Eleanor Roosevelt",
     },
-    /*
-    {
-      role: "Microsoft",
-      subtitle: "Software Engineer",
-      period: "July 2021 - Sept 2023",
-      desc: "At Microsoft, within the Windows + Devices and later on in the Sustainability Team, I developed cross-platform applications using Xamarin and C# to create scalable solutions for both Android and Apple devices. I was nominated for the Diversity & Inclusion Microsoft Award and earned the Site Lead Award for the Microsoft Global Hackathon. During the hackathon, I led the development of Ndovu Network, a mentorship matching web application, showcasing my leadership and innovation.",
-      logoText: "MS",
-      logoBg: "bg-white border-2 border-slate-100",
-      quote: "The best way to predict the future is to invent it — Alan Kay",
-    },
     
-    {
-      role: "Microsoft LEAP",
-      subtitle: "Apprenticeship",
-      period: "May 2020 - Jan 2021",
-      desc: "During my time in the Microsoft LEAP Apprenticeship Program, I received comprehensive training in C#, the .NET Framework, and the Microsoft Bot Framework. I contributed to the development of a legal bot that provided remote legal services, which played a key role in securing my subsequent apprenticeship at Microsoft, Redmond. Additionally, I enhanced the image onboarding process by implementing a failure reason feature, improving issue resolution efficiency. I also created a Power BI report to visualize inactive repositories, identifying over 100,000 repositories that led to significant cost savings through resource optimization.",
-      logoText: "LEAP",
-      logoBg: "bg-white border-2 border-slate-100",
-      quote:
-        "Success is the sum of small efforts, repeated day in and day out — Robert Collier",
-    },
-    */
   ];
 
   return (
@@ -68,7 +47,7 @@ export default function About() {
               <div className="absolute inset-0 bg-white"></div>
               <div className="relative z-10 w-full h-full">
                 <img
-                  src="https://images.unsplash.com/photo-1551434678-e076c223a692?q=80&w=2070&auto=format&fit=crop"
+                  src="https://www.bing.com/images/search?view=detailV2&ccid=tyiUnX6I&id=5D14F5A1D6CC6E36FAD70EEC9B1FF495002FF5E1&thid=OIP.tyiUnX6IPYwI2SZQMmNJcwHaFL&mediaurl=https%3A%2F%2Fstatic.vecteezy.com%2Fsystem%2Fresources%2Fpreviews%2F000%2F180%2F409%2Fnon_2x%2Fsoftware-engineers-vector.png&cdnurl=https%3A%2F%2Fth.bing.com%2Fth%2Fid%2FR.b728949d7e883d8c08d9265032634973%3Frik%3D4fUvAJX0H5vsDg%26pid%3DImgRaw%26r%3D0&exph=490&expw=700&q=%3D%22Software+Engineering+Illustration%22&form=IRPRST&ck=321B45EA9A96597F39995C8FE5ACA1F8&selectedindex=0&itb=0&cw=1912&ch=948&ajaxhist=0&ajaxserp=0&vt=0&sim=11"
                   alt="Software Engineering Illustration"
                   className="w-full h-full object-cover opacity-10"
                   referrerPolicy="no-referrer"
