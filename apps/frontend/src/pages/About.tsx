@@ -1,8 +1,5 @@
 import { motion } from "motion/react";
-import {
-  Linkedin,
-  HelpingHand,
-} from "lucide-react";
+import { Linkedin, HelpingHand } from "lucide-react";
 
 export default function About() {
   // const scrollToTop = () => {
@@ -19,7 +16,6 @@ export default function About() {
       quote:
         "The future belongs to those who believe in the beauty of their dreams and work relentlessly to turn them into reality. — Eleanor Roosevelt",
     },
-    
   ];
 
   return (
@@ -47,7 +43,7 @@ export default function About() {
               <div className="absolute inset-0 bg-white"></div>
               <div className="relative z-10 w-full h-full">
                 <img
-                  src="https://www.bing.com/images/search?view=detailV2&ccid=tyiUnX6I&id=5D14F5A1D6CC6E36FAD70EEC9B1FF495002FF5E1&thid=OIP.tyiUnX6IPYwI2SZQMmNJcwHaFL&mediaurl=https%3A%2F%2Fstatic.vecteezy.com%2Fsystem%2Fresources%2Fpreviews%2F000%2F180%2F409%2Fnon_2x%2Fsoftware-engineers-vector.png&cdnurl=https%3A%2F%2Fth.bing.com%2Fth%2Fid%2FR.b728949d7e883d8c08d9265032634973%3Frik%3D4fUvAJX0H5vsDg%26pid%3DImgRaw%26r%3D0&exph=490&expw=700&q=%3D%22Software+Engineering+Illustration%22&form=IRPRST&ck=321B45EA9A96597F39995C8FE5ACA1F8&selectedindex=0&itb=0&cw=1912&ch=948&ajaxhist=0&ajaxserp=0&vt=0&sim=11"
+                  src="https://static.vecteezy.com/system/resources/previews/000/180/409/non_2x/software-engineers-vector.png"
                   alt="Software Engineering Illustration"
                   className="w-full h-full object-cover opacity-10"
                   referrerPolicy="no-referrer"
@@ -112,10 +108,10 @@ export default function About() {
                 and a severe trust gap, relying on inefficient word-of-mouth or
                 paper flyers to find work.{" "}
                 <span className="font-bold">LocalHands</span> bridges this gap
-                by providing a digital space where everyday artisans and labourers,
-                from diggers
-                to cocoa harvesters can digitally showcase their skills, build
-                visibility, and seamlessly connect with clients.
+                by providing a digital space where everyday artisans and
+                labourers, from diggers to cocoa harvesters can digitally
+                showcase their skills, build visibility, and seamlessly connect
+                with clients.
               </p>
             </div>
           </div>
@@ -252,7 +248,7 @@ export default function About() {
         </div>
       </section>
 
-     { /* Footer Section 
+      {/* Footer Section 
       <motion.section
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -319,7 +315,6 @@ export default function About() {
         </div>
       </motion.section>
       */}
-    
     </div>
   );
 }
