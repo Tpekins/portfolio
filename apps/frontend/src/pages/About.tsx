@@ -8,13 +8,13 @@ export default function About() {
   const experiences = [
     {
       role: "University of Buea",
-      subtitle: "MS Software Engineering",
+      subtitle: "MSc Software Engineering",
       period: "Sept 2021 - to date",
-      desc: "As an MS Software Engineering student, I am dedicated to deepening my technical expertise and mastering modern software architecture. My focus is on becoming an exceptional software engineer, continuously honing my skills to design, build, and deploy scalable solutions to complex challenges. Driven by a passion for technology, I am committed to using these skills to make a tangible, positive impact on my community and the tech industry.",
+      desc: "As a MSc Software Engineering student, I am dedicated to deepening my technical expertise and mastering modern software architecture. My focus is on becoming an exceptional software engineer, continuously honing my skills to design, build, and deploy scalable solutions to complex challenges. Driven by a passion for technology, I am committed to using these skills to make a tangible, positive impact on my community and the tech industry.",
       logoText: "M",
       logoBg: "bg-[#00274c]",
       quote:
-        "The future belongs to those who believe in the beauty of their dreams and work relentlessly to turn them into reality. — Eleanor Roosevelt",
+        "The future belongs to those who believe in the beauty of their dreams and work relentlessly to turn them into reality.  Eleanor Roosevelt",
     },
   ];
 
@@ -159,48 +159,27 @@ export default function About() {
       </section>
 
       {/* Experience List Cards */}
-      <section className="pb-32 px-6 md:px-12">
-        <div className="max-w-7xl mx-auto flex flex-col gap-24">
-          {experiences.map((exp, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-              className="grid lg:grid-cols-12 gap-12 items-start"
-            >
-              {/* Logo */}
-              <div className="lg:col-span-2 flex justify-center lg:justify-start">
-                <div
-                  className={`w-32 h-32 rounded-lg ${exp.logoBg} flex items-center justify-center shadow-lg overflow-hidden`}
-                >
-                  {exp.role === "University of Michigan" ? (
-                    <img
-                      src="https://brand.umich.edu/assets/brand-portal/images/logos-guidelines/um-logo-vertical.png"
-                      alt="UM Logo"
-                      className="w-20 h-auto"
-                      referrerPolicy="no-referrer"
-                    />
-                  ) : exp.role === "Microsoft" ? (
-                    <div className="grid grid-cols-2 gap-1 w-16 h-16">
-                      <div className="bg-[#f25022] w-full h-full"></div>
-                      <div className="bg-[#7fba00] w-full h-full"></div>
-                      <div className="bg-[#00a4ef] w-full h-full"></div>
-                      <div className="bg-[#ffb900] w-full h-full"></div>
-                    </div>
-                  ) : (
-                    <div className="rounded-full border-2 border-slate-200 p-2">
-                      <img
-                        src="https://leap.microsoft.com/static/version1677616656/frontend/Microsoft/leap/en_US/images/logo.png"
-                        alt="LEAP Logo"
-                        className="w-16 h-auto"
-                        referrerPolicy="no-referrer"
-                      />
-                    </div>
-                  )}
-                </div>
-              </div>
+<section className="pb-32 px-6 md:px-12">
+  <div className="max-w-7xl mx-auto flex flex-col gap-24">
+    {experiences.map((exp, i) => (
+      <motion.div
+        key={i}
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ delay: i * 0.1 }}
+        className="grid lg:grid-cols-12 gap-12 items-start"
+      >
+        {/* Logo */}
+        <div className="lg:col-span-2 flex justify-center lg:justify-start">
+          <div className={`w-32 h-32 rounded-lg ${exp.logoBg} flex items-center justify-center shadow-lg overflow-hidden`}>
+            <img
+              src="/ub.jpg"
+              alt="University of Buea Logo"
+              className="w-full h-auto object-contain p-2"
+            />
+          </div>
+        </div>
 
               {/* Description */}
               <div className="lg:col-span-6 space-y-4">
@@ -247,74 +226,6 @@ export default function About() {
           ))}
         </div>
       </section>
-
-      {/* Footer Section 
-      <motion.section
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.8 }}
-        className="border-t border-border-subtle pt-16 pb-12 px-6 md:px-12 bg-white"
-      >
-        
-        <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-8">
-            {/* Left - Scroll to top button 
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={scrollToTop}
-              className="w-12 h-12 border-2 border-text-primary rounded-lg flex items-center justify-center hover:bg-text-primary hover:text-white transition-all group shadow-sm bg-white"
-              aria-label="Back to top"
-            >
-              <ChevronUp size={24} />
-            </motion.button>
-
-           
-            <div className="text-center space-y-3">
-              <p className="text-sm font-medium text-text-secondary">
-                © 2026 | All rights reserved | Made with ❤️ by Tiani Pekins.
-              </p>
-            </div>
-
-            <div className="flex justify-center gap-6">
-              <a
-                href="https://facebook.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-text-primary hover:text-primary transition-colors"
-              >
-                <Facebook size={20} />
-              </a>
-              <a
-                href="https://twitter.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-text-primary hover:text-primary transition-colors"
-              >
-                <Twitter size={20} />
-              </a>
-              <a
-                href="https://linkedin.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-text-primary hover:text-primary transition-colors"
-              >
-                <Linkedin size={20} />
-              </a>
-              <a
-                href="https://instagram.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-text-primary hover:text-primary transition-colors"
-              >
-                <Instagram size={20} />
-              </a>
-            </div>
-          </div>
-        </div>
-      </motion.section>
-      */}
     </div>
   );
 }
