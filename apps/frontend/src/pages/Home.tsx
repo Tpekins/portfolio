@@ -86,7 +86,6 @@ export default function Home() {
   const [previewPosts, setPreviewPosts] = useState<BlogPost[]>([]);
   const [postStats, setPostStats] = useState<PostStats[]>([]);
 
-  //Carousel refs & scroll helpers
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const scrollLeft = () => {
@@ -96,10 +95,9 @@ export default function Home() {
   const scrollRight = () => {
     scrollRef.current?.scrollBy({ left: 370, behavior: "smooth" });
   };
-  
 
   useEffect(() => {
-    getBlogPosts({ limit: 4 })
+    getBlogPosts({ limit: 10 })
       .then((res) => {
         setPreviewPosts(res.data);
         return Promise.all(
@@ -169,7 +167,6 @@ export default function Home() {
               </p>
             </div>
 
-            {/* Buttons Row */}
             <div className="flex flex-wrap items-center gap-4">
               <Link
                 to="/contact"
@@ -205,17 +202,11 @@ export default function Home() {
             className="relative flex items-center justify-center h-full"
           >
             <div className="relative w-full aspect-square max-w-[600px]">
-              {/* Background Circle */}
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-bg-secondary rounded-full opacity-50"></div>
 
-              {/* Lightbulb */}
               <motion.div
                 animate={{ y: [0, -20, 0] }}
-                transition={{
-                  duration: 4,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
+                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
                 className="absolute top-[10%] left-[10%] z-20 group"
               >
                 <div className="relative">
@@ -227,14 +218,9 @@ export default function Home() {
                 </div>
               </motion.div>
 
-              {/* 3D Code Symbol */}
               <motion.div
                 animate={{ y: [0, 20, 0], rotate: [12, 8, 12] }}
-                transition={{
-                  duration: 5,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
+                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
                 className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10"
               >
                 <div className="text-[18rem] md:text-[22rem] font-black text-white drop-shadow-[0_20px_50px_rgba(46,125,50,0.3)] select-none italic relative">
@@ -243,14 +229,9 @@ export default function Home() {
                 </div>
               </motion.div>
 
-              {/* Stacked Layers */}
               <motion.div
                 animate={{ y: [-15, 15, -15], x: [0, 10, 0] }}
-                transition={{
-                  duration: 6,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
+                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
                 className="absolute top-[10%] right-[5%] z-20 space-y-[-40px]"
               >
                 <div className="w-32 h-32 bg-amber-200 border-2 border-white rounded-2xl rotate-[30deg] shadow-xl relative z-30"></div>
@@ -289,24 +270,15 @@ export default function Home() {
                 className="space-y-8"
               >
                 <div className="flex flex-col items-center gap-6">
-                  {/* ── Colored icon card ── */}
-                  <div
-                    className={`w-24 h-24 rounded-3xl border flex items-center justify-center shadow-inner ${section.cardClass}`}
-                  >
+                  <div className={`w-24 h-24 rounded-3xl border flex items-center justify-center shadow-inner ${section.cardClass}`}>
                     {section.icon}
                   </div>
                   <h3 className="heading-card text-center">{section.title}</h3>
                 </div>
                 <ul className="space-y-4">
                   {section.bullets.map((bullet, idx) => (
-                    <li
-                      key={idx}
-                      className="flex gap-3 text-body text-sm leading-relaxed font-medium"
-                    >
-                      <CheckCircle2
-                        size={18}
-                        className="text-primary shrink-0 mt-1"
-                      />
+                    <li key={idx} className="flex gap-3 text-body text-sm leading-relaxed font-medium">
+                      <CheckCircle2 size={18} className="text-primary shrink-0 mt-1" />
                       {bullet}
                     </li>
                   ))}
@@ -358,7 +330,7 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/* Single Featured Project Example - LocalHands */}
+      {/* Single Featured Project - LocalHands */}
       <section className="pb-24 px-6 md:px-12">
         <div className="max-w-7xl mx-auto">
           <motion.div
@@ -368,9 +340,7 @@ export default function Home() {
             transition={{ duration: 1, ease: "easeOut" }}
             className="grid md:grid-cols-2 gap-16 items-center group"
           >
-            /* modified card size, logo fills it */
-            <div // ORIGINAL (bigger):
-                   className="bg-bg-secondary border border-border-subtle rounded-[3rem] overflow-hidden aspect-square relative flex items-center justify-center p-16 shadow-inner group-hover:scale-[1.01] transition-transform duration-1000">
+            <div className="bg-bg-secondary border border-border-subtle rounded-[3rem] overflow-hidden aspect-square relative flex items-center justify-center p-16 shadow-inner group-hover:scale-[1.01] transition-transform duration-1000">
               <img
                 src="/logo.png"
                 alt="LocalHands logo"
@@ -382,16 +352,13 @@ export default function Home() {
               <h3 className="section-title !text-4xl md:!text-5xl group-hover:text-primary transition-colors">
                 LocalHands
               </h3>
-              <p className="section-label">{`Powered Content Creation Platform`}</p>
+              <p className="section-label">AI-Powered Content Creation Platform</p>
               <p className="text-body font-light">
                 LocalHands is an innovative platform that leverages skilled
                 hands to generate reliable services, quality work, and
                 audio-visual solutions effectively.
               </p>
-              <Link
-                to="/projects"
-                className="btn-outline !px-10 !py-4 !text-base"
-              >
+              <Link to="/projects" className="btn-outline !px-10 !py-4 !text-base">
                 Learn more
               </Link>
             </div>
@@ -420,34 +387,20 @@ export default function Home() {
                 </span>
               </h2>
             </div>
-            <Link
-              to="/blog"
-              className="nav-link !text-lg py-3 whitespace-nowrap"
-            >
+            <Link to="/blog" className="nav-link !text-lg py-3 whitespace-nowrap">
               Read all posts
             </Link>
           </motion.div>
 
-          {/*Carousel with arrow buttons */}
+          {/* Carousel */}
           <div className="relative">
-            {/* Arrow buttons — only show when more than 3 posts */}
             {previewPosts.length > 3 && (
               <>
                 <button
                   onClick={scrollLeft}
                   className="absolute -left-5 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-white border border-border-subtle rounded-full shadow-md flex items-center justify-center hover:bg-bg-secondary transition-colors duration-300"
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="18"
-                    height="18"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M15 18l-6-6 6-6" />
                   </svg>
                 </button>
@@ -455,24 +408,13 @@ export default function Home() {
                   onClick={scrollRight}
                   className="absolute -right-5 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-white border border-border-subtle rounded-full shadow-md flex items-center justify-center hover:bg-bg-secondary transition-colors duration-300"
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="18"
-                    height="18"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M9 18l6-6-6-6" />
                   </svg>
                 </button>
               </>
             )}
 
-            {/* Scrollable cards row */}
             <div
               ref={scrollRef}
               className="flex gap-8 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide"
@@ -481,11 +423,7 @@ export default function Home() {
                 previewPosts.map((post, i) => {
                   const Wrapper = post.externalUrl
                     ? ({ children }: { children: ReactNode }) => (
-                        <a
-                          href={post.externalUrl!}
-                          target="_blank"
-                          rel="noreferrer"
-                        >
+                        <a href={post.externalUrl!} target="_blank" rel="noreferrer">
                           {children}
                         </a>
                       )
@@ -501,7 +439,19 @@ export default function Home() {
                         transition={{ duration: 0.5, delay: i * 0.1 }}
                         className="bg-white border border-border-subtle rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 group cursor-pointer flex-shrink-0 w-[350px] snap-start"
                       >
-                        <div className="aspect-video bg-bg-secondary animate-pulse opacity-40"></div>
+                        {/* Thumbnail */}
+                        <div className="aspect-video bg-bg-secondary overflow-hidden">
+                          {post.thumbnail ? (
+                            <img
+                              src={post.thumbnail}
+                              alt={post.title}
+                              className="w-full h-full object-cover"
+                            />
+                          ) : (
+                            <div className="w-full h-full animate-pulse opacity-40 bg-bg-secondary" />
+                          )}
+                        </div>
+
                         <div className="p-8 space-y-6">
                           <span className="text-[10px] font-black italic text-primary uppercase opacity-60">
                             {post.publishedAt
@@ -522,6 +472,7 @@ export default function Home() {
                               <CheckCircle2 size={14} /> {post.author.name}
                             </div>
 
+                            {/* Dev.to — auto stats */}
                             {postStats[i]?.source === "devto" && (
                               <div className="flex gap-4 text-[10px] font-bold opacity-60">
                                 <span>
@@ -537,25 +488,50 @@ export default function Home() {
                               </div>
                             )}
 
-                            {postStats[i]?.source === "medium" &&
-                              post.externalUrl && (
-                                <a
-                                  href={post.externalUrl}
-                                  target="_blank"
-                                  rel="noreferrer"
-                                  onClick={(e) => e.stopPropagation()}
-                                  className="flex items-center gap-1 text-[10px] font-bold uppercase text-primary opacity-70 hover:opacity-100 transition-opacity"
-                                >
-                                  Read on Medium <ExternalLink size={10} />
-                                </a>
+                            {/* Medium — read link */}
+                            {postStats[i]?.source === "medium" && post.externalUrl && (
+                              <a
+                                href={post.externalUrl}
+                                target="_blank"
+                                rel="noreferrer"
+                                onClick={(e) => e.stopPropagation()}
+                                className="flex items-center gap-1 text-[10px] font-bold uppercase text-primary opacity-70 hover:opacity-100 transition-opacity"
+                              >
+                                Read on Medium <ExternalLink size={10} />
+                              </a>
+                            )}
+
+                            {/* LinkedIn — likes + read link */}
+                            {(!postStats[i] || postStats[i]?.source === "none") &&
+                              post.externalUrl?.includes("linkedin.com") && (
+                                <div className="flex items-center gap-3">
+                                  <span className="text-[10px] font-bold opacity-60">
+                                    {post.likes ?? 5} REACT
+                                  </span>
+                                  <span className="text-[10px] font-bold opacity-60">
+
+
+                                    {post.likes ?? 1}  COMM
+                                  </span>
+                                  <a
+                                    href={post.externalUrl}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    onClick={(e) => e.stopPropagation()}
+                                    className="flex items-center gap-1 text-[10px] font-bold uppercase text-primary opacity-70 hover:opacity-100 transition-opacity"
+                                  >
+                                    
+                                  </a>
+                                </div>
                               )}
 
-                            {(!postStats[i] ||
-                              postStats[i]?.source === "none") && (
-                              <span className="text-[10px] font-bold opacity-40">
-                                {post.category}
-                              </span>
-                            )}
+                            {/* Fallback — category */}
+                            {(!postStats[i] || postStats[i]?.source === "none") &&
+                              !post.externalUrl?.includes("linkedin.com") && (
+                                <span className="text-[10px] font-bold opacity-40">
+                                  {post.category}
+                                </span>
+                              )}
                           </div>
                         </div>
                       </motion.div>
@@ -569,7 +545,6 @@ export default function Home() {
               )}
             </div>
           </div>
-          {/* End carousel */}
         </div>
       </section>
     </div>

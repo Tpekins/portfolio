@@ -13,6 +13,7 @@ export type BlogPost = {
   featured: boolean;
   publishedAt: string | null;
   createdAt: string;
+  likes?: number;
   author: {
     id: string;
     name: string;
