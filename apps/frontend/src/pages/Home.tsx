@@ -25,7 +25,7 @@ async function fetchPostStats(url: string): Promise<PostStats> {
       const match = url.match(/dev\.to\/([^/]+)\/([^/]+)/);
       if (!match) return { comments: null, reactions: null, source: "devto" };
       const res = await fetch(
-        `https://dev.to/api/articles/${match[1]}/${match[2]}`
+        `https://dev.to/api/articles/${match[1]}/${match[2]}`,
       );
       if (!res.ok) return { comments: null, reactions: null, source: "devto" };
       const data = await res.json();
@@ -91,7 +91,7 @@ export default function Home() {
       .then((res) => {
         setPreviewPosts(res.data);
         return Promise.all(
-          res.data.map((post) => fetchPostStats(post.externalUrl ?? ""))
+          res.data.map((post) => fetchPostStats(post.externalUrl ?? "")),
         );
       })
       .then(setPostStats)
@@ -104,7 +104,7 @@ export default function Home() {
   const summarySections = [
     {
       title: "Software Development",
-      icon: <Code2 size={40} className="text-primary/20" />,
+      icon: <Code2 size={40} className="text-indigo-500" />,
       bullets: [
         "Architecting web and mobile applications using modern frameworks.",
         "Building robust solutions that connect and empower communities.",
@@ -112,7 +112,7 @@ export default function Home() {
     },
     {
       title: "Community & Tech",
-      icon: <Users size={40} className="text-primary/20" />,
+      icon: <Users size={40} className="text-emerald-500" />,
       bullets: [
         "Contributing to local tech ecosystems and guiding aspiring developers.",
         "Mentoring on tech stacks and community-led innovation.",
@@ -120,7 +120,7 @@ export default function Home() {
     },
     {
       title: "Product Strategy",
-      icon: <Layers size={40} className="text-primary/20" />,
+      icon: <Layers size={40} className="text-amber-500" />,
       bullets: [
         "Driving projects from concept to deployment with a focus on user impact.",
         "Collaborating with cross-functional teams to manage full product lifecycles.",
@@ -352,9 +352,11 @@ export default function Home() {
             className="grid md:grid-cols-2 gap-16 items-center group"
           >
             <div className="bg-bg-secondary border border-border-subtle rounded-[3rem] overflow-hidden aspect-square relative flex items-center justify-center p-16 shadow-inner group-hover:scale-[1.01] transition-transform duration-1000">
-              <div className="text-[10rem] md:text-[12rem] font-display font-black text-primary tracking-tighter uppercase select-none group-hover:rotate-3 transition-transform duration-1000">
-                LH
-              </div>
+              <img
+                src="/logo.png"
+                alt="LocalHands logo"
+                className="w-full h-full object-contain group-hover:rotate-3 transition-transform duration-1000"
+              />
               <div className="absolute inset-0 bg-gradient-to-tr from-primary/5 to-transparent"></div>
             </div>
             <div className="space-y-6">
@@ -407,64 +409,92 @@ export default function Home() {
             </Link>
           </motion.div>
           <div className="grid md:grid-cols-3 gap-12">
-             {previewPosts.length > 0 ? previewPosts.map((post, i) => {
-              const Wrapper = post.externalUrl
-                ? ({ children }: { children: ReactNode }) => <a href={post.externalUrl!} target="_blank" rel="noreferrer">{children}</a>
-                : ({ children }: { children: ReactNode }) => <Link to={`/blog/${post.slug}`}>{children}</Link>;
-              return (
-              <Wrapper key={post.id}>
-                <motion.div
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-50px" }}
-                  transition={{ duration: 0.5, delay: i * 0.1 }}
-                  className="bg-white border border-border-subtle rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 group cursor-pointer"
-                >
-                  <div className="aspect-video bg-bg-secondary animate-pulse opacity-40"></div>
-                  <div className="p-8 space-y-6">
-                    <span className="text-[10px] font-black italic text-primary uppercase opacity-60">
-                      {post.publishedAt
-                        ? new Date(post.publishedAt).toLocaleDateString("en-US", { month: "short", day: "2-digit", year: "numeric" }).toUpperCase()
-                        : "—"}
-                    </span>
-                    <h4 className="text-2xl font-bold leading-tight group-hover:text-primary transition-colors line-clamp-3">
-                      {post.title}
-                    </h4>
-                    <div className="flex items-center justify-between pt-4 border-t border-border-subtle">
-                      <div className="flex items-center gap-2 text-xs font-bold uppercase opacity-40">
-                        <CheckCircle2 size={14} /> {post.author.name}
-                      </div>
-
-                      {postStats[i]?.source === "devto" && (
-                        <div className="flex gap-4 text-[10px] font-bold opacity-60">
-                          <span>{postStats[i].reactions !== null ? `${postStats[i].reactions} REACT` : "—"}</span>
-                          <span>{postStats[i].comments !== null ? `${postStats[i].comments} COMM` : "—"}</span>
-                        </div>
-                      )}
-
-                      {postStats[i]?.source === "medium" && post.externalUrl && (
-                        <a
-                          href={post.externalUrl}
-                          target="_blank"
-                          rel="noreferrer"
-                          onClick={(e) => e.stopPropagation()}
-                          className="flex items-center gap-1 text-[10px] font-bold uppercase text-primary opacity-70 hover:opacity-100 transition-opacity"
-                        >
-                          Read on Medium <ExternalLink size={10} />
-                        </a>
-                      )}
-
-                      {(!postStats[i] || postStats[i]?.source === "none") && (
-                        <span className="text-[10px] font-bold opacity-40">
-                          {post.category}
+            {previewPosts.length > 0 ? (
+              previewPosts.map((post, i) => {
+                const Wrapper = post.externalUrl
+                  ? ({ children }: { children: ReactNode }) => (
+                      <a
+                        href={post.externalUrl!}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        {children}
+                      </a>
+                    )
+                  : ({ children }: { children: ReactNode }) => (
+                      <Link to={`/blog/${post.slug}`}>{children}</Link>
+                    );
+                return (
+                  <Wrapper key={post.id}>
+                    <motion.div
+                      initial={{ opacity: 0, y: 30 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true, margin: "-50px" }}
+                      transition={{ duration: 0.5, delay: i * 0.1 }}
+                      className="bg-white border border-border-subtle rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 group cursor-pointer"
+                    >
+                      <div className="aspect-video bg-bg-secondary animate-pulse opacity-40"></div>
+                      <div className="p-8 space-y-6">
+                        <span className="text-[10px] font-black italic text-primary uppercase opacity-60">
+                          {post.publishedAt
+                            ? new Date(post.publishedAt)
+                                .toLocaleDateString("en-US", {
+                                  month: "short",
+                                  day: "2-digit",
+                                  year: "numeric",
+                                })
+                                .toUpperCase()
+                            : "—"}
                         </span>
-                      )}
-                    </div>
-                  </div>
-                </motion.div>
-              </Wrapper>
-              );
-            }) : (
+                        <h4 className="text-2xl font-bold leading-tight group-hover:text-primary transition-colors line-clamp-3">
+                          {post.title}
+                        </h4>
+                        <div className="flex items-center justify-between pt-4 border-t border-border-subtle">
+                          <div className="flex items-center gap-2 text-xs font-bold uppercase opacity-40">
+                            <CheckCircle2 size={14} /> {post.author.name}
+                          </div>
+
+                          {postStats[i]?.source === "devto" && (
+                            <div className="flex gap-4 text-[10px] font-bold opacity-60">
+                              <span>
+                                {postStats[i].reactions !== null
+                                  ? `${postStats[i].reactions} REACT`
+                                  : "—"}
+                              </span>
+                              <span>
+                                {postStats[i].comments !== null
+                                  ? `${postStats[i].comments} COMM`
+                                  : "—"}
+                              </span>
+                            </div>
+                          )}
+
+                          {postStats[i]?.source === "medium" &&
+                            post.externalUrl && (
+                              <a
+                                href={post.externalUrl}
+                                target="_blank"
+                                rel="noreferrer"
+                                onClick={(e) => e.stopPropagation()}
+                                className="flex items-center gap-1 text-[10px] font-bold uppercase text-primary opacity-70 hover:opacity-100 transition-opacity"
+                              >
+                                Read on Medium <ExternalLink size={10} />
+                              </a>
+                            )}
+
+                          {(!postStats[i] ||
+                            postStats[i]?.source === "none") && (
+                            <span className="text-[10px] font-bold opacity-40">
+                              {post.category}
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                    </motion.div>
+                  </Wrapper>
+                );
+              })
+            ) : (
               <div className="col-span-3 text-center py-16 text-text-secondary font-medium opacity-50">
                 No posts yet.
               </div>
