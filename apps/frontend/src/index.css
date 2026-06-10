@@ -106,3 +106,11 @@
   @apply bg-white text-primary border-2 border-primary px-10 py-3 rounded-lg font-bold hover:bg-primary hover:text-white transition-all duration-300 inline-block text-center;
 }
 
+/* ── Hide scrollbar for blog carousel ── */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}

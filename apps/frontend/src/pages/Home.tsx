@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { motion } from "motion/react";
-import { useEffect, useState, type ReactNode } from "react";
+import { useEffect, useState, useRef, type ReactNode } from "react";
 import {
   CheckCircle2,
   Layers,
@@ -86,8 +86,20 @@ export default function Home() {
   const [previewPosts, setPreviewPosts] = useState<BlogPost[]>([]);
   const [postStats, setPostStats] = useState<PostStats[]>([]);
 
+  //Carousel refs & scroll helpers
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  const scrollLeft = () => {
+    scrollRef.current?.scrollBy({ left: -370, behavior: "smooth" });
+  };
+
+  const scrollRight = () => {
+    scrollRef.current?.scrollBy({ left: 370, behavior: "smooth" });
+  };
+  
+
   useEffect(() => {
-    getBlogPosts({ limit: 3 })
+    getBlogPosts({ limit: 4 })
       .then((res) => {
         setPreviewPosts(res.data);
         return Promise.all(
@@ -105,6 +117,7 @@ export default function Home() {
     {
       title: "Software Development",
       icon: <Code2 size={40} className="text-indigo-500" />,
+      cardClass: "bg-indigo-50 border-indigo-100",
       bullets: [
         "Architecting web and mobile applications using modern frameworks.",
         "Building robust solutions that connect and empower communities.",
@@ -113,6 +126,7 @@ export default function Home() {
     {
       title: "Community & Tech",
       icon: <Users size={40} className="text-emerald-500" />,
+      cardClass: "bg-emerald-50 border-emerald-100",
       bullets: [
         "Contributing to local tech ecosystems and guiding aspiring developers.",
         "Mentoring on tech stacks and community-led innovation.",
@@ -121,6 +135,7 @@ export default function Home() {
     {
       title: "Product Strategy",
       icon: <Layers size={40} className="text-amber-500" />,
+      cardClass: "bg-amber-50 border-amber-100",
       bullets: [
         "Driving projects from concept to deployment with a focus on user impact.",
         "Collaborating with cross-functional teams to manage full product lifecycles.",
@@ -189,7 +204,6 @@ export default function Home() {
             transition={{ duration: 1.2, delay: 0.2 }}
             className="relative flex items-center justify-center h-full"
           >
-            {/* Visual elements precisely as in image */}
             <div className="relative w-full aspect-square max-w-[600px]">
               {/* Background Circle */}
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-bg-secondary rounded-full opacity-50"></div>
@@ -275,7 +289,10 @@ export default function Home() {
                 className="space-y-8"
               >
                 <div className="flex flex-col items-center gap-6">
-                  <div className="w-24 h-24 rounded-3xl bg-bg-secondary border border-border-subtle flex items-center justify-center shadow-inner">
+                  {/* ── Colored icon card ── */}
+                  <div
+                    className={`w-24 h-24 rounded-3xl border flex items-center justify-center shadow-inner ${section.cardClass}`}
+                  >
                     {section.icon}
                   </div>
                   <h3 className="heading-card text-center">{section.title}</h3>
@@ -351,7 +368,9 @@ export default function Home() {
             transition={{ duration: 1, ease: "easeOut" }}
             className="grid md:grid-cols-2 gap-16 items-center group"
           >
-            <div className="bg-bg-secondary border border-border-subtle rounded-[3rem] overflow-hidden aspect-square relative flex items-center justify-center p-16 shadow-inner group-hover:scale-[1.01] transition-transform duration-1000">
+            /* modified card size, logo fills it */
+            <div // ORIGINAL (bigger):
+                   className="bg-bg-secondary border border-border-subtle rounded-[3rem] overflow-hidden aspect-square relative flex items-center justify-center p-16 shadow-inner group-hover:scale-[1.01] transition-transform duration-1000">
               <img
                 src="/logo.png"
                 alt="LocalHands logo"
@@ -363,7 +382,7 @@ export default function Home() {
               <h3 className="section-title !text-4xl md:!text-5xl group-hover:text-primary transition-colors">
                 LocalHands
               </h3>
-              <p className="section-label">{`AI-Powered Content Creation Platform`}</p>
+              <p className="section-label">{`Powered Content Creation Platform`}</p>
               <p className="text-body font-light">
                 LocalHands is an innovative platform that leverages skilled
                 hands to generate reliable services, quality work, and
@@ -408,98 +427,149 @@ export default function Home() {
               Read all posts
             </Link>
           </motion.div>
-          <div className="grid md:grid-cols-3 gap-12">
-            {previewPosts.length > 0 ? (
-              previewPosts.map((post, i) => {
-                const Wrapper = post.externalUrl
-                  ? ({ children }: { children: ReactNode }) => (
-                      <a
-                        href={post.externalUrl!}
-                        target="_blank"
-                        rel="noreferrer"
+
+          {/*Carousel with arrow buttons */}
+          <div className="relative">
+            {/* Arrow buttons — only show when more than 3 posts */}
+            {previewPosts.length > 3 && (
+              <>
+                <button
+                  onClick={scrollLeft}
+                  className="absolute -left-5 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-white border border-border-subtle rounded-full shadow-md flex items-center justify-center hover:bg-bg-secondary transition-colors duration-300"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M15 18l-6-6 6-6" />
+                  </svg>
+                </button>
+                <button
+                  onClick={scrollRight}
+                  className="absolute -right-5 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-white border border-border-subtle rounded-full shadow-md flex items-center justify-center hover:bg-bg-secondary transition-colors duration-300"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M9 18l6-6-6-6" />
+                  </svg>
+                </button>
+              </>
+            )}
+
+            {/* Scrollable cards row */}
+            <div
+              ref={scrollRef}
+              className="flex gap-8 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide"
+            >
+              {previewPosts.length > 0 ? (
+                previewPosts.map((post, i) => {
+                  const Wrapper = post.externalUrl
+                    ? ({ children }: { children: ReactNode }) => (
+                        <a
+                          href={post.externalUrl!}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          {children}
+                        </a>
+                      )
+                    : ({ children }: { children: ReactNode }) => (
+                        <Link to={`/blog/${post.slug}`}>{children}</Link>
+                      );
+                  return (
+                    <Wrapper key={post.id}>
+                      <motion.div
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, margin: "-50px" }}
+                        transition={{ duration: 0.5, delay: i * 0.1 }}
+                        className="bg-white border border-border-subtle rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 group cursor-pointer flex-shrink-0 w-[350px] snap-start"
                       >
-                        {children}
-                      </a>
-                    )
-                  : ({ children }: { children: ReactNode }) => (
-                      <Link to={`/blog/${post.slug}`}>{children}</Link>
-                    );
-                return (
-                  <Wrapper key={post.id}>
-                    <motion.div
-                      initial={{ opacity: 0, y: 30 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true, margin: "-50px" }}
-                      transition={{ duration: 0.5, delay: i * 0.1 }}
-                      className="bg-white border border-border-subtle rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 group cursor-pointer"
-                    >
-                      <div className="aspect-video bg-bg-secondary animate-pulse opacity-40"></div>
-                      <div className="p-8 space-y-6">
-                        <span className="text-[10px] font-black italic text-primary uppercase opacity-60">
-                          {post.publishedAt
-                            ? new Date(post.publishedAt)
-                                .toLocaleDateString("en-US", {
-                                  month: "short",
-                                  day: "2-digit",
-                                  year: "numeric",
-                                })
-                                .toUpperCase()
-                            : "—"}
-                        </span>
-                        <h4 className="text-2xl font-bold leading-tight group-hover:text-primary transition-colors line-clamp-3">
-                          {post.title}
-                        </h4>
-                        <div className="flex items-center justify-between pt-4 border-t border-border-subtle">
-                          <div className="flex items-center gap-2 text-xs font-bold uppercase opacity-40">
-                            <CheckCircle2 size={14} /> {post.author.name}
-                          </div>
-
-                          {postStats[i]?.source === "devto" && (
-                            <div className="flex gap-4 text-[10px] font-bold opacity-60">
-                              <span>
-                                {postStats[i].reactions !== null
-                                  ? `${postStats[i].reactions} REACT`
-                                  : "—"}
-                              </span>
-                              <span>
-                                {postStats[i].comments !== null
-                                  ? `${postStats[i].comments} COMM`
-                                  : "—"}
-                              </span>
+                        <div className="aspect-video bg-bg-secondary animate-pulse opacity-40"></div>
+                        <div className="p-8 space-y-6">
+                          <span className="text-[10px] font-black italic text-primary uppercase opacity-60">
+                            {post.publishedAt
+                              ? new Date(post.publishedAt)
+                                  .toLocaleDateString("en-US", {
+                                    month: "short",
+                                    day: "2-digit",
+                                    year: "numeric",
+                                  })
+                                  .toUpperCase()
+                              : "—"}
+                          </span>
+                          <h4 className="text-2xl font-bold leading-tight group-hover:text-primary transition-colors line-clamp-3">
+                            {post.title}
+                          </h4>
+                          <div className="flex items-center justify-between pt-4 border-t border-border-subtle">
+                            <div className="flex items-center gap-2 text-xs font-bold uppercase opacity-40">
+                              <CheckCircle2 size={14} /> {post.author.name}
                             </div>
-                          )}
 
-                          {postStats[i]?.source === "medium" &&
-                            post.externalUrl && (
-                              <a
-                                href={post.externalUrl}
-                                target="_blank"
-                                rel="noreferrer"
-                                onClick={(e) => e.stopPropagation()}
-                                className="flex items-center gap-1 text-[10px] font-bold uppercase text-primary opacity-70 hover:opacity-100 transition-opacity"
-                              >
-                                Read on Medium <ExternalLink size={10} />
-                              </a>
+                            {postStats[i]?.source === "devto" && (
+                              <div className="flex gap-4 text-[10px] font-bold opacity-60">
+                                <span>
+                                  {postStats[i].reactions !== null
+                                    ? `${postStats[i].reactions} REACT`
+                                    : "—"}
+                                </span>
+                                <span>
+                                  {postStats[i].comments !== null
+                                    ? `${postStats[i].comments} COMM`
+                                    : "—"}
+                                </span>
+                              </div>
                             )}
 
-                          {(!postStats[i] ||
-                            postStats[i]?.source === "none") && (
-                            <span className="text-[10px] font-bold opacity-40">
-                              {post.category}
-                            </span>
-                          )}
+                            {postStats[i]?.source === "medium" &&
+                              post.externalUrl && (
+                                <a
+                                  href={post.externalUrl}
+                                  target="_blank"
+                                  rel="noreferrer"
+                                  onClick={(e) => e.stopPropagation()}
+                                  className="flex items-center gap-1 text-[10px] font-bold uppercase text-primary opacity-70 hover:opacity-100 transition-opacity"
+                                >
+                                  Read on Medium <ExternalLink size={10} />
+                                </a>
+                              )}
+
+                            {(!postStats[i] ||
+                              postStats[i]?.source === "none") && (
+                              <span className="text-[10px] font-bold opacity-40">
+                                {post.category}
+                              </span>
+                            )}
+                          </div>
                         </div>
-                      </div>
-                    </motion.div>
-                  </Wrapper>
-                );
-              })
-            ) : (
-              <div className="col-span-3 text-center py-16 text-text-secondary font-medium opacity-50">
-                No posts yet.
-              </div>
-            )}
+                      </motion.div>
+                    </Wrapper>
+                  );
+                })
+              ) : (
+                <div className="w-full text-center py-16 text-text-secondary font-medium opacity-50">
+                  No posts yet.
+                </div>
+              )}
+            </div>
           </div>
+          {/* End carousel */}
         </div>
       </section>
     </div>
