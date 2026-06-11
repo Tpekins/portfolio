@@ -13,7 +13,7 @@ export function Footer() {
   };
 
   return (
-    <footer className="fixed bottom-0 left-0 right-0 z-20 h-[550px] bg-white border-t border-border-subtle pt-24 pb-12 px-6 w-full overflow-hidden flex flex-col items-center">
+    <footer className="fixed bottom-0 left-0 right-0 z-20 h-[550px] bg-white border-t border-border-subtle pt-12 pb-24 px-6 w-full overflow-hidden flex flex-col items-center">
       <div className="max-w-7xl mx-auto w-full flex-grow flex flex-col justify-between">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 items-start text-center md:text-left">
           {/* Logo Section */}
@@ -87,13 +87,13 @@ export function Footer() {
         <div className="mt-10 flex flex-col items-center space-y-6">
           <button
             onClick={scrollToTop}
-            className="w-12 h-12 border-2 border-text-primary rounded-lg flex items-center justify-center hover:bg-text-primary hover:text-white transition-all group shadow-sm bg-white"
+            className="w-12 h-5 border-2 border-text-primary rounded-lg flex items-center justify-center hover:bg-text-primary hover:text-white transition-all group shadow-sm bg-white"
             aria-label="Back to top"
           >
             <ChevronUp size={24} />
           </button>
 
-          <div className="text-center space-y-4">
+          <div className="text-center space-y-4 h-">
             <p className="text-sm font-medium text-text-secondary">
               © 2026 | All rights reserved | Made with ❤️ by Tiani Pekins.
             </p>
