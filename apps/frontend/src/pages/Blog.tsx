@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion } from "motion/react";
 import { ArrowRight, Search, ExternalLink } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -8,6 +8,7 @@ function getPlatformLabel(url: string | null): string {
   if (!url) return "";
   if (url.includes("medium.com")) return "Medium";
   if (url.includes("dev.to")) return "Dev.to";
+  if (url.includes("linkedin.com")) return "LinkedIn";
   if (url.includes("hashnode.com")) return "Hashnode";
   if (url.includes("substack.com")) return "Substack";
   try {
@@ -21,9 +22,17 @@ function getPlatformLabel(url: string | null): string {
 function wrapPost(post: BlogPost) {
   const card = <PostCard post={post} />;
   if (post.externalUrl) {
-    return <a href={post.externalUrl} target="_blank" rel="noreferrer" key={post.id}>{card}</a>;
+    return (
+      <a href={post.externalUrl} target="_blank" rel="noreferrer" key={post.id}>
+        {card}
+      </a>
+    );
   }
-  return <Link to={`/blog/${post.slug}`} key={post.id}>{card}</Link>;
+  return (
+    <Link to={`/blog/${post.slug}`} key={post.id}>
+      {card}
+    </Link>
+  );
 }
 
 function PostCard({ post }: { post: BlogPost }) {
@@ -58,7 +67,8 @@ function PostCard({ post }: { post: BlogPost }) {
               onClick={(e) => e.stopPropagation()}
               className="mt-3 inline-flex items-center gap-1 text-[10px] font-black uppercase tracking-widest text-primary opacity-40 hover:opacity-100 transition-opacity"
             >
-              Read on {getPlatformLabel(post.externalUrl)} <ExternalLink size={10} />
+              Read on {getPlatformLabel(post.externalUrl)}{" "}
+              <ExternalLink size={10} />
             </a>
           )}
         </div>
@@ -89,6 +99,11 @@ export default function Blog() {
   const [activeCategory, setActiveCategory] = useState("All");
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
+  const [isScrolling, setIsScrolling] = useState(false);
+  const scrollTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const listRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     getBlogPosts()
@@ -97,10 +112,17 @@ export default function Blog() {
       .finally(() => setLoading(false));
   }, []);
 
-  const categories = [
-    "All",
-    ...new Set(posts.map((p) => p.category)),
-  ];
+  const handleListScroll = (e: React.UIEvent<HTMLDivElement>) => {
+    const el = e.currentTarget;
+    const max = el.scrollHeight - el.clientHeight;
+    const progress = max > 0 ? el.scrollTop / max : 0;
+    setScrollProgress(progress);
+    setIsScrolling(true);
+    if (scrollTimerRef.current) clearTimeout(scrollTimerRef.current);
+    scrollTimerRef.current = setTimeout(() => setIsScrolling(false), 1200);
+  };
+
+  const categories = ["All", ...new Set(posts.map((p) => p.category))];
 
   const filteredPosts = posts.filter((post) => {
     const matchesCategory =
@@ -110,6 +132,9 @@ export default function Blog() {
       (post.excerpt?.toLowerCase() ?? "").includes(search.toLowerCase());
     return matchesCategory && matchesSearch;
   });
+
+  // Show bar only when hovering AND scrolling
+  const barVisible = isHovered && isScrolling;
 
   return (
     <div className="flex flex-col">
@@ -159,20 +184,53 @@ export default function Blog() {
         </div>
       </section>
 
-      {/* Post List */}
+      {/* Post list */}
       <section className="pb-48 px-6">
-        <div className="max-w-7xl mx-auto space-y-px">
-          {loading ? (
-            <div className="py-32 text-center text-text-secondary font-medium opacity-50">
-              Loading posts...
-            </div>
-          ) : filteredPosts.length > 0 ? (
-            filteredPosts.map((post) => wrapPost(post))
-          ) : (
-            <div className="py-32 text-center text-text-secondary font-medium opacity-50">
-              No posts found.
-            </div>
-          )}
+        <div
+          className="max-w-7xl mx-auto flex gap-4"
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
+          {/* Left vertical progress bar — only on hover + scroll */}
+          <div
+            className="relative flex-shrink-0 w-[3px] rounded-full overflow-hidden"
+            style={{
+              height: "960px",
+              backgroundColor: barVisible ? "#eeeeee" : "transparent",
+              transition: "background-color 0.3s ease",
+            }}
+          >
+            <div
+              className="absolute top-0 left-0 w-full bg-primary rounded-full"
+              style={{
+                height: `${scrollProgress * 100}%`,
+                opacity: barVisible ? 1 : 0,
+                transition: barVisible
+                  ? "height 0.15s ease, opacity 0.2s ease"
+                  : "height 0.15s ease, opacity 0.6s ease",
+              }}
+            />
+          </div>
+
+          {/* Scrollable articles — 4 visible at a time */}
+          <div
+            ref={listRef}
+            onScroll={handleListScroll}
+            className="flex-grow overflow-y-auto scrollbar-hide"
+            style={{ height: "1400px" }}
+          >
+            {loading ? (
+              <div className="py-32 text-center text-text-secondary font-medium opacity-50">
+                Loading posts...
+              </div>
+            ) : filteredPosts.length > 0 ? (
+              filteredPosts.map((post) => wrapPost(post))
+            ) : (
+              <div className="py-32 text-center text-text-secondary font-medium opacity-50">
+                No posts found.
+              </div>
+            )}
+          </div>
         </div>
       </section>
     </div>

@@ -54,7 +54,6 @@ export class BlogService {
           featured: true,
           publishedAt: true,
           createdAt: true,
-        
           author: {
             select: {
               id: true,
