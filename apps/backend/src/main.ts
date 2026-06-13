@@ -14,6 +14,8 @@ async function bootstrap() {
       'http://localhost:3001',
       'https://tiani.pekins.me',
       'https://tianipekins.me',
+      'httsps://tiani.pekins.com',
+      'https://www.tianipekins.com',
       'https://portfolio-backend-r4k93p7de-tpekins-projects.vercel.app',
     ],
     credentials: true,
