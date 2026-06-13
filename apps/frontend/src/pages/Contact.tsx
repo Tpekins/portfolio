@@ -175,10 +175,10 @@ export default function Contact() {
                 others through mentorship.
               </p>
               <a 
-                href="mailto:tiani@localhands.africa"
+                href="mailto:tiani@tianipekins.com"
                 className="text-lg font-black text-[#1c1c1c] text-center md:text-left pt-2 hover:underline block"
               >
-                tiani@localhands.africa
+                tiani@tianipekins.com
               </a>
             </div>
           </div>

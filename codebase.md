@@ -15373,7 +15373,7 @@ export default function Contact() {
                 others through mentorship.
               </p>
               <p className="text-[11px] font-black text-[#1c1c1c] text-center md:text-left pt-2">
-                tiani@localhands.africa
+                tiani@tianipekins.com
               </p>
             </div>
           </div>
