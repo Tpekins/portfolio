@@ -124,7 +124,7 @@ describe('Portfolio API (e2e)', () => {
             title: 'My First Blog Post',
             slug: 'my-first-blog-post',
             content: 'This is my first blog post content...',
-            category: 'Programming',
+            category: 'Software',
             excerpt: 'A brief excerpt',
             tags: ['typescript', 'nestjs'],
             published: true,
@@ -163,7 +163,7 @@ describe('Portfolio API (e2e)', () => {
 
       it('should filter by category', async () => {
         const response = await request(app.getHttpServer())
-          .get('/blog?category=Programming')
+          .get('/blog?category=Software')
           .expect(200);
 
         expect(response.body).toHaveProperty('data');

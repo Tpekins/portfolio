@@ -35,7 +35,7 @@ model BlogPost {
   content     String    @db.Text
   excerpt     String?
   externalUrl String?
-  category    String // "Software", "Tech", "Life", "Programming"
+  category    String // "All", "Tech", "Software", "Life", "Community"
   thumbnail   String?
   tags        String[]  @default([])
   featured    Boolean   @default(false)

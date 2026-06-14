@@ -25,7 +25,7 @@ export class CreateBlogPostDto {
   @IsString()
   content!: string;
 
-  @ApiProperty({ example: 'Programming', enum: CategoryType })
+  @ApiProperty({ example: 'Software', enum: CategoryType })
   @IsEnum(CategoryType, {
     message: `Category must be one of: ${Object.values(CategoryType).join(', ')}`,
   })

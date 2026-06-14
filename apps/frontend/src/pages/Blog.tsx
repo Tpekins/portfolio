@@ -122,7 +122,7 @@ export default function Blog() {
     scrollTimerRef.current = setTimeout(() => setIsScrolling(false), 1200);
   };
 
-  const categories = ["All", ...new Set(posts.map((p) => p.category))];
+  const categories = ["All", "Tech", "Software", "Life", "Community"];
 
   const filteredPosts = posts.filter((post) => {
     const matchesCategory =

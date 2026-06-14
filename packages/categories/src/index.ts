@@ -5,10 +5,10 @@
 
 export const CategoryType = {
   ALL: "All",
-  SOFTWARE: "Software",
   TECH: "Tech",
+  SOFTWARE: "Software",
   LIFE: "Life",
-  PROGRAMMING: "Programming",
+  COMMUNITY: "Community",
 } as const;
 export type CategoryType = (typeof CategoryType)[keyof typeof CategoryType];
 
