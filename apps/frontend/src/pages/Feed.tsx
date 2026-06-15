@@ -302,7 +302,7 @@ export default function Feed() {
             </div>
             <div className="text-right hidden md:block">
               <p className="text-body font-medium max-w-xs">
-                Videos, photos, notes, and events — a living log of the journey.
+                Captured as it happens.
               </p>
             </div>
           </div>
