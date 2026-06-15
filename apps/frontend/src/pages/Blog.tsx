@@ -75,8 +75,8 @@ function PostCard({ post }: { post: BlogPost }) {
       viewport={{ once: true }}
       className="group relative py-10 md:py-12 border-b border-border-subtle hover:bg-primary/5 transition-colors duration-700 cursor-pointer"
     >
-      <div className="px-6">
-        <div className="grid md:grid-cols-12 gap-8 md:gap-12 items-start">
+      <div className="px-6 max-w-6xl mx-auto">
+        <div className="grid md:grid-cols-12 gap-6 md:gap-12 items-start">
           {/* Left: Date + Category stacked vertically */}
           <div className="md:col-span-2 flex flex-col gap-2">
             <div className={`text-[10px] font-black uppercase tracking-[0.3em] ${config.textClass}`}>
@@ -178,8 +178,8 @@ export default function Blog() {
   return (
     <div className="flex flex-col">
       {/* Blog Hero */}
-      <section className="pt-48 pb-32 px-6">
-        <div className="max-w-5xl mx-auto">
+      <section className="pt-48 pb-24 px-6">
+        <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-end gap-8 mb-16 pb-8 border-b border-border-subtle">
             <div className="space-y-3 max-w-3xl">
               <span className="section-label">The Journal</span>
@@ -192,7 +192,7 @@ export default function Blog() {
             </div>
           </div>
 
-          <div className="flex flex-wrap items-center gap-4 pt-12">
+          <div className="flex flex-wrap items-center gap-3 pt-4">
             {categories.map((cat) => (
               <button
                 key={cat}
@@ -226,7 +226,7 @@ export default function Blog() {
       {/* Post list */}
       <section className="pb-48 px-6">
         <div
-          className="max-w-5xl mx-auto flex gap-4"
+          className="max-w-7xl mx-auto flex gap-4"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
