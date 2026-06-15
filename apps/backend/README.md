@@ -4,97 +4,180 @@ A **NestJS** REST API serving the portfolio frontend. Handles blog CRUD, project
 
 ---
 
-## Architecture
+## Module System
 
+```mermaid
+flowchart TB
+    AppModule["🏠 AppModule<br/>Root Module"] --> Infrastructure
+    AppModule --> AuthLayer
+    AppModule --> CoreService
+    AppModule --> BusinessLogic
+    AppModule --> Communication
+
+    subgraph Infrastructure["🏗️ Infrastructure Layer"]
+        direction TB
+        PrismaMod["🗄️ PrismaModule<br/>Database Connection"]
+        ConfigMod["⚙️ ConfigModule<br/>Environment Config"]
+    end
+
+    subgraph AuthLayer["🔐 User & Auth Layer"]
+        direction TB
+        AuthMod["🔑 AuthModule<br/>JWT + Passport"]
+        UserMod["👤 UserModule<br/>Admin Management"]
+    end
+
+    subgraph CoreService["⚙️ Core Service Layer"]
+        direction TB
+        BlogMod["📝 BlogModule<br/>Posts & Categories"]
+        ProjMod["📁 ProjectModule<br/>Project Showcase"]
+        UploadMod["📤 FileUploadModule<br/>Image Upload"]
+    end
+
+    subgraph BusinessLogic["💼 Business Logic Layer"]
+        direction TB
+        ContactMod["📨 ContactModule<br/>Form Submissions"]
+        CommentMod["💬 CommentModule<br/>Blog Comments"]
+    end
+
+    subgraph Communication["📡 Communication Layer"]
+        direction TB
+        EmailMod["📧 EmailModule<br/>Notifications"]
+    end
+
+    style AppModule fill:#fff3e0
+    style Infrastructure fill:#e1f5fe
+    style AuthLayer fill:#fce4ec
+    style CoreService fill:#e8f5e9
+    style BusinessLogic fill:#f3e5f5
+    style Communication fill:#fff9c4
+    style PrismaMod fill:#bbdefb
+    style ConfigMod fill:#bbdefb
+    style AuthMod fill:#f8bbd0
+    style UserMod fill:#f8bbd0
+    style BlogMod fill:#c8e6c9
+    style ProjMod fill:#c8e6c9
+    style UploadMod fill:#c8e6c9
+    style ContactMod fill:#e1bee7
+    style CommentMod fill:#e1bee7
+    style EmailMod fill:#fff59d
 ```
-Client (React SPA)
-        │
-        │ HTTP/REST
-        ▼
-┌─────────────────────────────────────────────────────────────┐
-│                      NestJS Application                        │
-│                                                                │
-│  ┌─────────────────────────────────────────────────────────┐  │
-│  │                    Global Middleware                     │  │
-│  │  • CORS  • ValidationPipe  • JWT AuthGuard (optional)   │  │
-│  └─────────────────────────────────────────────────────────┘  │
-│                          │                                     │
-│  ┌───────────────────────┼───────────────────────────────────┐  │
-│  │                       ▼                                    │  │
-│  │  ┌─────────┐  ┌─────────┐  ┌─────────┐  ┌─────────┐     │  │
-│  │  │ /blog   │  │/projects│  │/contact │  │ /auth   │     │  │
-│  │  │ Module  │  │ Module  │  │ Module  │  │ Module  │     │  │
-│  │  └────┬────┘  └────┬────┘  └────┬────┘  └────┬────┘     │  │
-│  │       │            │            │            │          │  │
-│  │  ┌────┴────┐  ┌────┴────┐  ┌────┴────┐  ┌────┴────┐     │  │
-│  │  │Service  │  │Service  │  │Service  │  │Service  │     │  │
-│  │  │(CRUD)   │  │(CRUD)   │  │(Submit) │  │(JWT)    │     │  │
-│  │  └────┬────┘  └────┬────┘  └────┬────┘  └────┬────┘     │  │
-│  │       │            │            │            │          │  │
-│  │  ┌────┴────┐  ┌────┴────┐  ┌────┴────┐  ┌────┴────┐     │  │
-│  │  │   DTO   │  │   DTO   │  │   DTO   │  │   DTO   │     │  │
-│  │  │ (Zod)   │  │ (Zod)   │  │ (Zod)   │  │ (Zod)   │     │  │
-│  │  └────┬────┘  └────┬────┘  └────┬────┘  └────┬────┘     │  │
-│  └───────┼────────────┼────────────┼────────────┼──────────┘  │
-│          │            │            │            │             │
-└──────────┼────────────┼────────────┼────────────┼─────────────┘
-           │            │            │            │
-           └────────────┴────────────┴────────────┘
-                              │
-                              ▼
-                    ┌─────────────────────┐
-                    │   Prisma ORM        │
-                    │  (Type-safe SQL)    │
-                    └──────────┬──────────┘
-                               │
-                               ▼
-                    ┌─────────────────────┐
-                    │   PostgreSQL        │
-                    │   (Relational DB)   │
-                    └─────────────────────┘
+
+## Layered Architecture
+
+```mermaid
+flowchart TB
+    subgraph Client["🌐 Client"]
+        React["⚛️ React SPA"]
+    end
+
+    React -->|HTTP/REST| Gateway
+
+    subgraph Gateway["🚪 API Gateway"]
+        direction TB
+        CORS["🌐 CORS"]
+        ValPipe["✅ ValidationPipe"]
+        JWT["🔐 JWT AuthGuard"]
+    end
+
+    Gateway -->|routes to| Controllers
+
+    subgraph Controllers["🎮 Controllers"]
+        direction LR
+        BlogCtrl["📝 BlogController"]
+        ProjCtrl["📁 ProjectController"]
+        AuthCtrl["🔑 AuthController"]
+        ContactCtrl["📨 ContactController"]
+        CommentCtrl["💬 CommentController"]
+        UploadCtrl["📤 FileUploadController"]
+    end
+
+    Controllers -->|uses| Services
+
+    subgraph Services["⚙️ Services"]
+        direction LR
+        BlogSvc["📝 BlogService<br/>CRUD Logic"]
+        ProjSvc["📁 ProjectService<br/>CRUD Logic"]
+        AuthSvc["🔑 AuthService<br/>JWT + bcrypt"]
+        ContactSvc["📨 ContactService<br/>Form Handling"]
+        CommentSvc["💬 CommentService<br/>Moderation"]
+        UploadSvc["📤 FileUploadService<br/>Storage"]
+    end
+
+    Services -->|uses| Prisma
+
+    subgraph Prisma["🗄️ Prisma ORM"]
+        direction TB
+        Client["📦 Prisma Client"]
+    end
+
+    Prisma -->|queries| DB
+
+    subgraph DB["💾 PostgreSQL"]
+        direction TB
+        Tables["📋 Tables:<br/>users, blog_posts,<br/>projects, comments,<br/>contact_submissions"]
+    end
+
+    style Client fill:#e3f2fd
+    style Gateway fill:#fff3e0
+    style Controllers fill:#e8f5e9
+    style Services fill:#fce4ec
+    style Prisma fill:#f3e5f5
+    style DB fill:#e1f5fe
+    style BlogCtrl fill:#c8e6c9
+    style ProjCtrl fill:#c8e6c9
+    style AuthCtrl fill:#c8e6c9
+    style ContactCtrl fill:#c8e6c9
+    style CommentCtrl fill:#c8e6c9
+    style UploadCtrl fill:#c8e6c9
+    style BlogSvc fill:#f8bbd0
+    style ProjSvc fill:#f8bbd0
+    style AuthSvc fill:#f8bbd0
+    style ContactSvc fill:#f8bbd0
+    style CommentSvc fill:#f8bbd0
+    style UploadSvc fill:#f8bbd0
 ```
 
 ---
 
 ## API Endpoints
 
-### Blog
+### 📝 Blog
 ```
-GET    /blog              → List all posts (paginated, filterable)
-GET    /blog?category=X   → Filter by category
-GET    /blog/:idOrSlug    → Get single post
-POST   /blog              → Create post (JWT required)
-PUT    /blog/:id          → Update post (JWT required)
-DELETE /blog/:id          → Delete post (JWT required)
-```
-
-### Projects
-```
-GET    /projects          → List all projects
-POST   /projects          → Create project (JWT required)
-PUT    /projects/:id      → Update project (JWT required)
-DELETE /projects/:id      → Delete project (JWT required)
+GET    /blog              → 📋 List all posts (paginated, filterable)
+GET    /blog?category=X   → 🔍 Filter by category
+GET    /blog/:idOrSlug    → 📄 Get single post
+POST   /blog              → ✨ Create post (JWT required)
+PUT    /blog/:id          → 📝 Update post (JWT required)
+DELETE /blog/:id          → 🗑️ Delete post (JWT required)
 ```
 
-### Contact
+### 📁 Projects
 ```
-POST   /contact           → Submit contact form
-GET    /contact           → List submissions (JWT required)
-```
-
-### Auth
-```
-POST   /auth/login        → Login, returns JWT
+GET    /projects          → 📋 List all projects
+POST   /projects          → ✨ Create project (JWT required)
+PUT    /projects/:id      → 📝 Update project (JWT required)
+DELETE /projects/:id      → 🗑️ Delete project (JWT required)
 ```
 
-### Comments
+### 📨 Contact
 ```
-POST   /comments          → Create comment (public, needs approval)
+POST   /contact           → 📤 Submit contact form
+GET    /contact           → 📋 List submissions (JWT required)
 ```
 
-### File Upload
+### 🔐 Auth
 ```
-POST   /upload            → Upload image/file (JWT required)
+POST   /auth/login        → 🔑 Login, returns JWT
+```
+
+### 💬 Comments
+```
+POST   /comments          → 💬 Create comment (public, needs approval)
+```
+
+### 📤 File Upload
+```
+POST   /upload            → 📎 Upload image/file (JWT required)
 ```
 
 ---
@@ -128,21 +211,37 @@ Client POST /blog
 
 ```mermaid
 flowchart TD
-    A[Client sends request] --> B{Route matches?}
-    B -->|No| C[404 Not Found]
-    B -->|Yes| D{Auth required?}
-    D -->|Yes| E{Valid JWT?}
-    E -->|No| F[401 Unauthorized]
-    E -->|Yes| G[Extract user from token]
-    G --> H[Controller receives request]
-    D -->|No| H
-    H --> I[Validate DTO]
-    I -->|Invalid| J[400 Bad Request]
-    I -->|Valid| K[Service processes request]
-    K --> L{Database query}
-    L -->|Error| M[500 Server Error]
-    L -->|Success| N[Return response]
-    N --> O[Client receives JSON]
+    A["🌐 Client sends request"] --> B{"❓ Route matches?"}
+    B -->|"❌ No"| C["⚠️ 404 Not Found"]
+    B -->|"✅ Yes"| D{"🔐 Auth required?"}
+    D -->|"✅ Yes"| E{"❓ Valid JWT?"}
+    E -->|"❌ No"| F["🚫 401 Unauthorized"]
+    E -->|"✅ Yes"| G["👤 Extract user from token"]
+    G --> H["🎮 Controller receives request"]
+    D -->|"❌ No"| H
+    H --> I["✅ Validate DTO"]
+    I -->|"❌ Invalid"| J["⚠️ 400 Bad Request"]
+    I -->|"✅ Valid"| K["⚙️ Service processes request"]
+    K --> L{"🗄️ Database query"}
+    L -->|"❌ Error"| M["💥 500 Server Error"]
+    L -->|"✅ Success"| N["📦 Return response"]
+    N --> O["🌐 Client receives JSON"]
+
+    style A fill:#e3f2fd
+    style B fill:#f8bbd0
+    style C fill:#ffcdd2
+    style D fill:#f8bbd0
+    style E fill:#f8bbd0
+    style F fill:#ffcdd2
+    style G fill:#e8f5e9
+    style H fill:#fff3e0
+    style I fill:#f8bbd0
+    style J fill:#ffcdd2
+    style K fill:#e8f5e9
+    style L fill:#f8bbd0
+    style M fill:#ffcdd2
+    style N fill:#c8e6c9
+    style O fill:#e3f2fd
 ```
 
 ---
@@ -202,14 +301,14 @@ flowchart TD
 
 | Tech | Version | Purpose |
 |------|---------|---------|
-| NestJS | 10 | Framework, DI, modular architecture |
-| Prisma | 6 | ORM, type-safe queries, migrations |
-| PostgreSQL | 15+ | Relational database |
-| JWT | — | Stateless auth tokens |
-| Passport | — | Auth strategies |
-| class-validator | — | DTO validation |
-| Swagger | — | API documentation |
-| bcrypt | — | Password hashing |
+| ⚡ NestJS | 10 | Framework, DI, modular architecture |
+| 🗄️ Prisma | 6 | ORM, type-safe queries, migrations |
+| 💾 PostgreSQL | 15+ | Relational database |
+| 🔐 JWT | — | Stateless auth tokens |
+| 🛡️ Passport | — | Auth strategies |
+| ✅ class-validator | — | DTO validation |
+| 📖 Swagger | — | API documentation |
+| 🔒 bcrypt | — | Password hashing |
 
 ---
 
@@ -278,22 +377,22 @@ backend/
 ## Development
 
 ```bash
-# Install dependencies (from root or backend dir)
+# 📦 Install dependencies (from root or backend dir)
 yarn install
 
-# Environment setup
+# ⚙️ Environment setup
 cp .env.example .env
 # Edit .env — set DATABASE_URL, JWT_SECRET
 # (Database URL is private — never commit this file)
 
-# Database
+# 🗄️ Database
 yarn prisma migrate dev
 yarn prisma db seed
 
-# Run dev server (via Turborepo)
+# ▶️ Run dev server (via Turborepo)
 yarn dev --filter=backend
 
-# Run tests
+# 🧪 Run tests
 yarn test --filter=backend
 yarn test:e2e --filter=backend
 ```
@@ -343,45 +442,66 @@ yarn test:e2e --filter=backend
 
 ```mermaid
 flowchart TD
-    A[User sends POST /auth/login] --> B[Controller receives email + password]
-    B --> C[AuthService validates credentials]
-    C --> D{User exists?}
-    D -->|No| E[401 Unauthorized]
-    D -->|Yes| F[bcrypt compares password hash]
-    F -->|Mismatch| E
-    F -->|Match| G[Generate JWT token]
-    G --> H[Return token to client]
-    H --> I[Client stores token]
-    I --> J[Subsequent requests include Authorization: Bearer <token>]
-    J --> K[Passport JWT Strategy validates token]
-    K -->|Valid| L[Grant access to protected route]
-    K -->|Invalid| M[401 Unauthorized]
+    A["👤 User sends POST /auth/login"] --> B["🎮 Controller receives email + password"]
+    B --> C["🔑 AuthService validates credentials"]
+    C --> D{"❓ User exists?"}
+    D -->|"❌ No"| E["🚫 401 Unauthorized"]
+    D -->|"✅ Yes"| F["🔒 bcrypt compares password hash"]
+    F -->|"❌ Mismatch"| E
+    F -->|"✅ Match"| G["🔐 Generate JWT token"]
+    G --> H["📦 Return token to client"]
+    H --> I["💾 Client stores token"]
+    I --> J["📡 Subsequent requests include Authorization: Bearer <token>"]
+    J --> K["🔍 Passport JWT Strategy validates token"]
+    K -->|"✅ Valid"| L["✅ Grant access to protected route"]
+    K -->|"❌ Invalid"| M["🚫 401 Unauthorized"]
+
+    style A fill:#e3f2fd
+    style B fill:#fff3e0
+    style C fill:#e8f5e9
+    style D fill:#f8bbd0
+    style E fill:#ffcdd2
+    style F fill:#e8f5e9
+    style G fill:#c8e6c9
+    style H fill:#c8e6c9
+    style I fill:#e3f2fd
+    style J fill:#e3f2fd
+    style K fill:#f8bbd0
+    style L fill:#a5d6a7
+    style M fill:#ffcdd2
 ```
 
 ---
 
 ## Blog Categories
 
-Valid category values (enforced by DTO):
-```
-All         ──► View all posts
-Software    ──► Software engineering, architecture, patterns
-Tech        ──► General technology, tools, trends
-Life        ──► Personal, career, culture
-Community   ──► Open source, events, ecosystem
+🏷️ Valid category values (enforced by DTO):
+
+```mermaid
+flowchart LR
+    ALL["🏠 ALL<br/>View all posts"] --> SW["💻 SOFTWARE<br/>Engineering<br/>Architecture"]
+    SW --> TC["🔧 TECH<br/>Technology<br/>Tools & Trends"]
+    TC --> LF["🌱 LIFE<br/>Personal<br/>Career & Culture"]
+    LF --> CM["🤝 COMMUNITY<br/>Open Source<br/>Events & Ecosystem"]
+
+    style ALL fill:#e3f2fd
+    style SW fill:#e8f5e9
+    style TC fill:#fff3e0
+    style LF fill:#fce4ec
+    style CM fill:#f3e5f5
 ```
 
-> Stored as plain `String` in PostgreSQL — no migration needed to add new categories.
+> 💡 Stored as plain `String` in PostgreSQL — no migration needed to add new categories.
 
 ---
 
-## Notes for Reviewers
+## 📝 Notes for Reviewers
 
-- **Prisma client is generated** inside `src/generated/prisma/` — do not edit manually.
-- **DTOs use class-validator** for runtime type checking, not just TypeScript.
-- **All services return Prisma-select optimized data** — no over-fetching.
-- **E2E tests use the real database** — ensure `DATABASE_URL` is set before running.
-- **Comments are moderated** — `approved: false` by default, admin can approve.
+- 🗄️ **Prisma client is generated** inside `src/generated/prisma/` — do not edit manually.
+- ✅ **DTOs use class-validator** for runtime type checking, not just TypeScript.
+- 🎯 **All services return Prisma-select optimized data** — no over-fetching.
+- 🧪 **E2E tests use the real database** — ensure `DATABASE_URL` is set before running.
+- 💬 **Comments are moderated** — `approved: false` by default, admin can approve.
 
 ---
 
