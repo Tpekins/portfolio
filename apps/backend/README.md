@@ -1,98 +1,346 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Portfolio Backend
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+A **NestJS** REST API serving the portfolio frontend. Handles blog CRUD, project showcases, contact form submissions, JWT authentication, and file uploads.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+---
 
-## Description
+## Architecture
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
-
-## Project setup
-
-```bash
-$ yarn install
+```
+Client (React SPA)
+        │
+        │ HTTP/REST
+        ▼
+┌─────────────────────────────────────────────────────────────┐
+│                      NestJS Application                        │
+│                                                                │
+│  ┌─────────────────────────────────────────────────────────┐  │
+│  │                    Global Middleware                     │  │
+│  │  • CORS  • ValidationPipe  • JWT AuthGuard (optional)   │  │
+│  └─────────────────────────────────────────────────────────┘  │
+│                          │                                     │
+│  ┌───────────────────────┼───────────────────────────────────┐  │
+│  │                       ▼                                    │  │
+│  │  ┌─────────┐  ┌─────────┐  ┌─────────┐  ┌─────────┐     │  │
+│  │  │ /blog   │  │/projects│  │/contact │  │ /auth   │     │  │
+│  │  │ Module  │  │ Module  │  │ Module  │  │ Module  │     │  │
+│  │  └────┬────┘  └────┬────┘  └────┬────┘  └────┬────┘     │  │
+│  │       │            │            │            │          │  │
+│  │  ┌────┴────┐  ┌────┴────┐  ┌────┴────┐  ┌────┴────┐     │  │
+│  │  │Service  │  │Service  │  │Service  │  │Service  │     │  │
+│  │  │(CRUD)   │  │(CRUD)   │  │(Submit) │  │(JWT)    │     │  │
+│  │  └────┬────┘  └────┬────┘  └────┬────┘  └────┬────┘     │  │
+│  │       │            │            │            │          │  │
+│  │  ┌────┴────┐  ┌────┴────┐  ┌────┴────┐  ┌────┴────┐     │  │
+│  │  │   DTO   │  │   DTO   │  │   DTO   │  │   DTO   │     │  │
+│  │  │ (Zod)   │  │ (Zod)   │  │ (Zod)   │  │ (Zod)   │     │  │
+│  │  └────┬────┘  └────┬────┘  └────┬────┘  └────┬────┘     │  │
+│  └───────┼────────────┼────────────┼────────────┼──────────┘  │
+│          │            │            │            │             │
+└──────────┼────────────┼────────────┼────────────┼─────────────┘
+           │            │            │            │
+           └────────────┴────────────┴────────────┘
+                              │
+                              ▼
+                    ┌─────────────────────┐
+                    │   Prisma ORM        │
+                    │  (Type-safe SQL)    │
+                    └──────────┬──────────┘
+                               │
+                               ▼
+                    ┌─────────────────────┐
+                    │   PostgreSQL        │
+                    │   (Relational DB)   │
+                    └─────────────────────┘
 ```
 
-## Compile and run the project
+---
 
-```bash
-# development
-$ yarn run start
+## API Endpoints
 
-# watch mode
-$ yarn run start:dev
-
-# production mode
-$ yarn run start:prod
+### Blog
+```
+GET    /blog              → List all posts (paginated, filterable)
+GET    /blog?category=X   → Filter by category
+GET    /blog/:idOrSlug    → Get single post
+POST   /blog              → Create post (JWT required)
+PUT    /blog/:id          → Update post (JWT required)
+DELETE /blog/:id          → Delete post (JWT required)
 ```
 
-## Run tests
-
-```bash
-# unit tests
-$ yarn run test
-
-# e2e tests
-$ yarn run test:e2e
-
-# test coverage
-$ yarn run test:cov
+### Projects
+```
+GET    /projects          → List all projects
+POST   /projects          → Create project (JWT required)
+PUT    /projects/:id      → Update project (JWT required)
+DELETE /projects/:id      → Delete project (JWT required)
 ```
 
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
-```bash
-$ yarn install -g mau
-$ mau deploy
+### Contact
+```
+POST   /contact           → Submit contact form
+GET    /contact           → List submissions (JWT required)
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+### Auth
+```
+POST   /auth/login        → Login, returns JWT
+```
 
-## Resources
+### Comments
+```
+POST   /comments          → Create comment (public, needs approval)
+```
 
-Check out a few resources that may come in handy when working with NestJS:
+### File Upload
+```
+POST   /upload            → Upload image/file (JWT required)
+```
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+---
 
-## Support
+## Data Flow
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+### Blog Post Creation
+```
+Client POST /blog
+    │
+    ▼
+┌─────────────────────────────────────────┐
+│ AuthGuard (JWT)                         │
+│    │                                    │
+│    ▼                                    │
+│ DTO Validation (class-validator)        │
+│    │                                    │
+│    ▼                                    │
+│ BlogService.create()                    │
+│    │                                    │
+│    ├─► Check slug uniqueness            │
+│    ├─► Build Prisma create input        │
+│    └─► prisma.blogPost.create()         │
+│         │                               │
+│         ▼                               │
+│    Return post with author relation     │
+└─────────────────────────────────────────┘
+```
 
-## Stay in touch
+---
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+## Database Schema
 
-## License
+```
+┌─────────────────────┐      ┌─────────────────────┐
+│       User          │      │      BlogPost       │
+├─────────────────────┤      ├─────────────────────┤
+│ id (PK)             │      │ id (PK)             │
+│ email               │      │ title               │
+│ password (hash)     │      │ slug (unique)       │
+│ name                │      │ content             │
+│ createdAt           │      │ excerpt             │
+│ updatedAt           │      │ externalUrl         │
+└─────────────────────┘      │ category (String)   │
+        │                    │ tags (String[])     │
+        │                    │ featured (Boolean)  │
+        │                    │ published (Boolean) │
+        │                    │ publishedAt         │
+        │                    │ createdAt           │
+        │                    │ updatedAt           │
+        │                    │ authorId (FK) ──────┼──► User.id
+        │                    └─────────────────────┘
+        │
+        │                    ┌─────────────────────┐
+        │                    │      Comment        │
+        │                    ├─────────────────────┤
+        │                    │ id (PK)             │
+        │                    │ authorName          │
+        │                    │ content             │
+        │                    │ approved (Boolean)  │
+        │                    │ createdAt           │
+        │                    │ blogPostId (FK) ────┼──► BlogPost.id
+        │                    └─────────────────────┘
+        │
+        └────────────────►┌─────────────────────┐
+                          │      Project        │
+                          ├─────────────────────┤
+                          │ id (PK)             │
+                          │ title               │
+                          │ slug (unique)       │
+                          │ description         │
+                          │ technologies (Str[])│
+                          │ thumbnail           │
+                          │ demoUrl             │
+                          │ gitUrl              │
+                          │ featured (Boolean)  │
+                          │ authorId (FK) ──────┼──► User.id
+                          └─────────────────────┘
+```
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+---
+
+## Tech Stack
+
+| Tech | Version | Purpose |
+|------|---------|---------|
+| NestJS | 10 | Framework, DI, modular architecture |
+| Prisma | 6 | ORM, type-safe queries, migrations |
+| PostgreSQL | 15+ | Relational database |
+| JWT | — | Stateless auth tokens |
+| Passport | — | Auth strategies |
+| class-validator | — | DTO validation |
+| Swagger | — | API documentation |
+| bcrypt | — | Password hashing |
+
+---
+
+## Folder Structure
+
+```
+backend/
+├── prisma/
+│   ├── schema.prisma         ← Database schema
+│   └── seed.ts               ← Seed data (admin user, blog posts, projects)
+│
+├── src/
+│   ├── blog/
+│   │   ├── blog.controller.ts    ← Route handlers
+│   │   ├── blog.service.ts       ← Business logic
+│   │   ├── blog.module.ts        ← Module definition
+│   │   └── dto/
+│   │       └── blog.dto.ts       ← Create/Update/Query DTOs
+│   │
+│   ├── projects/
+│   │   ├── projects.controller.ts
+│   │   ├── projects.service.ts
+│   │   ├── projects.module.ts
+│   │   └── dto/
+│   │       └── project.dto.ts
+│   │
+│   ├── contact/
+│   │   ├── contact.controller.ts
+│   │   ├── contact.service.ts
+│   │   └── dto/
+│   │       └── contact.dto.ts
+│   │
+│   ├── auth/
+│   │   ├── auth.controller.ts
+│   │   ├── auth.service.ts
+│   │   ├── auth.module.ts
+│   │   └── strategies/
+│   │       └── jwt.strategy.ts
+│   │
+│   ├── comments/
+│   │   ├── comments.controller.ts
+│   │   ├── comments.service.ts
+│   │   └── dto/
+│   │       └── comment.dto.ts
+│   │
+│   ├── file-upload/
+│   │   ├── file-upload.controller.ts
+│   │   └── file-upload.service.ts
+│   │
+│   ├── prisma/
+│   │   ├── prisma.module.ts
+│   │   └── prisma.service.ts
+│   │
+│   ├── main.ts                   ← Entry point
+│   └── app.module.ts             ← Root module
+│
+├── test/
+│   └── app.e2e-spec.ts           ← End-to-end tests
+│
+├── package.json
+└── tsconfig.json
+```
+
+---
+
+## Development
+
+```bash
+# Install dependencies (from root or backend dir)
+yarn install
+
+# Environment setup
+cp .env.example .env
+# Edit .env — set DATABASE_URL, JWT_SECRET
+# (Database URL is private — never commit this file)
+
+# Database
+yarn prisma migrate dev
+yarn prisma db seed
+
+# Run dev server (via Turborepo)
+yarn dev --filter=backend
+
+# Run tests
+yarn test --filter=backend
+yarn test:e2e --filter=backend
+```
+
+---
+
+## Authentication
+
+```
+┌─────────────┐
+│   Login     │
+│  (email,    │
+│  password)  │
+└──────┬──────┘
+       │
+       ▼
+┌─────────────┐
+│   Auth      │
+│   Service   │
+│  • Validate │
+│    password │
+│    (bcrypt) │
+│  • Sign JWT │
+└──────┬──────┘
+       │
+       ▼
+┌─────────────┐
+│   JWT Token │
+│   (1 day)   │
+└──────┬──────┘
+       │
+       ▼
+┌─────────────────────────────┐
+│   Protected Routes          │
+│   Authorization: Bearer <jwt>│
+│   • POST /blog              │
+│   • PUT /blog/:id           │
+│   • DELETE /blog/:id        │
+│   • POST /projects          │
+│   • POST /upload            │
+└─────────────────────────────┘
+```
+
+---
+
+## Blog Categories
+
+Valid category values (enforced by DTO):
+```
+All         ──► View all posts
+Software    ──► Software engineering, architecture, patterns
+Tech        ──► General technology, tools, trends
+Life        ──► Personal, career, culture
+Community   ──► Open source, events, ecosystem
+```
+
+> Stored as plain `String` in PostgreSQL — no migration needed to add new categories.
+
+---
+
+## Notes for Reviewers
+
+- **Prisma client is generated** inside `src/generated/prisma/` — do not edit manually.
+- **DTOs use class-validator** for runtime type checking, not just TypeScript.
+- **All services return Prisma-select optimized data** — no over-fetching.
+- **E2E tests use the real database** — ensure `DATABASE_URL` is set before running.
+- **Comments are moderated** — `approved: false` by default, admin can approve.
+
+---
+
+**Maintained by Tiani Pekins | Backend Engineer** 🇨🇲

@@ -1,30 +1,89 @@
 # @repo/categories
 
-Shared category definitions for portfolio projects.
+Shared category definitions for the portfolio blog. Used across **frontend** and **backend** to ensure consistency.
+
+---
+
+## Categories
+
+```
+┌─────────────┐
+│     ALL     │  ← Default filter, shows all posts
+└──────┬──────┘
+       │
+┌─────────────┐
+│   SOFTWARE  │  ← Software engineering, architecture, patterns
+└──────┬──────┘
+       │
+┌─────────────┐
+│    TECH     │  ← General technology, tools, trends
+└──────┬──────┘
+       │
+┌─────────────┐
+│    LIFE     │  ← Personal, career, culture
+└──────┬──────┘
+       │
+┌─────────────┐
+│  COMMUNITY  │  ← Open source, events, ecosystem
+└─────────────┘
+```
+
+---
 
 ## Usage
 
 ### Frontend (React)
 ```tsx
-import { BLOG_CATEGORIES, CategoryType } from "@repo/categories";
+import { CategoryType, isValidCategory } from "@repo/categories";
 
-const categories = BLOG_CATEGORIES;
+// Static list for filter buttons
+const categories = ["All", "Software", "Tech", "Life", "Community"];
+
+// Validate API response
+const cat = apiResponse.category;
+if (isValidCategory(cat)) {
+  setActiveCategory(cat);
+}
 ```
 
 ### Backend (NestJS)
 ```ts
-import { BLOG_CATEGORIES, CategoryType } from "@repo/categories";
+import { CategoryType } from "@repo/categories";
 
-@Query(() => [String])
-getCategories() {
-  return BLOG_CATEGORIES;
+// In DTO
+@IsEnum(CategoryType)
+category!: CategoryType;
+
+// In service
+if (query.category) {
+  where.category = query.category;
 }
 ```
 
+---
+
 ## Exports
 
-- `BLOG_CATEGORIES` - Array of all available blog categories
-- `CATEGORY_LABELS` - Mapping of categories to display labels
-- `CategoryType` - TypeScript type for category values
-- `isValidCategory()` - Type guard function
-- `getCategoryLabel()` - Helper to get display label for a category
+| Export | Type | Description |
+|--------|------|-------------|
+| `CategoryType` | `const` / `type` | Enum object and TypeScript type |
+| `isValidCategory` | `function` | Type guard: checks if value is a valid category |
+| `getCategoryLabel` | `function` | Maps enum key to display string |
+
+---
+
+## Category Change History
+
+```
+Previous: All, Software, Tech, Life, Programming
+Current:  All, Software, Tech, Life, Community
+                              │
+                              ▼
+                    "Programming" replaced by "Community"
+```
+
+> **Note**: The database stores `category` as a plain `String`, so no migration is required when updating the enum. Only posts with the old category value (`"Programming"`) will no longer have a dedicated filter button — they will still appear under the **"All"** filter.
+
+---
+
+**Maintained by Tiani Pekins** 🇨🇲

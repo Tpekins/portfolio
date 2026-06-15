@@ -1,159 +1,183 @@
-# Turborepo starter
+# Tiani Pekins Portfolio
 
-This Turborepo starter is maintained by the Turborepo core team.
+A modern, full-stack portfolio platform built for showcasing engineering projects, technical blog posts, and professional contact. Designed for speed, clarity, and mobile-first browsing.
 
-## Using this example
+---
 
-Run the following command:
+## Architecture Overview
 
-```sh
-npx create-turbo@latest
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│                        CLIENT LAYER                                  │
+│  ┌─────────────┐   ┌─────────────┐   ┌─────────────┐               │
+│  │   Home      │   │  Projects   │   │   About     │               │
+│  │   (GSAP)    │   │   (Grid)    │   │   (Bio)     │               │
+│  └──────┬──────┘   └──────┬──────┘   └──────┬──────┘               │
+│  ┌─────────────┐   ┌─────────────┐   ┌─────────────┐               │
+│  │    Blog     │   │  BlogPost   │   │   Contact   │               │
+│  │ (Filter +   │   │  (Comments) │   │   (Form)    │               │
+│  │  Search)    │   │             │   │             │               │
+│  └──────┬──────┘   └──────┬──────┘   └──────┬──────┘               │
+└─────────┼─────────────────┼─────────────────┼──────────────────────┘
+          │                 │                 │
+          └─────────────────┴─────────────────┘
+                            │
+                            ▼ HTTP/REST API
+┌─────────────────────────────────────────────────────────────────────┐
+│                       API GATEWAY (NestJS)                           │
+│  ┌─────────────┐   ┌─────────────┐   ┌─────────────┐               │
+│  │   /blog     │   │  /projects  │   │  /contact   │               │
+│  │  (CRUD)     │   │  (CRUD)     │   │  (Submit)   │               │
+│  └──────┬──────┘   └──────┬──────┘   └──────┬──────┘               │
+│  ┌─────────────┐   ┌─────────────┐   ┌─────────────┐               │
+│  │   /auth     │   │ /upload     │   │  /comments  │               │
+│  │  (JWT)      │   │ (File)      │   │  (Create)   │               │
+│  └──────┬──────┘   └──────┬──────┘   └──────┬──────┘               │
+└─────────┼─────────────────┼─────────────────┼──────────────────────┘
+          │                 │                 │
+          └─────────────────┴─────────────────┘
+                            │
+                            ▼ Prisma ORM
+┌─────────────────────────────────────────────────────────────────────┐
+│                    DATABASE (PostgreSQL)                           │
+│  ┌─────────────┐   ┌─────────────┐   ┌─────────────┐               │
+│  │   users     │   │ blog_posts  │   │   projects  │               │
+│  └─────────────┘   └─────────────┘   └─────────────┘               │
+│  ┌─────────────┐   ┌─────────────┐                                   │
+│  │   comments  │   │contact_sub..│                                   │
+│  └─────────────┘   └─────────────┘                                   │
+└─────────────────────────────────────────────────────────────────────┘
 ```
 
-## What's inside?
+---
 
-This Turborepo includes the following packages/apps:
+## Tech Stack
 
-### Apps and Packages
+| Layer | Technology | Purpose |
+|-------|-----------|---------|
+| **Frontend** | React 19 + Vite | UI rendering & SPA routing |
+| **Styling** | Tailwind CSS v4 | Utility-first CSS with custom tokens |
+| **Animations** | Framer Motion (`motion/react`) | Scroll-linked animations, transitions |
+| **Backend** | NestJS | Modular REST API architecture |
+| **Database** | PostgreSQL + Prisma | Relational data with type-safe queries |
+| **Auth** | JWT + Passport | Stateless token-based admin authentication |
+| **Monorepo** | Turborepo | Shared packages, unified build pipeline |
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
+---
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
+## Project Structure
 
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
-
-```sh
-cd my-turborepo
-turbo build
+```
+portfolio/
+├── apps/
+│   ├── frontend/          ← React SPA (6 pages, see README inside)
+│   └── backend/           ← NestJS API (REST endpoints, see README inside)
+│
+├── packages/
+│   ├── ui/                ← Shared React components (Navbar, Footer, Card, Button)
+│   ├── categories/        ← Shared blog category definitions (All, Software, Tech, Life, Community)
+│   └── eslint-config/     ← Shared lint rules
+│
+├── turbo.json             ← Turborepo task orchestration
+└── package.json           ← Root workspace configuration
 ```
 
-Without global `turbo`, use your package manager:
+---
 
-```sh
-cd my-turborepo
-npx turbo build
-yarn dlx turbo build
-yarn   exec turbo build
+## Quick Start
+
+### Prerequisites
+- Node.js 20+
+- PostgreSQL database
+
+### 1. Install dependencies
+```bash
+yarn install
 ```
 
-You can build a specific package by using a [filter](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters):
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
-
-```sh
-turbo build --filter=docs
+### 2. Environment setup
+```bash
+cp apps/backend/.env.example apps/backend/.env
+# Edit .env and set DATABASE_URL
 ```
 
-Without global `turbo`:
-
-```sh
-npx turbo build --filter=docs
-yarn exec turbo build --filter=docs
-yarn exec turbo build --filter=docs
+### 3. Database setup
+```bash
+cd apps/backend
+yarn prisma migrate dev
+yarn prisma db seed
 ```
 
-### Develop
-
-To develop all apps and packages, run the following command:
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
-
-```sh
-cd my-turborepo
-turbo dev
+### 4. Run the entire stack (Turborepo)
+```bash
+# From root — starts all packages in parallel
+yarn dev
 ```
 
-Without global `turbo`, use your package manager:
-
-```sh
-cd my-turborepo
-npx turbo dev
-yarn exec turbo dev
-yarn exec turbo dev
+**What runs:**
+```
+@repo/categories#dev ──► Shared category package (watch mode)
+@repo/ui#dev         ──► Shared UI components (watch mode)
+frontend#dev         ──► Vite dev server (http://localhost:3001)
+backend#dev          ──► NestJS dev server (http://localhost:3000)
 ```
 
-You can develop a specific package by using a [filter](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters):
+### 5. Run individual apps
+```bash
+# Frontend only
+yarn dev --filter=frontend
 
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
+# Backend only
+yarn dev --filter=backend
 
-```sh
-turbo dev --filter=web
+# Shared packages only
+yarn dev --filter=@repo/ui
 ```
 
-Without global `turbo`:
+---
 
-```sh
-npx turbo dev --filter=web
-yarn exec turbo dev --filter=web
-yarn exec turbo dev --filter=web
+## Build & Deploy
+
+```bash
+# Build everything
+yarn build
+
+# Build specific app
+yarn build --filter=frontend
 ```
 
-### Remote Caching
+---
 
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
+## Shared Packages
 
-Turborepo can use a technique known as [Remote Caching](https://turborepo.dev/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
-
-```sh
-cd my-turborepo
-turbo login
+```
+Frontend ───────► @repo/ui ───────► Reusable components
+                │
+                ▼
+Backend ───────► @repo/categories ─► CategoryType enum + helpers
+                │
+                ▼
+                @repo/eslint-config ─► Shared lint rules
 ```
 
-Without global `turbo`, use your package manager:
+---
 
-```sh
-cd my-turborepo
-npx turbo login
-yarn exec turbo login
-yarn exec turbo login
-```
+## Documentation
 
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
+Detailed documentation for each part of the project:
 
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
+| Docs | What you'll find |
+|------|------------------|
+| [Frontend README](./apps/frontend/README.md) | React pages, Tailwind styling, animations, blog filter, scroll progress bar |
+| [Backend README](./apps/backend/README.md) | NestJS API endpoints, database schema, auth flow, Prisma setup |
+| [Categories README](./packages/categories/README.md) | Blog category definitions (`All`, `Software`, `Tech`, `Life`, `Community`) |
 
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
+---
 
-```sh
-turbo link
-```
+## License
 
-Without global `turbo`:
+MIT — feel free to fork, learn, and build your own.
 
-```sh
-npx turbo link
-yarn exec turbo link
-yarn exec turbo link
-```
+---
 
-## Useful Links
-
-Learn more about the power of Turborepo:
-
-- [Tasks](https://turborepo.dev/docs/crafting-your-repository/running-tasks)
-- [Caching](https://turborepo.dev/docs/crafting-your-repository/caching)
-- [Remote Caching](https://turborepo.dev/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters)
-- [Configuration Options](https://turborepo.dev/docs/reference/configuration)
-- [CLI Usage](https://turborepo.dev/docs/reference/command-line-reference)
+**Built by Tiani Pekins | Software Engineer** 🇨🇲
