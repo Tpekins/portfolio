@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import {
   ArrowRight,
@@ -12,23 +12,9 @@ import {
   Clock,
   Search,
 } from "lucide-react";
+import { getFeedItems, type FeedItem } from "../services/api";
 
 type FeedType = "video" | "photo" | "note" | "event";
-
-interface FeedItemData {
-  id: string;
-  type: FeedType;
-  date: string;
-  title: string;
-  description: string;
-  youtubeId?: string;
-  photoUrl?: string;
-  noteContent?: string;
-  eventLocation?: string;
-  eventTime?: string;
-}
-
-const feedItems: FeedItemData[] = [];
 
 const filters: { label: string; value: FeedType | "all" }[] = [
   { label: "ALL", value: "all" },
@@ -145,8 +131,8 @@ function FeedItemCard({
   item,
   onPhotoClick,
 }: {
-  item: FeedItemData;
-  onPhotoClick?: (item: FeedItemData) => void;
+  item: FeedItem;
+  onPhotoClick?: (item: FeedItem) => void;
 }) {
   const config = typeConfig[item.type];
 
@@ -272,14 +258,33 @@ function FeedItemCard({
 export default function Feed() {
   const [activeFilter, setActiveFilter] = useState<FeedType | "all">("all");
   const [search, setSearch] = useState("");
-  const [lightboxItem, setLightboxItem] = useState<FeedItemData | null>(null);
+  const [lightboxItem, setLightboxItem] = useState<FeedItem | null>(null);
+  const [feedItems, setFeedItems] = useState<FeedItem[]>([]);
+  const [loading, setLoading] = useState(true);
 
+  /**
+   * Fetch feed items from the backend when the component mounts.
+   * This replaces the old empty array with real data from Neon.
+   */
+  useEffect(() => {
+    setLoading(true);
+    getFeedItems()
+      .then((res) => setFeedItems(res.data))
+      .catch(() => setFeedItems([]))
+      .finally(() => setLoading(false));
+  }, []);
+
+  /**
+   * Filter items locally based on:
+   * - Active tab (ALL / VIDEOS / PHOTOS / NOTES / EVENTS)
+   * - Search text (matches title, description, note content, or type)
+   */
   const filteredItems = feedItems.filter((item) => {
     const matchesCategory =
       activeFilter === "all" || item.type === activeFilter;
     const matchesSearch =
-      item.title.toLowerCase().includes(search.toLowerCase()) ||
-      item.description.toLowerCase().includes(search.toLowerCase()) ||
+      (item.title?.toLowerCase() ?? "").includes(search.toLowerCase()) ||
+      (item.description?.toLowerCase() ?? "").includes(search.toLowerCase()) ||
       (item.noteContent?.toLowerCase() ?? "").includes(search.toLowerCase()) ||
       item.type.toLowerCase().includes(search.toLowerCase());
     return matchesCategory && matchesSearch;
@@ -332,25 +337,31 @@ export default function Feed() {
       {/* Feed List */}
       <section className="pb-48 px-6">
         <div className="max-w-7xl mx-auto">
-          <AnimatePresence mode="popLayout">
-            {filteredItems.length > 0 ? (
-              filteredItems.map((item) => (
-                <FeedItemCard
-                  key={item.id}
-                  item={item}
-                  onPhotoClick={setLightboxItem}
-                />
-              ))
-            ) : (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="py-32 text-center text-text-secondary font-medium opacity-50"
-              >
-                No items found.
-              </motion.div>
-            )}
-          </AnimatePresence>
+          {loading ? (
+            <div className="py-32 text-center text-text-secondary font-medium opacity-50">
+              Loading feed...
+            </div>
+          ) : (
+            <AnimatePresence mode="popLayout">
+              {filteredItems.length > 0 ? (
+                filteredItems.map((item) => (
+                  <FeedItemCard
+                    key={item.id}
+                    item={item}
+                    onPhotoClick={setLightboxItem}
+                  />
+                ))
+              ) : (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="py-32 text-center text-text-secondary font-medium opacity-50"
+                >
+                  No items found.
+                </motion.div>
+              )}
+            </AnimatePresence>
+          )}
         </div>
       </section>
 
@@ -359,7 +370,7 @@ export default function Feed() {
         {lightboxItem && lightboxItem.photoUrl && (
           <PhotoLightbox
             photoUrl={lightboxItem.photoUrl}
-            title={lightboxItem.title}
+            title={lightboxItem.title ?? ""}
             onClose={() => setLightboxItem(null)}
           />
         )}

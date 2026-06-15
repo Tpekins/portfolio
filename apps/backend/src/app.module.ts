@@ -6,6 +6,7 @@ import { PrismaModule } from './prisma/prisma.module';
 import { validateEnv } from './config/configuration';
 import { AuthModule } from './auth/auth.module';
 import { BlogModule } from './blog/blog.module';
+import { FeedModule } from './feed/feed.module';
 import { ProjectsModule } from './projects/projects.module';
 import { ContactModule } from './contact/contact.module';
 import { CommentsModule } from './comments/comments.module';
@@ -22,6 +23,7 @@ import { AiModule } from './ai/ai.module';
     PrismaModule,
     AuthModule,
     BlogModule,
+    FeedModule,
     ProjectsModule,
     ContactModule,
     CommentsModule,
