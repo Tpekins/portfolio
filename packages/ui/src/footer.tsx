@@ -50,12 +50,6 @@ export function Footer() {
             </h2>
             <div className="flex flex-col gap-3 items-center md:items-start text-left">
               <a
-                href="/contact"
-                className="text-base font-bold text-text-primary hover:text-primary transition-colors flex items-center gap-3"
-              >
-                <span className="text-primary font-black">−</span> Contact
-              </a>
-              <a
                 href="/"
                 className="text-base font-bold text-text-primary hover:text-primary transition-colors flex items-center gap-3"
               >
@@ -78,6 +72,18 @@ export function Footer() {
                 className="text-base font-bold text-text-primary hover:text-primary transition-colors flex items-center gap-3"
               >
                 <span className="text-primary font-black">−</span> Blog
+              </a>
+              <a
+                href="/feed"
+                className="text-base font-bold text-text-primary hover:text-primary transition-colors flex items-center gap-3"
+              >
+                <span className="text-primary font-black">−</span> Feed
+              </a>
+              <a
+                href="/contact"
+                className="text-base font-bold text-text-primary hover:text-primary transition-colors flex items-center gap-3"
+              >
+                <span className="text-primary font-black">−</span> Contact
               </a>
             </div>
           </div>
