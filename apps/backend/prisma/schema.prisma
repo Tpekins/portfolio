@@ -21,8 +21,9 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  blogPosts BlogPost[]
-  projects  Project[]
+  blogPosts  BlogPost[]
+  projects   Project[]
+  feedItems  FeedItem[]
 
   @@map("users")
 }
@@ -38,9 +39,10 @@ model BlogPost {
   category    String // "All", "Tech", "Software", "Life", "Community"
   thumbnail   String?
   tags        String[]  @default([])
-  featured    Boolean   @default(false)
-  published   Boolean   @default(false)
+  featured    Boolean  @default(false)
+  published   Boolean  @default(false)
   publishedAt DateTime?
+  likes       Int      @default(0)
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
 
@@ -99,4 +101,27 @@ model Comment {
   blogPost   BlogPost @relation(fields: [blogPostId], references: [id], onDelete: Cascade)
 
   @@map("comments")
+}
+
+// Feed items (videos, photos, notes, events)
+model FeedItem {
+  id            String   @id @default(cuid())
+  type          String   // "video" | "photo" | "note" | "event"
+  date          DateTime @default(now())
+  title         String?
+  description   String?  @db.Text
+  youtubeId     String?
+  youtubeUrl    String?
+  photoUrl      String?
+  noteContent   String?  @db.Text
+  eventLocation String?
+  eventTime     String?
+  published     Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  authorId String
+  author   User   @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  @@map("feed_items")
 }
