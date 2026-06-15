@@ -219,7 +219,7 @@ function FeedItemCard({
             <div className="relative w-full rounded-2xl overflow-hidden shadow-xl bg-black" style={{ paddingBottom: "56.25%" }}>
               <iframe
                 src={`https://www.youtube.com/embed/${item.youtubeId}`}
-                title={item.title}
+                title={item.title ?? ""}
                 className="absolute top-0 left-0 w-full h-full"
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -238,7 +238,7 @@ function FeedItemCard({
             >
               <img
                 src={item.photoUrl}
-                alt={item.title}
+                alt={item.title ?? ""}
                 className="w-full h-auto object-cover transition-transform duration-700 group-hover/photo:scale-105"
               />
               <div className="absolute inset-0 bg-black/0 group-hover/photo:bg-black/20 transition-colors duration-500 flex items-center justify-center">
