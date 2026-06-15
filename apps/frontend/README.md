@@ -96,6 +96,30 @@ Blog Page (hover + scroll triggers)
 - **Height**: 960px fixed bar
 - **List height**: 1400px (shows ~4 posts at a time)
 
+## Blog Filter Flow
+
+```mermaid
+flowchart TD
+    A[User opens /blog] --> B[Fetch all posts from API]
+    B --> C[Extract unique categories]
+    C --> D[Render filter buttons]
+    D --> E[User clicks category]
+    E --> F{Active category?}
+    F -->|ALL| G[Show all posts]
+    F -->|Other| H[Filter posts by category]
+    G --> I[User types in search]
+    H --> I
+    I --> J{Search term?}
+    J -->|Yes| K[Filter by title + excerpt]
+    J -->|No| L[Keep current list]
+    K --> M[Render filtered posts]
+    L --> M
+    M --> N[User scrolls list]
+    N --> O{Hovering AND scrolling?}
+    O -->|Yes| P[Show green progress bar]
+    O -->|No| Q[Hide progress bar]
+```
+
 ---
 
 ## Tech Stack

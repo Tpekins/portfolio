@@ -49,6 +49,27 @@ A modern, full-stack portfolio platform built for showcasing engineering project
 └─────────────────────────────────────────────────────────────────────┘
 ```
 
+## Request Flow
+
+```mermaid
+flowchart TD
+    A[User opens browser] --> B[React Router matches URL]
+    B --> C{Static or Dynamic?}
+    C -->|Static page| D[Render page component]
+    C -->|Needs data| E[Call API service]
+    E --> F[HTTP GET /blog?category=X]
+    F --> G[NestJS Controller receives request]
+    G --> H[Service validates query]
+    H --> I{Category filter?}
+    I -->|Yes| J[Apply Prisma where clause]
+    I -->|No| K[Return all posts]
+    J --> L[Prisma queries PostgreSQL]
+    K --> L
+    L --> M[Return JSON response]
+    M --> N[React renders posts]
+    N --> O[User sees blog list]
+```
+
 ---
 
 ## Tech Stack

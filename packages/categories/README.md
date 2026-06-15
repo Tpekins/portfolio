@@ -70,6 +70,21 @@ if (query.category) {
 | `isValidCategory` | `function` | Type guard: checks if value is a valid category |
 | `getCategoryLabel` | `function` | Maps enum key to display string |
 
+## Category Validation Flow
+
+```mermaid
+flowchart TD
+    A[User clicks category] --> B[Set activeCategory state]
+    B --> C[Call getBlogPosts with category]
+    C --> D[Backend receives category parameter]
+    D --> E{isValidCategory?}
+    E -->|No| F[Ignore filter, return all posts]
+    E -->|Yes| G[Apply Prisma where clause]
+    G --> H[Query database]
+    H --> I[Return filtered posts]
+    I --> J[Frontend renders filtered list]
+```
+
 ---
 
 ## Category Change History

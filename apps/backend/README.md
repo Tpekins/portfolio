@@ -124,6 +124,27 @@ Client POST /blog
 └─────────────────────────────────────────┘
 ```
 
+## API Request Flow
+
+```mermaid
+flowchart TD
+    A[Client sends request] --> B{Route matches?}
+    B -->|No| C[404 Not Found]
+    B -->|Yes| D{Auth required?}
+    D -->|Yes| E{Valid JWT?}
+    E -->|No| F[401 Unauthorized]
+    E -->|Yes| G[Extract user from token]
+    G --> H[Controller receives request]
+    D -->|No| H
+    H --> I[Validate DTO]
+    I -->|Invalid| J[400 Bad Request]
+    I -->|Valid| K[Service processes request]
+    K --> L{Database query}
+    L -->|Error| M[500 Server Error]
+    L -->|Success| N[Return response]
+    N --> O[Client receives JSON]
+```
+
 ---
 
 ## Database Schema
@@ -314,6 +335,27 @@ yarn test:e2e --filter=backend
 │   • POST /projects          │
 │   • POST /upload            │
 └─────────────────────────────┘
+```
+
+---
+
+## Auth Flow
+
+```mermaid
+flowchart TD
+    A[User sends POST /auth/login] --> B[Controller receives email + password]
+    B --> C[AuthService validates credentials]
+    C --> D{User exists?}
+    D -->|No| E[401 Unauthorized]
+    D -->|Yes| F[bcrypt compares password hash]
+    F -->|Mismatch| E
+    F -->|Match| G[Generate JWT token]
+    G --> H[Return token to client]
+    H --> I[Client stores token]
+    I --> J[Subsequent requests include Authorization: Bearer <token>]
+    J --> K[Passport JWT Strategy validates token]
+    K -->|Valid| L[Grant access to protected route]
+    K -->|Invalid| M[401 Unauthorized]
 ```
 
 ---
