@@ -205,11 +205,31 @@ function FeedItemCard({
             )}
           </div>
 
-          {/* Right: Arrow */}
+          {/* Right: Arrow — functional based on type */}
           <div className="md:col-span-2 flex justify-end items-start pt-2">
-            <div className="w-14 h-14 rounded-2xl bg-white shadow-xl shadow-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all duration-500 group-hover:scale-110 cursor-pointer">
-              <ArrowRight size={22} />
-            </div>
+            {item.type === "video" && item.youtubeId ? (
+              <a
+                href={`https://www.youtube.com/watch?v=${item.youtubeId}`}
+                target="_blank"
+                rel="noreferrer"
+                className="w-14 h-14 rounded-2xl bg-white shadow-xl shadow-primary/10 flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-all duration-500 hover:scale-110"
+                aria-label="Watch on YouTube"
+              >
+                <ArrowRight size={22} />
+              </a>
+            ) : item.type === "photo" && item.photoUrl ? (
+              <button
+                onClick={() => onPhotoClick?.(item)}
+                className="w-14 h-14 rounded-2xl bg-white shadow-xl shadow-primary/10 flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-all duration-500 hover:scale-110"
+                aria-label="View photo"
+              >
+                <ArrowRight size={22} />
+              </button>
+            ) : (
+              <div className="w-14 h-14 rounded-2xl bg-white shadow-xl shadow-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all duration-500 group-hover:scale-110">
+                <ArrowRight size={22} />
+              </div>
+            )}
           </div>
         </div>
 
