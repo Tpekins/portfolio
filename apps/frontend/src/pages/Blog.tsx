@@ -19,6 +19,36 @@ function getPlatformLabel(url: string | null): string {
   }
 }
 
+const categoryConfig: Record<string, { textClass: string; borderClass: string }> = {
+  Tech: {
+    textClass: "text-blue-600",
+    borderClass: "border-blue-300",
+  },
+  Software: {
+    textClass: "text-violet-600",
+    borderClass: "border-violet-300",
+  },
+  Life: {
+    textClass: "text-amber-600",
+    borderClass: "border-amber-300",
+  },
+  Community: {
+    textClass: "text-emerald-600",
+    borderClass: "border-emerald-300",
+  },
+};
+
+function CategoryBadge({ category }: { category: string }) {
+  const config = categoryConfig[category] ?? categoryConfig["Tech"];
+  return (
+    <span
+      className={`inline-flex items-center text-[10px] font-black uppercase tracking-widest px-2 py-0.5 rounded-full border ${config.borderClass} ${config.textClass}`}
+    >
+      {category}
+    </span>
+  );
+}
+
 function wrapPost(post: BlogPost) {
   const card = <PostCard post={post} />;
   if (post.externalUrl) {
@@ -36,45 +66,54 @@ function wrapPost(post: BlogPost) {
 }
 
 function PostCard({ post }: { post: BlogPost }) {
+  const config = categoryConfig[post.category] ?? categoryConfig["Tech"];
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      className="group relative py-16 md:py-20 border-b border-border-subtle hover:bg-primary/5 transition-colors duration-700 cursor-pointer"
+      className="group relative py-10 md:py-12 border-b border-border-subtle hover:bg-primary/5 transition-colors duration-700 cursor-pointer"
     >
-      <div className="grid md:grid-cols-12 gap-12 items-center relative z-10 px-6">
-        <div className="md:col-span-2 text-[10px] font-black uppercase tracking-[0.3em] text-primary italic opacity-60">
-          {formatDate(post.publishedAt)}
-        </div>
-        <div className="md:col-span-1 text-[10px] font-black uppercase tracking-[0.3em] text-text-secondary opacity-40">
-          {post.category}
-        </div>
-        <div className="md:col-span-7">
-          <h3 className="section-title !text-2xl md:!text-3xl lg:!text-4xl group-hover:text-primary transition-colors duration-500">
-            {post.title}
-          </h3>
-          {post.excerpt && (
-            <p className="mt-4 text-body text-sm font-medium line-clamp-2">
-              {post.excerpt}
-            </p>
-          )}
-          {post.externalUrl && (
-            <a
-              href={post.externalUrl}
-              target="_blank"
-              rel="noreferrer"
-              onClick={(e) => e.stopPropagation()}
-              className="mt-3 inline-flex items-center gap-1 text-[10px] font-black uppercase tracking-widest text-primary opacity-40 hover:opacity-100 transition-opacity"
-            >
-              Read on {getPlatformLabel(post.externalUrl)}{" "}
-              <ExternalLink size={10} />
-            </a>
-          )}
-        </div>
-        <div className="md:col-span-2 flex justify-end">
-          <div className="w-16 h-16 rounded-2xl bg-white shadow-xl shadow-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all duration-500 group-hover:scale-110">
-            <ArrowRight size={24} />
+      <div className="px-6">
+        <div className="grid md:grid-cols-12 gap-8 md:gap-12 items-start">
+          {/* Left: Date + Category stacked vertically */}
+          <div className="md:col-span-2 flex flex-col gap-2">
+            <div className={`text-[10px] font-black uppercase tracking-[0.3em] ${config.textClass}`}>
+              {formatDate(post.publishedAt)}
+            </div>
+            <CategoryBadge category={post.category} />
+          </div>
+
+          {/* Middle: Content */}
+          <div className="md:col-span-8">
+            <h3 className="section-title !text-xl md:!text-2xl group-hover:opacity-80 transition-opacity duration-500">
+              {post.title}
+            </h3>
+            {post.excerpt && (
+              <p className="mt-3 text-body text-sm font-medium leading-relaxed line-clamp-2">
+                {post.excerpt}
+              </p>
+            )}
+            {post.externalUrl && (
+              <a
+                href={post.externalUrl}
+                target="_blank"
+                rel="noreferrer"
+                onClick={(e) => e.stopPropagation()}
+                className="mt-3 inline-flex items-center gap-1 text-[10px] font-black uppercase tracking-widest text-primary opacity-40 hover:opacity-100 transition-opacity"
+              >
+                Read on {getPlatformLabel(post.externalUrl)}{" "}
+                <ExternalLink size={10} />
+              </a>
+            )}
+          </div>
+
+          {/* Right: Arrow */}
+          <div className="md:col-span-2 flex justify-end items-center">
+            <div className="w-11 h-11 rounded-xl bg-white shadow-xl shadow-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all duration-500 group-hover:scale-110">
+              <ArrowRight size={18} />
+            </div>
           </div>
         </div>
       </div>
@@ -140,7 +179,7 @@ export default function Blog() {
     <div className="flex flex-col">
       {/* Blog Hero */}
       <section className="pt-48 pb-32 px-6">
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-5xl mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-end gap-8 mb-16 pb-8 border-b border-border-subtle">
             <div className="space-y-3 max-w-3xl">
               <span className="section-label">The Journal</span>
@@ -187,7 +226,7 @@ export default function Blog() {
       {/* Post list */}
       <section className="pb-48 px-6">
         <div
-          className="max-w-7xl mx-auto flex gap-4"
+          className="max-w-5xl mx-auto flex gap-4"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
@@ -195,7 +234,7 @@ export default function Blog() {
           <div
             className="relative flex-shrink-0 w-[3px] rounded-full overflow-hidden"
             style={{
-              height: "960px",
+              height: "640px",
               backgroundColor: barVisible ? "#eeeeee" : "transparent",
               transition: "background-color 0.3s ease",
             }}
@@ -212,12 +251,12 @@ export default function Blog() {
             />
           </div>
 
-          {/* Scrollable articles — 4 visible at a time */}
+          {/* Scrollable articles */}
           <div
             ref={listRef}
             onScroll={handleListScroll}
             className="flex-grow overflow-y-auto scrollbar-hide"
-            style={{ height: "1400px" }}
+            style={{ height: "640px" }}
           >
             {loading ? (
               <div className="py-32 text-center text-text-secondary font-medium opacity-50">
