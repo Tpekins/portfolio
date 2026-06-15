@@ -176,9 +176,9 @@ export default function Blog() {
   const barVisible = isHovered && isScrolling;
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col bg-[#fdfcfb]">
       {/* Blog Hero */}
-      <section className="pt-48 pb-24 px-6">
+      <section className="pt-48 pb-24 px-6 bg-[#fdfcfb]">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-end gap-8 mb-16 pb-8 border-b border-border-subtle">
             <div className="space-y-3 max-w-3xl">
