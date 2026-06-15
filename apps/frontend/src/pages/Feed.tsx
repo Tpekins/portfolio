@@ -22,7 +22,6 @@ interface FeedItemData {
   title: string;
   description: string;
   youtubeId?: string;
-  youtubeUrl?: string;
   photoUrl?: string;
   noteContent?: string;
   eventLocation?: string;
@@ -187,9 +186,9 @@ function FeedItemCard({
                 </p>
 
                 {/* Video: Watch on YouTube */}
-                {item.type === "video" && item.youtubeUrl && (
+                {item.type === "video" && item.youtubeId && (
                   <a
-                    href={item.youtubeUrl}
+                    href={`https://www.youtube.com/watch?v=${item.youtubeId}`}
                     target="_blank"
                     rel="noreferrer"
                     className="inline-flex items-center gap-1.5 text-[10px] font-black uppercase tracking-widest text-amber-600 opacity-70 hover:opacity-100 transition-opacity mt-1"

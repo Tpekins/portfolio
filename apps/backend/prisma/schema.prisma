@@ -111,7 +111,6 @@ model FeedItem {
   title         String?
   description   String?  @db.Text
   youtubeId     String?
-  youtubeUrl    String?
   photoUrl      String?
   noteContent   String?  @db.Text
   eventLocation String?
