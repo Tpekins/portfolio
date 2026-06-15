@@ -295,10 +295,15 @@ export default function Feed() {
       {/* Feed Hero */}
       <section className="pt-48 pb-24 px-6">
         <div className="max-w-7xl mx-auto">
-          <div className="mb-16 pb-8 border-b border-border-subtle">
+          <div className="flex flex-col md:flex-row justify-between items-end gap-8 mb-16 pb-8 border-b border-border-subtle">
             <div className="space-y-3 max-w-3xl">
               <span className="section-label">Updates & Moments</span>
               <h1 className="heading-hero">The Feed</h1>
+            </div>
+            <div className="text-right hidden md:block">
+              <p className="text-body font-medium max-w-xs">
+                Videos, photos, notes, and events — a living log of the journey.
+              </p>
             </div>
           </div>
 
