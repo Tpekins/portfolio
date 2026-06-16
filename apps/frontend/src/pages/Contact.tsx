@@ -146,13 +146,14 @@ export default function Contact() {
 
           {/* Profile Card */}
           <div className="w-full max-w-lg flex flex-col md:flex-row items-center md:items-start gap-8 mt-10">
-          <div className="w-59 h-69 shrink-0 overflow-hidden rounded-lg">
+          <div className="w-59 h-69 shrink-0 overflow-hidden rounded-lg group relative">
               <img
                 src="/Tiani.jpg"
                 alt="Tiani Pekins"
-                className="w-full h-full object-cover object-top"
+                className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500 group-hover:opacity-60"
                 referrerPolicy="no-referrer"
               />
+              <div className="absolute inset-0 bg-[#2e7d32]/0 group-hover:bg-[#2e7d32]/20 transition-colors duration-500"></div>
             </div>
             <div className="space-y-4 pt-4 md:pt-10">
               <div className="space-y-1 text-center md:text-left">

@@ -149,12 +149,13 @@ export default function About() {
             >
               {/* Logo */}
               <div className="lg:col-span-2 flex justify-center lg:justify-start">
-                <div className={`w-32 h-32 rounded-lg ${exp.logoBg} flex items-center justify-center shadow-lg overflow-hidden`}>
+                <div className={`w-32 h-32 rounded-lg ${exp.logoBg} flex items-center justify-center shadow-lg overflow-hidden group relative`}>
                   <img
                     src="/ub.jpg"
                     alt="University of Buea Logo"
-                    className="w-full h-auto object-contain p-2"
+                    className="w-full h-auto object-contain p-2 group-hover:scale-110 transition-transform duration-500 group-hover:opacity-60"
                   />
+                  <div className="absolute inset-0 bg-[#2e7d32]/0 group-hover:bg-[#2e7d32]/20 transition-colors duration-500"></div>
                 </div>
               </div>
 

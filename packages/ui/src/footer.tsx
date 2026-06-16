@@ -17,7 +17,7 @@ export function Footer() {
   return (
     <footer className="fixed bottom-0 left-0 right-0 z-20 h-[550px] bg-white border-t border-[#eeeeee] pt-12 pb-24 px-6 w-full overflow-hidden flex flex-col items-center">
       <div className="max-w-7xl mx-auto w-full flex-grow flex flex-col justify-between">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 items-start text-center md:text-left">
+        <div className="mt-10 grid grid-cols-1 md:grid-cols-12 gap-12 items-start text-center md:text-left">
           {/* Logo Section */}
           <div className="md:col-span-4 flex flex-col items-center md:items-start space-y-2">
             <span className="text-5xl md:text-6xl font-script text-[#2e7d32] tracking-tight">
@@ -90,7 +90,7 @@ export function Footer() {
         <div className="mt-10 flex flex-col items-center space-y-6">
           <button
             onClick={scrollToTop}
-            className="w-12 h-5 border-2 border-[#1a1a1c] rounded-lg flex items-center justify-center hover:bg-[#1a1a1c] hover:text-white transition-all group shadow-sm bg-white"
+            className="w-12 h-12 border-2 border-[#1a1a1c] rounded-lg flex items-center justify-center hover:bg-[#1a1a1c] hover:text-white transition-all group shadow-sm bg-white"
             aria-label="Back to top"
           >
             <ChevronUp size={24} />

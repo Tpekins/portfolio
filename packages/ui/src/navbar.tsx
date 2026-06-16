@@ -147,7 +147,7 @@ export function Navbar() {
           {/* Hamburger menu button */}
           <div className="relative" ref={dropdownRef}>
             <button
-              className="w-12 h-12 flex items-center justify-center bg-white border border-[#eeeeee] rounded-lg text-[#1a1a1c] hover:bg-[#f5f5f5] transition-colors"
+              className="w-12 h-12 flex items-center justify-center bg-white border border-[#eeeeee] rounded-lg text-[#1a1a1c] hover:bg-[#2e7d32] hover:text-white hover:border-[#2e7d32] transition-all duration-300"
               onClick={() => {
                 if (isOpen) {
                   setShowLanguageMenu(false);
@@ -186,10 +186,10 @@ export function Navbar() {
                           {LANGUAGES.map((lang) => (
                             <button
                               key={lang.code}
-                              className={`flex items-center justify-between w-full px-2 py-1.5 text-xs font-medium rounded-lg transition-colors ${
+                              className={`group flex items-center justify-between w-full px-3 py-1.5 text-xs font-bold border-b border-[#eeeeee] last:border-b-0 hover:bg-[#2e7d32] hover:text-white transition-all duration-300 ${
                                 selectedLanguage === lang.code
                                   ? "bg-[#f1f8f1] text-[#2e7d32]"
-                                  : "text-[#1a1a1c] hover:bg-[#f5f5f5]"
+                                  : "text-[#1a1a1c]"
                               }`}
                               onClick={() => handleLanguageSelect(lang.code)}
                               role="menuitem"
@@ -199,12 +199,12 @@ export function Navbar() {
                                   const FlagIcon = FLAGS[lang.code];
                                   return FlagIcon ? <FlagIcon /> : null;
                                 })()}
-                                <span className="text-[8px] font-bold text-[#333333]">
+                                <span className="text-[10px] font-black group-hover:text-white transition-colors duration-300">
                                   {lang.code}
                                 </span>
                               </div>
                               {selectedLanguage === lang.code && (
-                                <span className="text-[8px] font-bold text-[#2e7d32]">
+                                <span className="text-[8px] font-bold text-[#2e7d32] group-hover:text-white">
                                   ✓
                                 </span>
                               )}
@@ -223,7 +223,7 @@ export function Navbar() {
                       >
                         <div className="flex flex-col gap-0.5">
                           <button
-                            className="flex items-center justify-between w-full px-2 py-2 text-xs font-medium text-[#1a1a1c] hover:bg-[#f5f5f5] rounded-lg transition-colors"
+                            className="flex items-center justify-between w-full px-2 py-2 text-sm font-bold text-[#1a1a1c] hover:bg-[#f5f5f5] hover:text-[#2e7d32] rounded-lg transition-all duration-300"
                             onClick={() => setShowLanguageMenu(true)}
                             role="menuitem"
                           >
@@ -231,7 +231,7 @@ export function Navbar() {
                               <Globe size={14} />
                               <span>Language</span>
                             </div>
-                            <ChevronRight size={14} className="text-[#333333]" />
+                            <ChevronRight size={14} className="text-[#333333] group-hover:text-[#2e7d32]" />
                           </button>
                         </div>
                       </motion.div>
