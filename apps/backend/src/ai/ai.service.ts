@@ -43,7 +43,6 @@ export class AiService {
 
       this.logger.log('Generating summary for content');
 
-      // Replace this with actual Google GenAI API call
       // For now, return a placeholder
       return `[AI Summary] This content discusses key concepts related to the provided text. To enable AI features, configure GOOGLE_GENAI_API_KEY.`;
     } catch (error) {
@@ -54,7 +53,6 @@ export class AiService {
 
   /**
    * Generate tags for blog content
-   * Requires GOOGLE_GENAI_API_KEY to be set in environment
    */
   async generateTags(
     title: string,
@@ -63,7 +61,7 @@ export class AiService {
   ): Promise<string[]> {
     if (!this.apiKey) {
       throw new BadRequestException(
-        'AI service not configured. Please set GOOGLE_GENAI_API_KEY in environment.',
+        'AI service not configured. Please set API_KEY in environment.',
       );
     }
 
@@ -78,7 +76,6 @@ export class AiService {
 
       this.logger.log('Generating tags for content');
 
-      // TODO: Implement Google GenAI integration
       // For now, return some basic tags based on content analysis
       const basicTags = ['blog', 'content', 'development'];
       return basicTags.slice(0, maxTags);
