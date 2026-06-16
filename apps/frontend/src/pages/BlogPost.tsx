@@ -2,8 +2,10 @@ import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { ArrowLeft, ExternalLink } from "lucide-react";
 import { getBlogPost, type BlogPost } from "../services/api";
+import { useTranslation } from "@repo/ui";
 
 export default function BlogPostPage() {
+  const { t, locale } = useTranslation();
   const { slug } = useParams<{ slug: string }>();
   const [post, setPost] = useState<BlogPost | null>(null);
   const [loading, setLoading] = useState(true);
@@ -19,10 +21,10 @@ export default function BlogPostPage() {
 
   if (loading) {
     return (
-      <div className="flex flex-col min-h-screen">
+      <div className="flex flex-col min-h-screen bg-white">
         <main className="flex-grow pt-48 pb-32 px-6">
-          <div className="max-w-3xl mx-auto text-center text-text-secondary font-medium opacity-50">
-            Loading post...
+          <div className="max-w-3xl mx-auto text-center text-[#333333] font-medium">
+            {t("blogPost.loading")}
           </div>
         </main>
       </div>
@@ -31,17 +33,17 @@ export default function BlogPostPage() {
 
   if (error || !post) {
     return (
-      <div className="flex flex-col min-h-screen">
+      <div className="flex flex-col min-h-screen bg-white">
         <main className="flex-grow pt-48 pb-32 px-6">
           <div className="max-w-3xl mx-auto text-center space-y-6">
-            <p className="text-text-secondary font-medium opacity-50">
-              Post not found.
+            <p className="text-[#333333] font-medium">
+              {t("blogPost.notFound")}
             </p>
             <Link
               to="/blog"
-              className="inline-flex items-center gap-2 text-primary font-bold hover:underline"
+              className="inline-flex items-center gap-2 text-[#2e7d32] font-bold hover:underline"
             >
-              <ArrowLeft size={18} /> Back to blog
+              <ArrowLeft size={18} /> {t("blogPost.backToBlog")}
             </Link>
           </div>
         </main>
@@ -50,22 +52,22 @@ export default function BlogPostPage() {
   }
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-white">
       <main className="flex-grow pt-48 pb-32 px-6">
         <article className="max-w-3xl mx-auto">
           <Link
             to="/blog"
-            className="inline-flex items-center gap-2 text-sm font-bold text-text-secondary hover:text-primary transition-colors mb-12"
+            className="inline-flex items-center gap-2 text-sm font-bold text-[#333333] hover:text-[#2e7d32] transition-colors mb-12"
           >
-            <ArrowLeft size={16} /> Back to blog
+            <ArrowLeft size={16} /> {t("blogPost.backToBlog")}
           </Link>
 
           <header className="space-y-6 mb-16">
             <div className="flex items-center gap-4 text-[10px] font-black uppercase tracking-widest">
-              <span className="text-primary">{post.category}</span>
-              <span className="text-text-secondary opacity-40">
+              <span className="text-[#2e7d32]">{post.category}</span>
+              <span className="text-[#333333]">
                 {post.publishedAt
-                  ? new Date(post.publishedAt).toLocaleDateString("en-US", {
+                  ? new Date(post.publishedAt).toLocaleDateString(locale, {
                       month: "long",
                       day: "numeric",
                       year: "numeric",
@@ -77,18 +79,18 @@ export default function BlogPostPage() {
               {post.title}
             </h1>
             {post.excerpt && (
-              <p className="text-body text-lg font-medium">{post.excerpt}</p>
+              <p className="text-[#333333] text-lg font-medium">{post.excerpt}</p>
             )}
-            <div className="flex items-center gap-3 text-sm font-medium text-text-secondary">
-              <span>By {post.author.name}</span>
+            <div className="flex items-center gap-3 text-sm font-medium text-[#333333]">
+              <span>{t("blogPost.by")} {post.author.name}</span>
               {post.tags.length > 0 && (
                 <>
-                  <span className="opacity-30">·</span>
+                  <span className="text-[#333333]">·</span>
                   <div className="flex gap-2">
                     {post.tags.map((tag) => (
                       <span
                         key={tag}
-                        className="text-[10px] font-bold uppercase tracking-wider bg-bg-secondary px-3 py-1 rounded-full"
+                        className="text-[10px] font-bold uppercase tracking-wider bg-[#fafafa] text-[#1a1a1c] px-3 py-1 rounded-full"
                       >
                         {tag}
                       </span>
@@ -101,22 +103,22 @@ export default function BlogPostPage() {
 
           {post.externalUrl ? (
             <div className="space-y-8">
-              <div className="bg-bg-secondary border border-border-subtle rounded-2xl p-8 text-center space-y-4">
-                <p className="text-body font-medium">
-                  This article is published on an external platform.
+              <div className="bg-[#fafafa] border border-[#eeeeee] rounded-2xl p-8 text-center space-y-4">
+                <p className="text-[#333333] font-medium">
+                  {t("blogPost.external")}
                 </p>
                 <a
                   href={post.externalUrl}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center gap-2 bg-primary text-white px-8 py-4 rounded-xl font-bold hover:opacity-90 transition-all"
+                  className="inline-flex items-center gap-2 bg-[#2e7d32] text-white px-8 py-4 rounded-xl font-bold hover:opacity-90 transition-all"
                 >
-                  Read full article <ExternalLink size={18} />
+                  {t("blogPost.readFull")} <ExternalLink size={18} />
                 </a>
               </div>
               {(post.content ?? "").split("\n").map((paragraph, i) =>
                 paragraph.trim() ? (
-                  <p key={i} className="text-body mb-6 leading-relaxed">
+                  <p key={i} className="text-[#333333] mb-6 leading-relaxed">
                     {paragraph}
                   </p>
                 ) : null
@@ -126,7 +128,7 @@ export default function BlogPostPage() {
             <div className="prose prose-lg max-w-none">
               {(post.content ?? "").split("\n").map((paragraph, i) =>
                 paragraph.trim() ? (
-                  <p key={i} className="text-body mb-6 leading-relaxed">
+                  <p key={i} className="text-[#333333] mb-6 leading-relaxed">
                     {paragraph}
                   </p>
                 ) : null

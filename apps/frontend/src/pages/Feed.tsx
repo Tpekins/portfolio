@@ -13,22 +13,16 @@ import {
   Search,
 } from "lucide-react";
 import { getFeedItems, type FeedItem } from "../services/api";
+import { useTranslation } from "@repo/ui";
 
 type FeedType = "video" | "photo" | "note" | "event";
 
-const filters: { label: string; value: FeedType | "all" }[] = [
-  { label: "ALL", value: "all" },
-  { label: "VIDEOS", value: "video" },
-  { label: "PHOTOS", value: "photo" },
-  { label: "NOTES", value: "note" },
-  { label: "EVENTS", value: "event" },
-];
+const filterValues: (FeedType | "all")[] = ["all", "video", "photo", "note", "event"];
 
 const typeConfig: Record<
   FeedType,
   {
     icon: typeof Play;
-    label: string;
     badgeClass: string;
     dateClass: string;
     borderClass: string;
@@ -36,37 +30,40 @@ const typeConfig: Record<
 > = {
   video: {
     icon: Play,
-    label: "VIDEO",
     badgeClass: "border-amber-500 text-amber-600 bg-amber-50",
     dateClass: "text-amber-600",
     borderClass: "border-amber-500",
   },
   photo: {
     icon: ImageIcon,
-    label: "PHOTO",
     badgeClass: "border-emerald-600 text-emerald-700 bg-emerald-50",
     dateClass: "text-emerald-700",
     borderClass: "border-emerald-600",
   },
   note: {
     icon: FileText,
-    label: "NOTE",
     badgeClass: "border-indigo-500 text-indigo-600 bg-indigo-50",
     dateClass: "text-indigo-600",
     borderClass: "border-indigo-500",
   },
   event: {
     icon: Calendar,
-    label: "EVENT",
     badgeClass: "border-rose-500 text-rose-600 bg-rose-50",
     dateClass: "text-rose-600",
     borderClass: "border-rose-500",
   },
 };
 
-function formatDate(dateStr: string): string {
+const typeLabels: Record<FeedType, string> = {
+  video: "feed.videos",
+  photo: "feed.photos",
+  note: "feed.notes",
+  event: "feed.events",
+};
+
+function formatDate(dateStr: string, locale: string): string {
   return new Date(dateStr)
-    .toLocaleDateString("en-US", {
+    .toLocaleDateString(locale, {
       month: "short",
       day: "2-digit",
       year: "numeric",
@@ -75,6 +72,7 @@ function formatDate(dateStr: string): string {
 }
 
 function TypeBadge({ type }: { type: FeedType }) {
+  const { t } = useTranslation();
   const config = typeConfig[type];
   const Icon = config.icon;
   return (
@@ -82,7 +80,7 @@ function TypeBadge({ type }: { type: FeedType }) {
       className={`inline-flex items-center gap-1.5 text-[10px] font-black uppercase tracking-widest px-3 py-1.5 rounded-full border ${config.badgeClass}`}
     >
       <Icon size={12} />
-      {config.label}
+      {t(typeLabels[type])}
     </span>
   );
 }
@@ -104,7 +102,6 @@ function PhotoLightbox({
       exit={{ opacity: 0 }}
       className="fixed inset-0 z-[60] bg-black/95 flex items-center justify-center p-4 md:p-12"
     >
-      {/* Close button — circled X at extreme top-right edge */}
       <button
         onClick={onClose}
         className="fixed top-4 right-4 md:top-6 md:right-6 w-14 h-14 rounded-full bg-white flex items-center justify-center text-black shadow-2xl hover:bg-gray-100 hover:scale-110 transition-all duration-300 z-[70]"
@@ -134,6 +131,7 @@ function FeedItemCard({
   item: FeedItem;
   onPhotoClick?: (item: FeedItem) => void;
 }) {
+  const { t, locale } = useTranslation();
   const config = typeConfig[item.type];
 
   return (
@@ -141,7 +139,7 @@ function FeedItemCard({
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      className="group relative py-12 md:py-16 border-b border-border-subtle hover:bg-primary/5 transition-colors duration-700"
+      className="group relative py-12 md:py-16 border-b border-[#eeeeee] hover:bg-[#2e7d32]/5 transition-colors duration-700"
     >
       <div className="max-w-7xl mx-auto px-6">
         {/* Header row: date + badge | title + desc | arrow */}
@@ -149,7 +147,7 @@ function FeedItemCard({
           {/* Left: Date + Badge */}
           <div className="md:col-span-2 flex flex-col gap-3">
             <div className={`text-[10px] font-black uppercase tracking-[0.3em] ${config.dateClass}`}>
-              {formatDate(item.date)}
+              {formatDate(item.date, locale)}
             </div>
             <TypeBadge type={item.type} />
           </div>
@@ -158,16 +156,16 @@ function FeedItemCard({
           <div className="md:col-span-8">
             {item.type === "note" ? (
               <div className={`border-l-2 ${config.borderClass} pl-6`}>
-                <p className="text-lg md:text-xl text-text-primary italic leading-relaxed font-medium">
+                <p className="text-lg md:text-xl text-[#1a1a1c] italic leading-relaxed font-medium">
                   {item.noteContent}
                 </p>
               </div>
             ) : (
               <div className="space-y-3">
-                <h3 className="section-title !text-2xl md:!text-3xl group-hover:text-primary transition-colors duration-500">
+                <h3 className="section-title !text-2xl md:!text-3xl group-hover:text-[#2e7d32] transition-colors duration-500">
                   {item.title}
                 </h3>
-                <p className="text-body text-sm font-medium leading-relaxed">
+                <p className="text-[#333333] text-sm font-medium leading-relaxed">
                   {item.description}
                 </p>
 
@@ -177,10 +175,10 @@ function FeedItemCard({
                     href={`https://www.youtube.com/watch?v=${item.youtubeId}`}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center gap-1.5 text-[10px] font-black uppercase tracking-widest text-amber-600 opacity-70 hover:opacity-100 transition-opacity mt-1"
+                    className="inline-flex items-center gap-1.5 text-[10px] font-black uppercase tracking-widest text-amber-600 hover:opacity-80 transition-opacity mt-1"
                   >
                     <ExternalLink size={10} />
-                    WATCH ON YOUTUBE
+                    {t("feed.watchOnYouTube")}
                   </a>
                 )}
 
@@ -188,13 +186,13 @@ function FeedItemCard({
                 {item.type === "event" && (
                   <div className="flex flex-wrap items-center gap-4 pt-1">
                     {item.eventLocation && (
-                      <span className="inline-flex items-center gap-1 text-xs font-bold text-text-secondary">
+                      <span className="inline-flex items-center gap-1 text-xs font-bold text-[#333333]">
                         <MapPin size={12} className="text-rose-500" />
                         {item.eventLocation}
                       </span>
                     )}
                     {item.eventTime && (
-                      <span className="inline-flex items-center gap-1 text-xs font-bold text-text-secondary">
+                      <span className="inline-flex items-center gap-1 text-xs font-bold text-[#333333]">
                         <Clock size={12} className="text-rose-500" />
                         {item.eventTime}
                       </span>
@@ -205,14 +203,14 @@ function FeedItemCard({
             )}
           </div>
 
-          {/* Right: Arrow — functional based on type */}
+          {/* Right: Arrow */}
           <div className="md:col-span-2 flex justify-end items-start pt-2">
             {item.type === "video" && item.youtubeId ? (
               <a
                 href={`https://www.youtube.com/watch?v=${item.youtubeId}`}
                 target="_blank"
                 rel="noreferrer"
-                className="w-14 h-14 rounded-2xl bg-white shadow-xl shadow-primary/10 flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-all duration-500 hover:scale-110"
+                className="w-14 h-14 rounded-2xl bg-white shadow-xl shadow-[#2e7d32]/10 flex items-center justify-center text-[#2e7d32] hover:bg-[#2e7d32] hover:text-white transition-all duration-500 hover:scale-110"
                 aria-label="Watch on YouTube"
               >
                 <ArrowRight size={22} />
@@ -220,13 +218,13 @@ function FeedItemCard({
             ) : item.type === "photo" && item.photoUrl ? (
               <button
                 onClick={() => onPhotoClick?.(item)}
-                className="w-14 h-14 rounded-2xl bg-white shadow-xl shadow-primary/10 flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-all duration-500 hover:scale-110"
+                className="w-14 h-14 rounded-2xl bg-white shadow-xl shadow-[#2e7d32]/10 flex items-center justify-center text-[#2e7d32] hover:bg-[#2e7d32] hover:text-white transition-all duration-500 hover:scale-110"
                 aria-label="View photo"
               >
                 <ArrowRight size={22} />
               </button>
             ) : (
-              <div className="w-14 h-14 rounded-2xl bg-white shadow-xl shadow-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all duration-500 group-hover:scale-110">
+              <div className="w-14 h-14 rounded-2xl bg-white shadow-xl shadow-[#2e7d32]/10 flex items-center justify-center text-[#2e7d32] group-hover:bg-[#2e7d32] group-hover:text-white transition-all duration-500 group-hover:scale-110">
                 <ArrowRight size={22} />
               </div>
             )}
@@ -276,16 +274,21 @@ function FeedItemCard({
 
 /* ─── Main Feed Page ─── */
 export default function Feed() {
+  const { t } = useTranslation();
   const [activeFilter, setActiveFilter] = useState<FeedType | "all">("all");
   const [search, setSearch] = useState("");
   const [lightboxItem, setLightboxItem] = useState<FeedItem | null>(null);
   const [feedItems, setFeedItems] = useState<FeedItem[]>([]);
   const [loading, setLoading] = useState(true);
 
-  /**
-   * Fetch feed items from the backend when the component mounts.
-   * This replaces the old empty array with real data from Neon.
-   */
+  const filterLabels: Record<FeedType | "all", string> = {
+    all: t("feed.all"),
+    video: t("feed.videos"),
+    photo: t("feed.photos"),
+    note: t("feed.notes"),
+    event: t("feed.events"),
+  };
+
   useEffect(() => {
     setLoading(true);
     getFeedItems()
@@ -294,11 +297,6 @@ export default function Feed() {
       .finally(() => setLoading(false));
   }, []);
 
-  /**
-   * Filter items locally based on:
-   * - Active tab (ALL / VIDEOS / PHOTOS / NOTES / EVENTS)
-   * - Search text (matches title, description, note content, or type)
-   */
   const filteredItems = feedItems.filter((item) => {
     const matchesCategory =
       activeFilter === "all" || item.type === activeFilter;
@@ -315,44 +313,44 @@ export default function Feed() {
       {/* Feed Hero */}
       <section className="pt-48 pb-24 px-6 bg-[#f8fafc]">
         <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col md:flex-row justify-between items-end gap-8 mb-16 pb-8 border-b border-border-subtle">
+          <div className="flex flex-col md:flex-row justify-between items-end gap-8 mb-16 pb-8 border-b border-[#eeeeee]">
             <div className="space-y-3 max-w-3xl">
-              <span className="section-label">Updates & Moments</span>
-              <h1 className="heading-hero">The Feed</h1>
+              <span className="section-label">{t("feed.updates")}</span>
+              <h1 className="heading-hero">{t("feed.theFeed")}</h1>
             </div>
             <div className="text-right hidden md:block">
-              <p className="text-body font-medium max-w-xs">
-                Captured as it happens.
+              <p className="text-[#333333] font-medium max-w-xs">
+                {t("feed.captured")}
               </p>
             </div>
           </div>
 
           {/* Filter Tabs + Search */}
           <div className="flex flex-wrap items-center gap-3 pt-4">
-            {filters.map((f) => (
+            {filterValues.map((f) => (
               <button
-                key={f.value}
-                onClick={() => setActiveFilter(f.value)}
+                key={f}
+                onClick={() => setActiveFilter(f)}
                 className={`text-[10px] font-black uppercase tracking-widest px-8 py-4 rounded-full border transition-all ${
-                  activeFilter === f.value
-                    ? "bg-primary text-white border-primary"
-                    : "bg-white text-text-secondary border-border-subtle hover:border-primary hover:text-primary"
+                  activeFilter === f
+                    ? "bg-[#2e7d32] text-white border-[#2e7d32]"
+                    : "bg-white text-[#333333] border-[#eeeeee] hover:border-[#2e7d32] hover:text-[#2e7d32]"
                 }`}
               >
-                {f.label}
+                {filterLabels[f]}
               </button>
             ))}
             <div className="flex-grow md:max-w-xs ml-auto relative">
               <input
                 type="text"
-                placeholder="Search feed..."
+                placeholder={t("feed.search")}
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="w-full bg-white border border-border-subtle rounded-full py-4 px-12 focus:outline-none focus:border-primary text-sm font-medium"
+                className="w-full bg-white border border-[#eeeeee] rounded-full py-4 px-12 focus:outline-none focus:border-[#2e7d32] text-sm font-medium"
               />
               <Search
                 size={18}
-                className="absolute left-5 top-1/2 -translate-y-1/2 text-text-secondary opacity-40"
+                className="absolute left-5 top-1/2 -translate-y-1/2 text-[#333333] opacity-40"
               />
             </div>
           </div>
@@ -362,9 +360,9 @@ export default function Feed() {
       {/* Feed List */}
       <section className="pb-48 px-6">
         <div className="max-w-7xl mx-auto">
-          {loading ? (
-            <div className="py-32 text-center text-text-secondary font-medium opacity-50">
-              Loading feed...
+            {loading ? (
+            <div className="py-32 text-center text-[#333333] font-medium">
+              {t("feed.loading")}
             </div>
           ) : (
             <AnimatePresence mode="popLayout">
@@ -380,9 +378,9 @@ export default function Feed() {
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  className="py-32 text-center text-text-secondary font-medium opacity-50"
+                  className="py-32 text-center text-[#333333] font-medium"
                 >
-                  No items found.
+                  {t("feed.noItems")}
                 </motion.div>
               )}
             </AnimatePresence>

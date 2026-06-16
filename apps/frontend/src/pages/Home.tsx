@@ -10,6 +10,7 @@ import {
   ExternalLink,
 } from "lucide-react";
 import { getBlogPosts, type BlogPost } from "../services/api";
+import { useTranslation } from "@repo/ui";
 
 type PostStats = {
   comments: number | null;
@@ -50,7 +51,7 @@ function ArrowDivider() {
   return (
     <div className="w-full py-20 flex justify-center items-center overflow-hidden">
       <div className="w-full max-w-7xl px-6 flex items-center">
-        <div className="flex-grow h-px bg-text-primary opacity-10"></div>
+        <div className="flex-grow h-px bg-[#1a1a1c] opacity-10"></div>
         <div className="relative flex-shrink-0 mx-6">
           <svg
             width="60"
@@ -58,7 +59,7 @@ function ArrowDivider() {
             viewBox="0 0 60 80"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
-            className="text-text-primary opacity-70"
+            className="text-[#1a1a1c] opacity-70"
           >
             <path
               d="M20 5 C 20 20, 45 25, 45 45 C 45 60, 20 60, 20 45 C 20 25, 55 35, 55 65"
@@ -76,13 +77,14 @@ function ArrowDivider() {
             />
           </svg>
         </div>
-        <div className="flex-grow h-px bg-text-primary opacity-10"></div>
+        <div className="flex-grow h-px bg-[#1a1a1c] opacity-10"></div>
       </div>
     </div>
   );
 }
 
 export default function Home() {
+  const { t, locale } = useTranslation();
   const [previewPosts, setPreviewPosts] = useState<BlogPost[]>([]);
   const [postStats, setPostStats] = useState<PostStats[]>([]);
 
@@ -113,30 +115,30 @@ export default function Home() {
 
   const summarySections = [
     {
-      title: "Software Development",
+      title: t("home.softwareDev"),
       icon: <Code2 size={40} className="text-indigo-500" />,
       cardClass: "bg-indigo-50 border-indigo-100",
       bullets: [
-        "Architecting web and mobile applications using modern frameworks.",
-        "Building robust solutions that connect and empower communities.",
+        t("home.softwareDev1"),
+        t("home.softwareDev2"),
       ],
     },
     {
-      title: "Community & Tech",
+      title: t("home.communityTech"),
       icon: <Users size={40} className="text-emerald-500" />,
       cardClass: "bg-emerald-50 border-emerald-100",
       bullets: [
-        "Contributing to local tech ecosystems and guiding aspiring developers.",
-        "Mentoring on tech stacks and community-led innovation.",
+        t("home.communityTech1"),
+        t("home.communityTech2"),
       ],
     },
     {
-      title: "Product Strategy",
+      title: t("home.productStrategy"),
       icon: <Layers size={40} className="text-amber-500" />,
       cardClass: "bg-amber-50 border-amber-100",
       bullets: [
-        "Driving projects from concept to deployment with a focus on user impact.",
-        "Collaborating with cross-functional teams to manage full product lifecycles.",
+        t("home.productStrategy1"),
+        t("home.productStrategy2"),
       ],
     },
   ];
@@ -153,34 +155,28 @@ export default function Home() {
             className="space-y-12"
           >
             <div className="space-y-6">
-              <h1 className="heading-hero text-text-primary max-w-2xl">
-                Building <br />
-                tomorrow <br />
-                <span className="text-primary underline decoration-primary/20 decoration-4 underline-offset-4">
-                  today
-                </span>
-                , One line <br />
-                at a time
+              <h1 className="heading-hero text-[#1a1a1c] max-w-2xl">
+                {t("home.heroTitle")}
               </h1>
-              <p className="text-body font-bold max-w-lg opacity-80 pt-4">
-                Because great software doesn't write itself... yet.
+              <p className="text-[#333333] font-bold max-w-lg pt-4">
+                {t("home.heroSubtitle")}
               </p>
             </div>
 
             <div className="flex flex-wrap items-center gap-4">
               <Link
                 to="/contact"
-                className="inline-block px-12 py-5 bg-text-primary text-white hover:bg-primary rounded-xl font-bold text-xl transition-all duration-500 shadow-xl"
+                className="inline-block px-12 py-5 bg-[#1a1a1c] text-white hover:bg-[#2e7d32] rounded-xl font-bold text-xl transition-all duration-500 shadow-xl"
               >
-                Let's Talk
+                {t("home.letsTalk")}
               </Link>
 
               <a
                 href="/cv.pdf"
                 download="Tiani_Pekins_CV.pdf"
-                className="inline-flex items-center gap-2 px-3 py-5 border-2 border-text-primary text-text-primary hover:bg-text-primary hover:text-white rounded-xl font-bold text-xl transition-all duration-500"
+                className="inline-flex items-center gap-2 px-3 py-5 border-2 border-[#1a1a1c] text-[#1a1a1c] hover:bg-[#1a1a1c] hover:text-white rounded-xl font-bold text-xl transition-all duration-500"
               >
-                Download CV
+                {t("home.downloadCV")}
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="20"
@@ -202,7 +198,7 @@ export default function Home() {
             className="relative flex items-center justify-center h-full"
           >
             <div className="relative w-full aspect-square max-w-[600px]">
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-bg-secondary rounded-full opacity-50"></div>
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-[#fafafa] rounded-full opacity-50"></div>
 
               <motion.div
                 animate={{ y: [0, -20, 0] }}
@@ -224,7 +220,7 @@ export default function Home() {
                 className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10"
               >
                 <div className="text-[18rem] md:text-[22rem] font-black text-white drop-shadow-[0_20px_50px_rgba(46,125,50,0.3)] select-none italic relative">
-                  <span className="bg-gradient-to-br from-indigo-400 via-primary/40 to-teal-400 bg-clip-text text-transparent">{`</>`}</span>
+                  <span className="bg-gradient-to-br from-indigo-400 via-[#2e7d32]/40 to-teal-400 bg-clip-text text-transparent">{`</>`}</span>
                   <div className="absolute -inset-4 bg-white/20 blur-3xl -z-10 rounded-full opacity-50"></div>
                 </div>
               </motion.div>
@@ -244,7 +240,7 @@ export default function Home() {
       </section>
 
       {/* Quick Summary Section */}
-      <section className="py-20 px-6 bg-white/60 backdrop-blur-md border-y border-border-subtle">
+      <section className="py-20 px-6 bg-white/60 backdrop-blur-md border-y border-[#eeeeee]">
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -253,9 +249,9 @@ export default function Home() {
             transition={{ duration: 0.8 }}
             className="text-center mb-20"
           >
-            <span className="section-label">Quick Summary</span>
+            <span className="section-label">{t("home.quickSummary")}</span>
             <h2 className="text-2xl md:text-3xl lg:text-[36px] font-display font-black tracking-tight mt-4 leading-tight">
-              Crafting Digital Solutions From Concept to Deployment
+              {t("home.summaryTitle")}
             </h2>
           </motion.div>
 
@@ -277,8 +273,8 @@ export default function Home() {
                 </div>
                 <ul className="space-y-4">
                   {section.bullets.map((bullet, idx) => (
-                    <li key={idx} className="flex gap-3 text-body text-sm leading-relaxed font-medium">
-                      <CheckCircle2 size={18} className="text-primary shrink-0 mt-1" />
+                    <li key={idx} className="flex gap-3 text-[#333333] text-sm leading-relaxed font-medium">
+                      <CheckCircle2 size={18} className="text-[#2e7d32] shrink-0 mt-1" />
                       {bullet}
                     </li>
                   ))}
@@ -297,13 +293,13 @@ export default function Home() {
             className="bg-[#2e7d32] text-white py-5 px-6 md:px-10 rounded-2xl flex flex-col md:flex-row items-center justify-between gap-6 shadow-lg shadow-green-900/10"
           >
             <h3 className="text-lg md:text-xl font-display font-black tracking-tight leading-tight text-center md:text-left">
-              Start your own project with me today
+              {t("home.ctaTitle")}
             </h3>
             <Link
               to="/contact"
               className="px-8 py-2.5 bg-black text-white hover:opacity-90 rounded-xl font-bold text-sm transition-all duration-300 shadow-xl whitespace-nowrap shrink-0"
             >
-              Let's Talk
+              {t("home.letsTalk")}
             </Link>
           </motion.div>
         </div>
@@ -318,14 +314,14 @@ export default function Home() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-end gap-8 pb-8 border-b border-border-subtle"
+          className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-end gap-8 pb-8 border-b border-[#eeeeee]"
         >
           <div className="space-y-3 max-w-3xl">
-            <span className="section-label">Selected Work</span>
-            <h2 className="section-title">My Projects</h2>
+            <span className="section-label">{t("home.selectedWork")}</span>
+            <h2 className="section-title">{t("home.myProjects")}</h2>
           </div>
           <Link to="/projects" className="nav-link !text-lg py-3">
-            View all projects
+            {t("home.viewAllProjects")}
           </Link>
         </motion.div>
       </section>
@@ -340,26 +336,24 @@ export default function Home() {
             transition={{ duration: 1, ease: "easeOut" }}
             className="grid md:grid-cols-2 gap-16 items-center group"
           >
-            <div className="bg-bg-secondary border border-border-subtle rounded-[3rem] overflow-hidden aspect-square relative flex items-center justify-center p-16 shadow-inner group-hover:scale-[1.01] transition-transform duration-1000">
+            <div className="bg-[#fafafa] border border-[#eeeeee] rounded-[3rem] overflow-hidden aspect-square relative flex items-center justify-center p-16 shadow-inner group-hover:scale-[1.01] transition-transform duration-1000">
               <img
                 src="/logo.png"
                 alt="LocalHands logo"
                 className="w-full h-full object-contain group-hover:rotate-3 transition-transform duration-1000"
               />
-              <div className="absolute inset-0 bg-gradient-to-tr from-primary/5 to-transparent"></div>
+              <div className="absolute inset-0 bg-gradient-to-tr from-[#2e7d32]/5 to-transparent"></div>
             </div>
             <div className="space-y-6">
-              <h3 className="section-title !text-4xl md:!text-5xl group-hover:text-primary transition-colors">
-                LocalHands
+              <h3 className="section-title !text-4xl md:!text-5xl group-hover:text-[#2e7d32] transition-colors">
+                {t("projects.name")}
               </h3>
-              <p className="section-label">AI-Powered Content Creation Platform</p>
-              <p className="text-body font-light">
-                LocalHands is an innovative platform that leverages skilled
-                hands to generate reliable services, quality work, and
-                audio-visual solutions effectively.
+              <p className="section-label">{t("home.localhandsLabel")}</p>
+              <p className="text-[#333333] font-light">
+                {t("home.localhandsDesc")}
               </p>
               <Link to="/projects" className="btn-outline !px-10 !py-4 !text-base">
-                Learn more
+                {t("home.learnMore")}
               </Link>
             </div>
           </motion.div>
@@ -369,26 +363,23 @@ export default function Home() {
       <ArrowDivider />
 
       {/* Blog Preview Section */}
-      <section className="py-24 px-6 md:px-12 bg-bg-secondary/30 border-t border-border-subtle">
+      <section className="py-24 px-6 md:px-12 bg-[#fafafa]/30 border-t border-[#eeeeee]">
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8 }}
-            className="flex flex-col md:flex-row justify-between items-end gap-8 mb-16 pb-8 border-b border-border-subtle/50"
+            className="flex flex-col md:flex-row justify-between items-end gap-8 mb-16 pb-8 border-b border-[#eeeeee]/50"
           >
             <div className="space-y-3 max-w-4xl">
-              <span className="section-label">My Thoughts</span>
+              <span className="section-label">{t("home.myThoughts")}</span>
               <h2 className="text-2xl md:text-2xl lg:text-[28px] font-display font-black tracking-tight mt-2 leading-tight">
-                Insights & Ideas:{" "}
-                <span className="text-text-secondary underline decoration-primary/10 decoration-2 underline-offset-4">
-                  My Thoughts on Tech, Design, and Innovation
-                </span>
+                {t("home.insightsTitle")}
               </h2>
             </div>
             <Link to="/blog" className="nav-link !text-lg py-3 whitespace-nowrap">
-              Read all posts
+              {t("home.readAllPosts")}
             </Link>
           </motion.div>
 
@@ -396,9 +387,9 @@ export default function Home() {
           <div className="relative">
             {previewPosts.length > 3 && (
               <>
-                <button
+                  <button
                   onClick={scrollLeft}
-                  className="absolute -left-5 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-white border border-border-subtle rounded-full shadow-md flex items-center justify-center hover:bg-bg-secondary transition-colors duration-300"
+                  className="absolute -left-5 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-white border border-[#eeeeee] rounded-full shadow-md flex items-center justify-center hover:bg-[#fafafa] transition-colors duration-300"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M15 18l-6-6 6-6" />
@@ -406,7 +397,7 @@ export default function Home() {
                 </button>
                 <button
                   onClick={scrollRight}
-                  className="absolute -right-5 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-white border border-border-subtle rounded-full shadow-md flex items-center justify-center hover:bg-bg-secondary transition-colors duration-300"
+                  className="absolute -right-5 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-white border border-[#eeeeee] rounded-full shadow-md flex items-center justify-center hover:bg-[#fafafa] transition-colors duration-300"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M9 18l6-6-6-6" />
@@ -437,10 +428,10 @@ export default function Home() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true, margin: "-50px" }}
                         transition={{ duration: 0.5, delay: i * 0.1 }}
-                        className="bg-white border border-border-subtle rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 group cursor-pointer flex-shrink-0 w-[350px] snap-start"
+                        className="bg-white border border-[#eeeeee] rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 group cursor-pointer flex-shrink-0 w-[350px] snap-start"
                       >
                         {/* Thumbnail */}
-                        <div className="aspect-video bg-bg-secondary overflow-hidden">
+                        <div className="aspect-video bg-[#fafafa] overflow-hidden">
                           {post.thumbnail ? (
                             <img
                               src={post.thumbnail}
@@ -448,15 +439,15 @@ export default function Home() {
                               className="w-full h-full object-cover"
                             />
                           ) : (
-                            <div className="w-full h-full animate-pulse opacity-40 bg-bg-secondary" />
+                            <div className="w-full h-full animate-pulse opacity-40 bg-[#fafafa]" />
                           )}
                         </div>
 
                         <div className="p-8 space-y-6">
-                          <span className="text-[10px] font-black italic text-primary uppercase opacity-60">
+                          <span className="text-[10px] font-black italic text-[#2e7d32] uppercase opacity-60">
                             {post.publishedAt
                               ? new Date(post.publishedAt)
-                                  .toLocaleDateString("en-US", {
+                                  .toLocaleDateString(locale, {
                                     month: "short",
                                     day: "2-digit",
                                     year: "numeric",
@@ -464,10 +455,10 @@ export default function Home() {
                                   .toUpperCase()
                               : "—"}
                           </span>
-                          <h4 className="text-2xl font-bold leading-tight group-hover:text-primary transition-colors line-clamp-3">
+                          <h4 className="text-2xl font-bold leading-tight group-hover:text-[#2e7d32] transition-colors line-clamp-3">
                             {post.title}
                           </h4>
-                          <div className="flex items-center justify-between pt-4 border-t border-border-subtle">
+                          <div className="flex items-center justify-between pt-4 border-t border-[#eeeeee]">
                             <div className="flex items-center gap-2 text-xs font-bold uppercase opacity-40">
                               <CheckCircle2 size={14} /> {post.author.name}
                             </div>
@@ -477,12 +468,12 @@ export default function Home() {
                               <div className="flex gap-4 text-[10px] font-bold opacity-60">
                                 <span>
                                   {postStats[i].reactions !== null
-                                    ? `${postStats[i].reactions} REACT`
+                                    ? `${postStats[i].reactions} ${t("home.react")}`
                                     : "—"}
                                 </span>
                                 <span>
                                   {postStats[i].comments !== null
-                                    ? `${postStats[i].comments} COMM`
+                                    ? `${postStats[i].comments} ${t("home.comm")}`
                                     : "—"}
                                 </span>
                               </div>
@@ -495,9 +486,9 @@ export default function Home() {
                                 target="_blank"
                                 rel="noreferrer"
                                 onClick={(e) => e.stopPropagation()}
-                                className="flex items-center gap-1 text-[10px] font-bold uppercase text-primary opacity-70 hover:opacity-100 transition-opacity"
+                                className="flex items-center gap-1 text-[10px] font-bold uppercase text-[#2e7d32] opacity-70 hover:opacity-100 transition-opacity"
                               >
-                                Read on Medium <ExternalLink size={10} />
+                                {t("home.readOnMedium")} <ExternalLink size={10} />
                               </a>
                             )}
 
@@ -509,18 +500,15 @@ export default function Home() {
                                     {post.likes ?? 5} REACT
                                   </span>
                                   <span className="text-[10px] font-bold opacity-60">
-
-
-                                    {post.likes ?? 1}  COMM
+                                    {post.likes ?? 1} COMM
                                   </span>
                                   <a
                                     href={post.externalUrl}
                                     target="_blank"
                                     rel="noreferrer"
                                     onClick={(e) => e.stopPropagation()}
-                                    className="flex items-center gap-1 text-[10px] font-bold uppercase text-primary opacity-70 hover:opacity-100 transition-opacity"
+                                    className="flex items-center gap-1 text-[10px] font-bold uppercase text-[#2e7d32] opacity-70 hover:opacity-100 transition-opacity"
                                   >
-                                    
                                   </a>
                                 </div>
                               )}
@@ -539,8 +527,8 @@ export default function Home() {
                   );
                 })
               ) : (
-                <div className="w-full text-center py-16 text-text-secondary font-medium opacity-50">
-                  No posts yet.
+                <div className="w-full text-center py-16 text-[#333333] font-medium opacity-50">
+                  {t("home.noPosts")}
                 </div>
               )}
             </div>

@@ -8,26 +8,27 @@ import {
   Minus,
 } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "@repo/ui";
 
 export default function Projects() {
+  const { t } = useTranslation();
   const projects = [
     {
-      name: "LocalHands",
-      subtitle: "Connecting Communities with Skilled Hands",
-      category: "Platform · Service Marketplace",
-      description:
-        "LocalHands is a platform built to bridge the gap between local service providers and people who need them across Cameroon. From handymen to creatives, LocalHands makes it simple to find, book, and trust local talent.",
+      name: t("projects.name"),
+      subtitle: t("projects.subtitle"),
+      category: t("projects.category"),
+      description: t("projects.description"),
       responsibilities: [
-        "Brainstorming: Conceptualizing the platform vision and core features",
-        "UI/UX Design: Crafting an intuitive interface for service providers and clients",
-        "Front-End Development: Building responsive, dynamic components",
-        "Deployment: Shipping and maintaining the live product",
+        t("projects.resp1"),
+        t("projects.resp2"),
+        t("projects.resp3"),
+        t("projects.resp4"),
       ],
       tools: [
-        "React: Main frontend library for component-based architecture",
-        "TypeScript: Ensuring type safety and better developer experience",
-        "Tailwind CSS: Utility-first CSS framework for rapid UI development",
-        "Vercel: Cloud platform for static sites and Serverless Functions",
+        t("projects.tool1"),
+        t("projects.tool2"),
+        t("projects.tool3"),
+        t("projects.tool4"),
       ],
       github: "https://github.com/Tpekins",
       live: "https://localhands.africa",
@@ -41,25 +42,21 @@ export default function Projects() {
       {/* Projects Hero - Pink Banner */}
       <section className="bg-[#ffb5b5] pt-48 pb-24 px-6 md:px-12">
         <div className="max-w-7xl mx-auto text-center space-y-10">
-          <h1 className="heading-hero text-text-primary">
-            Here are my <br />
-            <span className="relative inline-block">
-              projects
-              <span className="absolute bottom-2 left-0 w-full h-3 bg-white/60 -z-10 rounded-sm"></span>
-            </span>
+          <h1 className="heading-hero text-[#1a1a1c]">
+            {t("projects.heroTitle")}
           </h1>
-          <p className="text-body font-medium max-w-xl mx-auto">
-            These are some of the projects that I have worked on.
+          <p className="text-[#333333] font-medium max-w-xl mx-auto">
+            {t("projects.heroSubtitle")}
           </p>
 
-          <div className="pt-20 flex flex-col md:flex-row justify-between items-center gap-8 border-t border-text-primary/10 mt-10">
+          <div className="pt-20 flex flex-col md:flex-row justify-between items-center gap-8 border-t border-[#1a1a1c]/10 mt-10">
             <div className="flex items-center gap-3">
-              <span className="text-base font-bold">Reach out &</span>
+              <span className="text-base font-bold">{t("projects.reachOut")}</span>
               <Link
                 to="/contact"
                 className="text-base font-bold underline underline-offset-4 hover:text-white transition-colors"
               >
-                Get personal pricing
+                {t("projects.getPricing")}
               </Link>
             </div>
             <div className="flex gap-6">
@@ -97,23 +94,23 @@ export default function Projects() {
                 className={`space-y-12 ${i % 2 !== 0 ? "lg:order-2" : "lg:order-1"}`}
               >
                 <div className="space-y-4">
-                  <h2 className="section-title text-[#1a1a1a]">
+                  <h2 className="section-title text-[#1a1a1c]">
                     {project.name}
                   </h2>
-                  <p className="text-body font-bold text-[#333333] opacity-90">
+                  <p className="text-[#333333] font-bold">
                     {project.subtitle}
                   </p>
                 </div>
 
-                <p className="text-body text-[#555555]">
+                <p className="text-[#333333]">
                   {project.description}
                 </p>
 
                 <div className="space-y-8">
                   {/* Responsibilities */}
                   <div className="space-y-6">
-                    <h4 className="text-lg font-bold text-[#1a1a1a]">
-                      Key Responsibilities:
+                    <h4 className="text-lg font-bold text-[#1a1a1c]">
+                      {t("projects.responsibilities")}
                     </h4>
                     <div className="space-y-0">
                       {project.responsibilities.map((item, idx) => {
@@ -121,14 +118,14 @@ export default function Projects() {
                         return (
                           <div
                             key={idx}
-                            className="flex items-start gap-4 py-4 border-t border-border-subtle/50 first:border-t-0"
+                            className="flex items-start gap-4 py-4 border-t border-[#eeeeee]/50 first:border-t-0"
                           >
                             <Check
                               className="text-green-600 mt-1 flex-shrink-0"
                               size={18}
                             />
-                            <p className="text-base text-[#444444] leading-snug">
-                              <span className="font-bold text-[#1a1a1a]">
+                            <p className="text-base text-[#333333] leading-snug">
+                              <span className="font-bold text-[#1a1a1c]">
                                 {bold}:
                               </span>{" "}
                               {rest}
@@ -141,7 +138,7 @@ export default function Projects() {
 
                   {/* Tools */}
                   <div className="space-y-6">
-                    <h4 className="text-lg font-bold text-[#1a1a1a]">Tools:</h4>
+                    <h4 className="text-lg font-bold text-[#1a1a1c]">{t("projects.tools")}</h4>
                     <div className="space-y-0">
                       {project.tools.map((item, idx) => {
                         const parts = item.split(": ");
@@ -150,14 +147,14 @@ export default function Projects() {
                         return (
                           <div
                             key={idx}
-                            className="flex items-start gap-4 py-4 border-t border-border-subtle/50 first:border-t-0"
+                            className="flex items-start gap-4 py-4 border-t border-[#eeeeee]/50 first:border-t-0"
                           >
                             <Minus
                               className="text-green-500 mt-1.5 flex-shrink-0"
                               size={18}
                             />
-                            <p className="text-base text-[#444444] leading-snug">
-                              <span className="font-bold text-[#1a1a1a]">
+                            <p className="text-base text-[#333333] leading-snug">
+                              <span className="font-bold text-[#1a1a1c]">
                                 {bold}:
                               </span>{" "}
                               {rest}
@@ -176,7 +173,7 @@ export default function Projects() {
                     rel="noreferrer"
                     className="inline-flex bg-[#1c1c1c] text-white py-4 px-8 rounded-xl font-bold hover:bg-black transition-all duration-300"
                   >
-                    Go To Website
+                    {t("projects.goToWebsite")}
                   </a>
                 </div>
               </div>

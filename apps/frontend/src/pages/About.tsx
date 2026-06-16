@@ -1,20 +1,18 @@
 import { motion } from "motion/react";
 import { Linkedin, HelpingHand } from "lucide-react";
+import { useTranslation } from "@repo/ui";
 
 export default function About() {
-  // const scrollToTop = () => {
-  //   window.scrollTo({ top: 0, behavior: "smooth" });
-  // };
+  const { t } = useTranslation();
   const experiences = [
     {
-      role: "University of Buea",
-      subtitle: "MSc Software Engineering",
-      period: "Sept 2021 - to date",
-      desc: "As a MSc Software Engineering student, I am dedicated to deepening my technical expertise and mastering modern software architecture. My focus is on becoming an exceptional software engineer, continuously honing my skills to design, build, and deploy scalable solutions to complex challenges. Driven by a passion for technology, I am committed to using these skills to make a tangible, positive impact on my community and the tech industry.",
+      role: t("about.role"),
+      subtitle: t("about.subtitle"),
+      period: t("about.period"),
+      desc: t("about.expDesc"),
       logoText: "M",
       logoBg: "bg-[#00274c]",
-      quote:
-        "The future belongs to those who believe in the beauty of their dreams and work relentlessly to turn them into reality.  Eleanor Roosevelt",
+      quote: t("about.quote"),
     },
   ];
 
@@ -26,17 +24,16 @@ export default function About() {
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-3xl md:text-4xl lg:text-[50px] font-display font-black tracking-tight leading-tight text-[#1c1c1c]"
+            className="text-3xl md:text-4xl lg:text-[50px] font-display font-black tracking-tight leading-tight text-[#1a1a1c]"
           >
-            I <span className="green-underline">solve problems</span> using{" "}
-            <br /> software
+            {t("about.heroTitle")}
           </motion.h1>
 
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.2 }}
-            className="w-full max-w-5xl aspect-[16/10] bg-white rounded-2xl border border-border-subtle overflow-hidden relative shadow-sm flex items-center justify-center p-0"
+            className="w-full max-w-5xl aspect-[16/10] bg-white rounded-2xl border border-[#eeeeee] overflow-hidden relative shadow-sm flex items-center justify-center p-0"
           >
             {/* Complex Illustration Mockup to match the image */}
             <div className="relative w-full h-full flex items-center justify-center bg-white overflow-hidden">
@@ -86,32 +83,13 @@ export default function About() {
       <section className="py-24 px-6 md:px-12">
         <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-start">
           <div className="space-y-10">
-            <span className="section-label">About Me</span>
-            <div className="space-y-8 text-sm md:text-base font-medium leading-relaxed text-[#1c1c1c] opacity-80">
+            <span className="section-label">{t("about.aboutMe")}</span>
+              <div className="space-y-8 text-sm md:text-base font-medium leading-relaxed text-[#1a1a1c]">
               <p>
-                I'm a passionate{" "}
-                <span className="font-bold">software engineer</span> and{" "}
-                pursuing my masters in Software Engineering at the{" "}
-                <span className="font-bold">University of Buea</span>.As an
-                active participant in{" "}
-                <span className="font-bold">Silicon Mountain</span> tech
-                community. I thrive on collaborating to build scalable,
-                innovative solutions that push the boundaries of technology in
-                our region and beyond.
+                {t("about.aboutDesc1")}
               </p>
               <p>
-                I have also founded{" "}
-                <span className="font-bold">LocalHands</span>, a non-profit
-                service exchange platform dedicated to empowering the informal
-                economy in Cameroon and across Africa. With 90% of our active
-                population working informally, many face "information poverty"
-                and a severe trust gap, relying on inefficient word-of-mouth or
-                paper flyers to find work.{" "}
-                <span className="font-bold">LocalHands</span> bridges this gap
-                by providing a digital space where everyday artisans and
-                labourers, from diggers to cocoa harvesters can digitally
-                showcase their skills, build visibility, and seamlessly connect
-                with clients.
+                {t("about.aboutDesc2")}
               </p>
             </div>
           </div>
@@ -122,11 +100,11 @@ export default function About() {
                 <Linkedin size={32} className="text-white" fill="white" />
               </div>
               <div className="space-y-0.5">
-                <p className="text-4xl md:text-5xl font-display font-black tracking-tighter text-[#1c1c1c]">
+                <p className="text-4xl md:text-5xl font-display font-black tracking-tighter text-[#1a1a1c]">
                   50+
                 </p>
-                <p className="text-[11px] font-bold uppercase tracking-widest text-[#1c1c1c] opacity-60">
-                  Connections
+                <p className="text-[11px] font-bold uppercase tracking-widest text-[#333333]">
+                  {t("about.connections")}
                 </p>
               </div>
             </div>
@@ -136,11 +114,11 @@ export default function About() {
                 <HelpingHand size={32} className="text-white" />
               </div>
               <div className="space-y-0.5">
-                <p className="text-4xl md:text-5xl font-display font-black tracking-tighter text-[#1c1c1c]">
+                <p className="text-4xl md:text-5xl font-display font-black tracking-tighter text-[#1a1a1c]">
                   15+
                 </p>
-                <p className="text-[11px] font-bold uppercase tracking-widest text-[#1c1c1c] opacity-60">
-                  People Mentored
+                <p className="text-[11px] font-bold uppercase tracking-widest text-[#333333]">
+                  {t("about.peopleMentored")}
                 </p>
               </div>
             </div>
@@ -148,53 +126,52 @@ export default function About() {
         </div>
       </section>
 
-      <section className="pt-24 pb-16 px-6 md:px-12 border-t border-border-subtle">
+      <section className="pt-24 pb-16 px-6 md:px-12 border-t border-[#eeeeee]">
         <div className="max-w-7xl mx-auto flex flex-col items-start text-left">
-          <span className="section-label">My Experience</span>
-          <h2 className="text-3xl md:text-4xl font-display font-black tracking-tight text-[#1c1c1c] mt-8">
-            These are my <span className="text-green-400">professional</span>{" "}
-            experiences.
+          <span className="section-label">{t("about.myExperience")}</span>
+          <h2 className="text-3xl md:text-4xl font-display font-black tracking-tight text-[#1a1a1c] mt-8">
+            {t("about.experienceTitle")}
           </h2>
         </div>
       </section>
 
       {/* Experience List Cards */}
-<section className="pb-32 px-6 md:px-12">
-  <div className="max-w-7xl mx-auto flex flex-col gap-24">
-    {experiences.map((exp, i) => (
-      <motion.div
-        key={i}
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ delay: i * 0.1 }}
-        className="grid lg:grid-cols-12 gap-12 items-start"
-      >
-        {/* Logo */}
-        <div className="lg:col-span-2 flex justify-center lg:justify-start">
-          <div className={`w-32 h-32 rounded-lg ${exp.logoBg} flex items-center justify-center shadow-lg overflow-hidden`}>
-            <img
-              src="/ub.jpg"
-              alt="University of Buea Logo"
-              className="w-full h-auto object-contain p-2"
-            />
-          </div>
-        </div>
+      <section className="pb-32 px-6 md:px-12">
+        <div className="max-w-7xl mx-auto flex flex-col gap-24">
+          {experiences.map((exp, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.1 }}
+              className="grid lg:grid-cols-12 gap-12 items-start"
+            >
+              {/* Logo */}
+              <div className="lg:col-span-2 flex justify-center lg:justify-start">
+                <div className={`w-32 h-32 rounded-lg ${exp.logoBg} flex items-center justify-center shadow-lg overflow-hidden`}>
+                  <img
+                    src="/ub.jpg"
+                    alt="University of Buea Logo"
+                    className="w-full h-auto object-contain p-2"
+                  />
+                </div>
+              </div>
 
               {/* Description */}
               <div className="lg:col-span-6 space-y-4">
                 <div className="space-y-1">
-                  <h3 className="text-2xl font-display font-bold text-[#1c1c1c]">
+                  <h3 className="text-2xl font-display font-bold text-[#1a1a1c]">
                     {exp.role}
                   </h3>
-                  <p className="text-sm font-medium text-text-secondary">
+                  <p className="text-sm font-medium text-[#333333]">
                     {exp.subtitle}
                   </p>
-                  <p className="text-[11px] font-bold text-text-secondary opacity-40 uppercase tracking-widest pt-1">
+                  <p className="text-[11px] font-bold text-[#333333] opacity-40 uppercase tracking-widest pt-1">
                     {exp.period}
                   </p>
                 </div>
-                <p className="text-sm md:text-base leading-relaxed text-[#1c1c1c] opacity-80 font-medium">
+                <p className="text-sm md:text-base leading-relaxed text-[#1a1a1c] font-medium">
                   {exp.desc}
                 </p>
               </div>
@@ -217,7 +194,7 @@ export default function About() {
                       <path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"></path>
                     </svg>
                   </div>
-                  <p className="text-sm italic font-medium text-[#1c1c1c] opacity-80 leading-relaxed">
+                  <p className="text-sm italic font-medium text-[#1a1a1c] leading-relaxed">
                     {exp.quote}
                   </p>
                 </div>

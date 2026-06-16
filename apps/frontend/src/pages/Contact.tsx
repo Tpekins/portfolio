@@ -1,7 +1,9 @@
 import React, { useState, useRef } from "react";
 import emailjs from '@emailjs/browser';
+import { useTranslation } from "@repo/ui";
 
 export default function Contact() {
+  const { t } = useTranslation();
   const form = useRef<HTMLFormElement>(null);
   const [status, setStatus] = useState<
     "idle" | "sending" | "success" | "error"
@@ -13,7 +15,6 @@ export default function Contact() {
 
     setStatus("sending");
 
-    // Replace these strings with your actual credentials when you have them
     const SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
     const TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
     const PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
@@ -27,7 +28,6 @@ export default function Contact() {
     .then(() => {
       setStatus("success");
       form.current?.reset();
-      // Reset status back to idle after 5 seconds so they can send another message if needed
       setTimeout(() => setStatus("idle"), 5000);
     })
     .catch((error) => {
@@ -43,17 +43,11 @@ export default function Contact() {
         <div className="max-w-7xl mx-auto flex flex-col items-center">
           {/* Main Heading */}
           <div className="text-center space-y-4 mb-20">
-            <h1 className="text-4xl md:text-[50px] font-display font-black text-[#1c1c1c] tracking-tight leading-tight">
-              <span className="relative inline-block">
-                Reach out
-                <span className="absolute bottom-1 left-0 w-full h-[6px] bg-white -z-10"></span>
-              </span>{" "}
-              <br />
-              if you need help or just <br />
-              want to say hello
+            <h1 className="text-4xl md:text-[50px] font-display font-black text-[#1a1a1c] tracking-tight leading-tight">
+              {t("contact.heroTitle")}
             </h1>
-            <p className="text-xs md:text-sm font-medium text-[#1c1c1c] opacity-70">
-              Let's start a conversation that sparks innovation.
+            <p className="text-xs md:text-sm font-medium text-[#1a1a1c] opacity-70">
+              {t("contact.heroSubtitle")}
             </p>
           </div>
 
@@ -63,24 +57,24 @@ export default function Contact() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <label className="text-[12px] font-bold text-white px-2">
-                    Name
+                    {t("contact.name")}
                   </label>
                   <input
                     type="text"
-                    name="from_name" // ADDED NAME
+                    name="from_name"
                     required
-                    className="w-full bg-white border-none py-4 px-4 rounded-md focus:ring-0 transition-all font-medium text-base text-[#1c1c1c] outline-none shadow-sm"
+                    className="w-full bg-white border-none py-4 px-4 rounded-md focus:ring-0 transition-all font-medium text-base text-[#1a1a1c] outline-none shadow-sm"
                   />
                 </div>
                 <div className="space-y-2">
                   <label className="text-[12px] font-bold text-white px-2">
-                    Surname
+                    {t("contact.surname")}
                   </label>
                   <input
                     type="text"
                     name="from_surname"
                     required
-                    className="w-full bg-white border-none py-4 px-4 rounded-md focus:ring-0 transition-all font-medium text-base text-[#1c1c1c] outline-none shadow-sm"
+                    className="w-full bg-white border-none py-4 px-4 rounded-md focus:ring-0 transition-all font-medium text-base text-[#1a1a1c] outline-none shadow-sm"
                   />
                 </div>
               </div>
@@ -88,47 +82,47 @@ export default function Contact() {
               <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-6">
                 <div className="space-y-2">
                   <label className="text-[12px] font-bold text-white px-2">
-                    Email
+                    {t("contact.email")}
                   </label>
                   <input
                     type="email"
                     name="reply_to"
                     required
-                    className="w-full bg-white border-none py-4 px-4 rounded-md focus:ring-0 transition-all font-medium text-base text-[#1c1c1c] outline-none shadow-sm"
+                    className="w-full bg-white border-none py-4 px-4 rounded-md focus:ring-0 transition-all font-medium text-base text-[#1a1a1c] outline-none shadow-sm"
                   />
                 </div>
                 <div className="space-y-2">
                   <label className="text-[12px] font-bold text-white px-2">
-                    Phone
+                    {t("contact.phone")}
                   </label>
                   <input
                     type="tel"
                     name="phone_number"
-                    className="w-full bg-white border-none py-4 px-4 rounded-md focus:ring-0 transition-all font-medium text-base text-[#1c1c1c] outline-none shadow-sm"
+                    className="w-full bg-white border-none py-4 px-4 rounded-md focus:ring-0 transition-all font-medium text-base text-[#1a1a1c] outline-none shadow-sm"
                   />
                 </div>
               </div>
 
               <div className="space-y-2">
                 <label className="text-[12px] font-bold text-white px-2">
-                  Subject
+                  {t("contact.subject")}
                 </label>
                 <input
                   type="text"
                   name="subject"
-                  className="w-full bg-white border-none py-4 px-4 rounded-md focus:ring-0 transition-all font-medium text-base text-[#1c1c1c] outline-none shadow-sm"
+                  className="w-full bg-white border-none py-4 px-4 rounded-md focus:ring-0 transition-all font-medium text-base text-[#1a1a1c] outline-none shadow-sm"
                 />
               </div>
 
               <div className="space-y-2">
                 <label className="text-[12px] font-bold text-white px-2">
-                  Message
+                  {t("contact.message")}
                 </label>
                 <textarea
                   rows={4}
-                  name="message" // ADDED NAME
+                  name="message"
                   required
-                  className="w-full bg-white border-none py-4 px-4 rounded-md focus:ring-0 transition-all font-medium text-base text-[#1c1c1c] resize-none outline-none shadow-sm"
+                  className="w-full bg-white border-none py-4 px-4 rounded-md focus:ring-0 transition-all font-medium text-base text-[#1a1a1c] resize-none outline-none shadow-sm"
                 ></textarea>
               </div>
 
@@ -139,12 +133,12 @@ export default function Contact() {
                   className="w-full bg-[#1c1c1c] text-white py-4 rounded-md font-bold text-sm hover:opacity-90 transition-all duration-300 disabled:opacity-50"
                 >
                   {status === "sending"
-                    ? "Sending..."
+                    ? t("contact.sending")
                     : status === "success"
-                      ? "Message Sent!"
+                      ? t("contact.success")
                       : status === "error"
-                      ? "Error! Try Again"
-                      : "Send a message"}
+                      ? t("contact.error")
+                      : t("contact.send")}
                 </button>
               </div>
             </form>
@@ -162,21 +156,19 @@ export default function Contact() {
             </div>
             <div className="space-y-4 pt-4 md:pt-10">
               <div className="space-y-1 text-center md:text-left">
-                <h2 className="text-3xl font-display font-medium text-[#1c1c1c]">
+                <h2 className="text-3xl font-display font-medium text-[#1a1a1c]">
                   Tiani Pekins
                 </h2>
-                <p className="text-[13px] font-bold uppercase tracking-widest text-[#1c1c1c]/60 italic font-mono">
-                  Software Engineer
+                <p className="text-[13px] font-bold uppercase tracking-widest text-[#1a1a1c] opacity-60 italic font-mono">
+                  {t("contact.role")}
                 </p>
               </div>
-              <p className="text-[14px] leading-relaxed text-[#1c1c1c] font-medium opacity-80 max-w-sm text-center md:text-left">
-                Passionate software engineer dedicated to transforming complex
-                challenges into innovative, user-friendly solutions and inspiring
-                others through mentorship.
+              <p className="text-[14px] leading-relaxed text-[#1a1a1c] font-medium max-w-sm text-center md:text-left">
+                {t("contact.bio")}
               </p>
               <a 
                 href="mailto:tiani@tianipekins.com"
-                className="text-lg font-black text-[#1c1c1c] text-center md:text-left pt-2 hover:underline block"
+                className="text-lg font-black text-[#1a1a1c] text-center md:text-left pt-2 hover:underline block"
               >
                 tiani@tianipekins.com
               </a>

@@ -3,6 +3,7 @@ import { motion } from "motion/react";
 import { ArrowRight, Search, ExternalLink } from "lucide-react";
 import { Link } from "react-router-dom";
 import { getBlogPosts, type BlogPost } from "../services/api";
+import { useTranslation } from "@repo/ui";
 
 function getPlatformLabel(url: string | null): string {
   if (!url) return "";
@@ -66,6 +67,7 @@ function wrapPost(post: BlogPost) {
 }
 
 function PostCard({ post }: { post: BlogPost }) {
+  const { t, locale } = useTranslation();
   const config = categoryConfig[post.category] ?? categoryConfig["Tech"];
 
   return (
@@ -73,14 +75,14 @@ function PostCard({ post }: { post: BlogPost }) {
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      className="group relative py-10 md:py-12 border-b border-border-subtle hover:bg-primary/5 transition-colors duration-700 cursor-pointer"
+      className="group relative py-10 md:py-12 border-b border-[#eeeeee] hover:bg-[#2e7d32]/5 transition-colors duration-700 cursor-pointer"
     >
       <div className="px-6 max-w-6xl mx-auto">
         <div className="grid md:grid-cols-12 gap-6 md:gap-12 items-start">
           {/* Left: Date + Category stacked vertically */}
           <div className="md:col-span-2 flex flex-col gap-2">
             <div className={`text-[10px] font-black uppercase tracking-[0.3em] ${config.textClass}`}>
-              {formatDate(post.publishedAt)}
+              {formatDate(post.publishedAt, locale)}
             </div>
             <CategoryBadge category={post.category} />
           </div>
@@ -91,19 +93,19 @@ function PostCard({ post }: { post: BlogPost }) {
               {post.title}
             </h3>
             {post.excerpt && (
-              <p className="mt-3 text-body text-sm font-medium leading-relaxed line-clamp-2">
+              <p className="mt-3 text-[#333333] text-sm font-medium leading-relaxed line-clamp-2">
                 {post.excerpt}
               </p>
             )}
             {post.externalUrl && (
-              <a
+                <a
                 href={post.externalUrl}
                 target="_blank"
                 rel="noreferrer"
                 onClick={(e) => e.stopPropagation()}
-                className="mt-3 inline-flex items-center gap-1 text-[10px] font-black uppercase tracking-widest text-primary opacity-40 hover:opacity-100 transition-opacity"
+                className="mt-3 inline-flex items-center gap-1 text-[10px] font-black uppercase tracking-widest text-[#2e7d32] hover:opacity-80 transition-opacity"
               >
-                Read on {getPlatformLabel(post.externalUrl)}{" "}
+                {t("blog.readOn")} {getPlatformLabel(post.externalUrl)}{" "}
                 <ExternalLink size={10} />
               </a>
             )}
@@ -111,21 +113,21 @@ function PostCard({ post }: { post: BlogPost }) {
 
           {/* Right: Arrow */}
           <div className="md:col-span-2 flex justify-end items-center">
-            <div className="w-11 h-11 rounded-xl bg-white shadow-xl shadow-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all duration-500 group-hover:scale-110">
+            <div className="w-11 h-11 rounded-xl bg-white shadow-xl shadow-[#2e7d32]/10 flex items-center justify-center text-[#2e7d32] group-hover:bg-[#2e7d32] group-hover:text-white transition-all duration-500 group-hover:scale-110">
               <ArrowRight size={18} />
             </div>
           </div>
         </div>
       </div>
-      <div className="absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/5 to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+      <div className="absolute inset-0 bg-gradient-to-r from-[#2e7d32]/0 via-[#2e7d32]/5 to-[#2e7d32]/0 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
     </motion.div>
   );
 }
 
-function formatDate(dateStr: string | null): string {
+function formatDate(dateStr: string | null, locale: string): string {
   if (!dateStr) return "—";
   return new Date(dateStr)
-    .toLocaleDateString("en-US", {
+    .toLocaleDateString(locale, {
       month: "short",
       day: "2-digit",
       year: "numeric",
@@ -134,6 +136,7 @@ function formatDate(dateStr: string | null): string {
 }
 
 export default function Blog() {
+  const { t } = useTranslation();
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [activeCategory, setActiveCategory] = useState("All");
   const [search, setSearch] = useState("");
@@ -162,6 +165,13 @@ export default function Blog() {
   };
 
   const categories = ["All", "Tech", "Software", "Life", "Community"];
+  const categoryLabels: Record<string, string> = {
+    All: t("blog.all"),
+    Tech: t("blog.tech"),
+    Software: t("blog.software"),
+    Life: t("blog.life"),
+    Community: t("blog.community"),
+  };
 
   const filteredPosts = posts.filter((post) => {
     const matchesCategory =
@@ -172,7 +182,6 @@ export default function Blog() {
     return matchesCategory && matchesSearch;
   });
 
-  // Show bar only when hovering AND scrolling
   const barVisible = isHovered && isScrolling;
 
   return (
@@ -180,14 +189,14 @@ export default function Blog() {
       {/* Blog Hero */}
       <section className="pt-48 pb-24 px-6 bg-[#fdfcfb]">
         <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col md:flex-row justify-between items-end gap-8 mb-16 pb-8 border-b border-border-subtle">
+          <div className="flex flex-col md:flex-row justify-between items-end gap-8 mb-16 pb-8 border-b border-[#eeeeee]">
             <div className="space-y-3 max-w-3xl">
-              <span className="section-label">The Journal</span>
-              <h1 className="heading-hero">The Blog</h1>
+              <span className="section-label">{t("blog.journal")}</span>
+              <h1 className="heading-hero">{t("blog.theBlog")}</h1>
             </div>
             <div className="text-right hidden md:block">
-              <p className="text-body font-medium max-w-xs">
-                Insights and engineering thoughts.
+              <p className="text-[#333333] font-medium max-w-xs">
+                {t("blog.insights")}
               </p>
             </div>
           </div>
@@ -199,24 +208,24 @@ export default function Blog() {
                 onClick={() => setActiveCategory(cat)}
                 className={`text-[10px] font-black uppercase tracking-widest px-8 py-4 rounded-full border transition-all ${
                   activeCategory === cat
-                    ? "bg-primary text-white border-primary"
-                    : "bg-white text-text-secondary border-border-subtle hover:border-primary hover:text-primary"
+                    ? "bg-[#2e7d32] text-white border-[#2e7d32]"
+                    : "bg-white text-[#333333] border-[#eeeeee] hover:border-[#2e7d32] hover:text-[#2e7d32]"
                 }`}
               >
-                {cat}
+                {categoryLabels[cat]}
               </button>
             ))}
             <div className="flex-grow md:max-w-xs ml-auto relative">
               <input
                 type="text"
-                placeholder="Search articles..."
+                placeholder={t("blog.search")}
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="w-full bg-white border border-border-subtle rounded-full py-4 px-12 focus:outline-none focus:border-primary text-sm font-medium"
+                className="w-full bg-white border border-[#eeeeee] rounded-full py-4 px-12 focus:outline-none focus:border-[#2e7d32] text-sm font-medium"
               />
               <Search
                 size={18}
-                className="absolute left-5 top-1/2 -translate-y-1/2 text-text-secondary opacity-40"
+                className="absolute left-5 top-1/2 -translate-y-1/2 text-[#333333] opacity-40"
               />
             </div>
           </div>
@@ -230,7 +239,7 @@ export default function Blog() {
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
-          {/* Left vertical progress bar — only on hover + scroll */}
+          {/* Left vertical progress bar */}
           <div
             className="relative flex-shrink-0 w-[3px] rounded-full overflow-hidden"
             style={{
@@ -240,7 +249,7 @@ export default function Blog() {
             }}
           >
             <div
-              className="absolute top-0 left-0 w-full bg-primary rounded-full"
+              className="absolute top-0 left-0 w-full bg-[#2e7d32] rounded-full"
               style={{
                 height: `${scrollProgress * 100}%`,
                 opacity: barVisible ? 1 : 0,
@@ -259,14 +268,14 @@ export default function Blog() {
             style={{ height: "640px" }}
           >
             {loading ? (
-              <div className="py-32 text-center text-text-secondary font-medium opacity-50">
-                Loading posts...
+              <div className="py-32 text-center text-[#333333] font-medium">
+                {t("blog.loading")}
               </div>
             ) : filteredPosts.length > 0 ? (
               filteredPosts.map((post) => wrapPost(post))
             ) : (
-              <div className="py-32 text-center text-text-secondary font-medium opacity-50">
-                No posts found.
+              <div className="py-32 text-center text-[#333333] font-medium">
+                {t("blog.noPosts")}
               </div>
             )}
           </div>
