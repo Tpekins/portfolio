@@ -60,7 +60,7 @@ export default function App() {
         </main>
         <div
           className="fixed bottom-0 left-0 right-0 z-10"
-          style={{ opacity: footerOpacity, pointerEvents: footerOpacity === 0 ? "none" : "auto", transition: "opacity 0.3s ease-in-out" }}
+          style={{ opacity: footerOpacity, pointerEvents: footerOpacity === 0 ? "none" : "auto", transition: "opacity 0.1s ease-in-out" }}
         >
           <div className="pointer-events-auto">
             <Footer />

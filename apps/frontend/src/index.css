@@ -75,7 +75,7 @@
 .site-wrapper {
   position: relative;
   z-index: 20;
-  padding-bottom: 550px;
+  padding-bottom: 510px;
   background: linear-gradient(
     to bottom,
     #ffffff 0%,
@@ -93,7 +93,7 @@
 .site-wrapper::after {
   content: '';
   position: absolute;
-  bottom: 490px;
+  bottom: 450px;
   left: 0;
   right: 0;
   height: 60px;

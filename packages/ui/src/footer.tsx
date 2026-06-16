@@ -15,11 +15,11 @@ export function Footer() {
   };
 
   return (
-    <footer className="fixed bottom-0 left-0 right-0 z-20 h-[550px] bg-white border-t border-[#eeeeee] pt-12 pb-24 px-6 w-full overflow-hidden flex flex-col items-center">
+    <footer className="fixed bottom-0 left-0 right-0 z-20 h-[520px] bg-white border-t border-[#eeeeee] pt-12 pb-20 px-6 w-full overflow-hidden flex flex-col items-center">
       <div className="max-w-7xl mx-auto w-full flex-grow flex flex-col justify-between">
-        <div className="mt-10 grid grid-cols-1 md:grid-cols-12 gap-12 items-start text-center md:text-left">
+        <div className="mt-10 grid grid-cols-1 md:grid-cols-12 gap-20 items-start text-center md:text-left">
           {/* Logo Section */}
-          <div className="md:col-span-4 flex flex-col items-center md:items-start space-y-2">
+          <div className="md:col-span-4 flex flex-col items-center md:items-start space-y-4">
             <span className="text-5xl md:text-6xl font-script text-[#2e7d32] tracking-tight">
               Tiani Pekins
             </span>
@@ -29,7 +29,7 @@ export function Footer() {
           </div>
 
           {/* Bio Section */}
-          <div className="md:col-span-5 space-y-4">
+          <div className="md:col-span-5 space-y-6">
             <h2 className="text-2xl font-display font-black text-[#1a1a1c]">
               {t("footer.hi")}
             </h2>
@@ -41,7 +41,7 @@ export function Footer() {
           </div>
 
           {/* Shortcuts Section */}
-          <div className="md:col-span-3">
+          <div className="md:col-span-20 space-y-6">
             <h2 className="text-2xl font-display font-black text-[#1a1a1c] mb-6">
               {t("footer.shortcuts")}
             </h2>
@@ -87,7 +87,7 @@ export function Footer() {
         </div>
 
         {/* Bottom Section */}
-        <div className="mt-10 flex flex-col items-center space-y-6">
+        <div className="mt-16 flex flex-col items-center space-y-10">
           <button
             onClick={scrollToTop}
             className="w-12 h-12 border-2 border-[#1a1a1c] rounded-lg flex items-center justify-center hover:bg-[#1a1a1c] hover:text-white transition-all group shadow-sm bg-white"
@@ -96,12 +96,12 @@ export function Footer() {
             <ChevronUp size={24} />
           </button>
 
-          <div className="text-center space-y-4">
+          <div className="text-center space-y-2 flex flex-col items-center">
             <p className="text-sm font-medium text-[#333333]">
               {t("footer.copyright")}
             </p>
 
-            <div className="flex justify-center gap-6">
+            <div className="flex justify-center gap-6 height- drop-shadow-hover">
               <a href="https://github.com/Tpekins" target="_blank" rel="noreferrer" className="text-[#1a1a1c] hover:text-[#2e7d32] transition-colors"><Github size={18} /></a>
               <a href="https://www.facebook.com/TianiPekins/" target="_blank" rel="noreferrer" className="text-[#1a1a1c] hover:text-[#2e7d32] transition-colors"><Facebook size={18} /></a>
               <a href="https://x.com/TianiPekins" target="_blank" rel="noreferrer" className="text-[#1a1a1c] hover:text-[#2e7d32] transition-colors"><Twitter size={18} /></a>
