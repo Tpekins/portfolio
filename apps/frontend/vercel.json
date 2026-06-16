@@ -1,5 +1,19 @@
 {
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }
+  ],
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "tianipekins.me" }],
+      "destination": "https://tianipekins.com/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "www.tianipekins.me" }],
+      "destination": "https://tianipekins.com/:path*",
+      "permanent": true
+    }
   ]
 }
