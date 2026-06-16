@@ -222,6 +222,28 @@ export function Navbar() {
                         className="p-1.5"
                       >
                         <div className="flex flex-col gap-0.5">
+                          {/* Navigation Links - Mobile Only */}
+                          <div className="md:hidden">
+                            {navLinks.map((link) => {
+                              const isActive = location.pathname === link.path;
+                              return (
+                                <Link
+                                  key={link.path}
+                                  to={link.path}
+                                  onClick={() => setIsOpen(false)}
+                                  className={`flex items-center w-full px-2 py-2 text-sm font-bold rounded-lg transition-all duration-300 ${
+                                    isActive
+                                      ? "bg-[#f1f8f1] text-[#2e7d32]"
+                                      : "text-[#1a1a1c] hover:bg-[#f5f5f5] hover:text-[#2e7d32]"
+                                  }`}
+                                  role="menuitem"
+                                >
+                                  {link.name}
+                                </Link>
+                              );
+                            })}
+                            <div className="my-1 border-t border-[#eeeeee]"></div>
+                          </div>
                           <button
                             className="flex items-center justify-between w-full px-2 py-2 text-sm font-bold text-[#1a1a1c] hover:bg-[#f5f5f5] hover:text-[#2e7d32] rounded-lg transition-all duration-300"
                             onClick={() => setShowLanguageMenu(true)}
