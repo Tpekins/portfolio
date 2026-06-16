@@ -309,9 +309,9 @@ export default function Feed() {
   });
 
   return (
-    <div className="flex flex-col bg-[#f8fafc]">
+    <div className="flex flex-col bg-[#f5f5f0]">
       {/* Feed Hero */}
-      <section className="pt-48 pb-24 px-6 bg-[#f8fafc]">
+      <section className="pt-48 pb-24 px-6 bg-[#f5f5f0]">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-end gap-8 mb-16 pb-8 border-b border-[#eeeeee]">
             <div className="space-y-3 max-w-3xl">
