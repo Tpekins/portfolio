@@ -119,8 +119,8 @@ export default function Contact() {
           </div>
 
           {/* Profile Card */}
-          <div className="w-full max-w-5xl flex flex-col md:flex-row items-center justify-center gap-15 px-35 py-25 hover:shadow-lg group">
-            <div className="w-85 h-125 shrink-0 overflow-hidden rounded-2xl relative">
+          <div className="w-full max-w-5xl flex flex-col md:flex-row items-center justify-center gap-15 px-35 py-22  hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 rounded-3xl">
+            <div className="w-85 h-125 shrink-0 overflow-hidden rounded-2xl relative, group">
               <img
                 src="/Tiani.jpg"
                 alt="Tiani Pekins"
@@ -130,7 +130,7 @@ export default function Contact() {
             </div>
             <div className="flex flex-col justify-center gap-8">
               <div className="space-y-3">
-                <h2 className="text-5xl font-display font-medium text-[#1a1a1c]">
+                <h2 className="text-5xl font-display font-small... text-[#1a1a1c]">
                   Tiani Pekins
                 </h2>
                 <p className="text-lg text-[#1a1a1c]/60 font-medium">
@@ -142,7 +142,7 @@ export default function Contact() {
               </p>
               <a
                 href="mailto:tiani@tianipekins.com"
-                className="text-xl font-bold text-[#1a1a1c] hover:underline"
+                className="text-xl font-bold text-[#1a1a1c] hover:underline pt-2"
               >
                 tiani@tianipekins.com
               </a>

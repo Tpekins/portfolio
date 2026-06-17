@@ -117,11 +117,11 @@ export function Navbar() {
     <nav className="fixed top-0 left-0 w-full z-50 bg-white/60 backdrop-blur-xl border-b border-[#eeeeee]/50 px-1">
       <div className="w-full px-6 xl:px-12 h-28 flex items-center justify-between">
         <Link to="/" className="group">
-          <div className="text-4xl font-display font-black text-[#1a1a1c] group-hover:text-[#2e7d32] transition-colors tracking-tighter leading-none mb-1 px-">
+          <div className="text-4xl font-display font-black text-[#1a1a1c] group-hover:text-[#2e7d32] transition-all tracking-tight leading-none mb-1 group-hover:scale-105 duration-500 group-hover:opacity-80 origin-left">
             Tiani Pekins
           </div>
-          <div className="text-[11px] font-black uppercase tracking-[0.3em] text-[#333333] group-hover:text-[#2e7d32] transition-colors px-2">
-            Software Engineer <span className="text-[#2e7d32] italic">/</span>
+          <div className="text-xs font-bold uppercase tracking-[0.2em] text-[#1a1a1c]/70 group-hover:text-[#2e7d32] transition-all group-hover:scale-105 duration-500 group-hover:opacity-80 origin-left px-2">
+            Software Engineer /
           </div>
         </Link>
 
