@@ -60,14 +60,14 @@ export default function Contact() {
                   name="from_name"
                   required
                   placeholder={t("contact.name")}
-                  className="w-full bg-white border border-gray-300 rounded-lg px-5 py-4 text-base font-medium text-[#1a1a1c] placeholder-gray-400 outline-none shadow-sm transition-all focus:ring-2 focus:ring-white/50"
+                  className="w-full bg-white border border-purple-500 rounded-lg px-5 py-4 text-base font-medium text-[#1a1a1c] placeholder-gray-400 outline-none shadow-sm transition-all focus:ring-2 focus:ring-purple-500/50"
                 />
                 <input
                   type="text"
                   name="from_surname"
                   required
                   placeholder={t("contact.surname")}
-                  className="w-full bg-white border border-gray-300 rounded-lg px-5 py-4 text-base font-medium text-[#1a1a1c] placeholder-gray-400 outline-none shadow-sm transition-all focus:ring-2 focus:ring-white/50"
+                  className="w-full bg-white border border-purple-500 rounded-lg px-5 py-4 text-base font-medium text-[#1a1a1c] placeholder-gray-400 outline-none shadow-sm transition-all focus:ring-2 focus:ring-purple-500/50"
                 />
               </div>
 
@@ -77,13 +77,13 @@ export default function Contact() {
                   name="reply_to"
                   required
                   placeholder={t("contact.email")}
-                  className="w-full bg-white border border-gray-300 rounded-lg px-5 py-4 text-base font-medium text-[#1a1a1c] placeholder-gray-400 outline-none shadow-sm transition-all focus:ring-2 focus:ring-white/50"
+                  className="w-full bg-white border border-purple-500 rounded-lg px-5 py-4 text-base font-medium text-[#1a1a1c] placeholder-gray-400 outline-none shadow-sm transition-all focus:ring-2 focus:ring-purple-500/50"
                 />
                 <input
                   type="tel"
                   name="phone_number"
                   placeholder={t("contact.phone")}
-                  className="w-full bg-white border border-gray-300 rounded-lg px-5 py-4 text-base font-medium text-[#1a1a1c] placeholder-gray-400 outline-none shadow-sm transition-all focus:ring-2 focus:ring-white/50"
+                  className="w-full bg-white border border-purple-500 rounded-lg px-5 py-4 text-base font-medium text-[#1a1a1c] placeholder-gray-400 outline-none shadow-sm transition-all focus:ring-2 focus:ring-purple-500/50"
                 />
               </div>
 
@@ -91,7 +91,7 @@ export default function Contact() {
                 type="text"
                 name="subject"
                 placeholder={t("contact.subject")}
-                className="w-full bg-white border border-gray-300 rounded-lg px-5 py-4 text-base font-medium text-[#1a1a1c] placeholder-gray-400 outline-none shadow-sm transition-all focus:ring-2 focus:ring-white/50"
+                className="w-full bg-white border border-purple-500 rounded-lg px-5 py-4 text-base font-medium text-[#1a1a1c] placeholder-gray-400 outline-none shadow-sm transition-all focus:ring-2 focus:ring-purple-500/50"
               />
 
               <textarea
@@ -99,13 +99,13 @@ export default function Contact() {
                 required
                 rows={6}
                 placeholder={t("contact.message")}
-                className="w-full bg-white border border-gray-300 rounded-lg px-5 py-4 text-base font-medium text-[#1a1a1c] placeholder-gray-400 outline-none shadow-sm transition-all focus:ring-2 focus:ring-white/50 resize-none"
+                className="w-full bg-white border border-purple-500 rounded-lg px-5 py-4 text-base font-medium text-[#1a1a1c] placeholder-gray-400 outline-none shadow-sm transition-all focus:ring-2 focus:ring-purple-500/50 resize-none"
               />
 
               <button
                 type="submit"
                 disabled={status === "sending" || status === "success"}
-                className="w-full bg-[#1c1c1c] text-white py-4 rounded-lg font-bold text-sm hover:bg-[#333] hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 disabled:opacity-50"
+                className="w-full bg-[#1c1c1c] text-white py-5 rounded-lg font-bold text-lg hover:bg-[#333434] hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 disabled:opacity-50"
               >
                 {status === "sending"
                   ? t("contact.sending")
@@ -119,30 +119,30 @@ export default function Contact() {
           </div>
 
           {/* Profile Card */}
-          <div className="w-full max-w-4xl flex flex-col md:flex-row items-start gap-16">
-            <div className="w-80 h-[26rem] shrink-0 overflow-hidden rounded-2xl">
+          <div className="w-full max-w-5xl flex flex-col md:flex-row items-center justify-center gap-15 px-35 py-25 hover:shadow-lg group">
+            <div className="w-85 h-125 shrink-0 overflow-hidden rounded-2xl relative">
               <img
                 src="/Tiani.jpg"
                 alt="Tiani Pekins"
-                className="w-full h-full object-cover object-top"
+                className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500 group-hover:opacity-80"
                 referrerPolicy="no-referrer"
               />
             </div>
-            <div className="flex flex-col justify-center gap-6 pt-2">
-              <div className="space-y-2">
-                <h2 className="text-4xl font-display font-medium text-[#1a1a1c]">
+            <div className="flex flex-col justify-center gap-8">
+              <div className="space-y-3">
+                <h2 className="text-5xl font-display font-medium text-[#1a1a1c]">
                   Tiani Pekins
                 </h2>
-                <p className="text-base text-[#1a1a1c]/60 font-medium">
+                <p className="text-lg text-[#1a1a1c]/60 font-medium">
                   {t("contact.role")}
                 </p>
               </div>
-              <p className="text-lg leading-relaxed text-[#1a1a1c] max-w-sm">
+              <p className="text-xl leading-relaxed text-[#1a1a1c] max-w-md">
                 {t("contact.bio")}
               </p>
               <a
                 href="mailto:tiani@tianipekins.com"
-                className="text-lg font-bold text-[#1a1a1c] hover:underline"
+                className="text-xl font-bold text-[#1a1a1c] hover:underline"
               >
                 tiani@tianipekins.com
               </a>
