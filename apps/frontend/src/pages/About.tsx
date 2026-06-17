@@ -84,7 +84,7 @@ export default function About() {
         <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-start">
           <div className="space-y-10">
             <span className="section-label">{t("about.aboutMe")}</span>
-              <div className="space-y-8 text-sm md:text-base font-medium leading-relaxed text-[#1a1a1c]">
+              <div className="space-y-5 text-sm md:text-base font..... leading-relaxed text-[#1a1a1c]">
               <p>
                 {t("about.aboutDesc1")}
               </p>
@@ -94,14 +94,14 @@ export default function About() {
             </div>
           </div>
 
-          <div className="flex flex-col gap-12 lg:pl-20">
+          <div className="flex flex-col gap-12 lg:pl-20 pt-2">
             <div className="flex items-center gap-8">
               <div className="w-16 h-16 bg-[#6366f1] rounded-xl flex items-center justify-center shadow-lg shadow-indigo-100">
                 <Linkedin size={32} className="text-white" fill="white" />
               </div>
               <div className="space-y-0.5">
                 <p className="text-4xl md:text-5xl font-display font-black tracking-tighter text-[#1a1a1c]">
-                  50+
+                  70+
                 </p>
                 <p className="text-[11px] font-bold uppercase tracking-widest text-[#333333]">
                   {t("about.connections")}
@@ -115,9 +115,9 @@ export default function About() {
               </div>
               <div className="space-y-0.5">
                 <p className="text-4xl md:text-5xl font-display font-black tracking-tighter text-[#1a1a1c]">
-                  15+
+                  25+
                 </p>
-                <p className="text-[11px] font-bold uppercase tracking-widest text-[#333333]">
+                <p className="text-[11px] font-bold uppercase tracking-widest text-[#333333] ">
                   {t("about.peopleMentored")}
                 </p>
               </div>
@@ -172,7 +172,7 @@ export default function About() {
                     {exp.period}
                   </p>
                 </div>
-                <p className="text-sm md:text-base leading-relaxed text-[#1a1a1c] font-medium">
+                <p className="text-sm md:text-base leading-relaxed text-[#1a1a1c] font....">
                   {exp.desc}
                 </p>
               </div>

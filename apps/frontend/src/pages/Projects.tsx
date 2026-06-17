@@ -41,7 +41,7 @@ export default function Projects() {
     <div className="flex flex-col min-h-screen">
       {/* Projects Hero - Pink Banner */}
       <section className="bg-[#ffb5b5] pt-48 pb-24 px-6 md:px-12">
-        <div className="max-w-7xl mx-auto text-center space-y-10">
+        <div className="max-w-7xl mx-auto text-center space-y-10 pt-14">
           <h1 className="heading-hero text-[#1a1a1c]">
             {t("projects.heroTitle")}
           </h1>
@@ -50,12 +50,12 @@ export default function Projects() {
           </p>
 
           <div className="pt-20 flex flex-col md:flex-row justify-between items-center gap-8 border-t border-[#1a1a1c]/10 mt-10">
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 ">
               <span className="text-base font-bold">{t("projects.reachOut")}</span>
               <Link
                 to="/contact"
                 className="text-base font-bold underline underline-offset-4 hover:text-white transition-colors"
-              >
+              > 
                 {t("projects.getPricing")}
               </Link>
             </div>

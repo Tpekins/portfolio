@@ -22,7 +22,7 @@ const translations = {
     // Footer
     footer: {
       hi: "Hi there,",
-      bio: "I'm Tiani a full-stack engineer and founder building at the intersection of tech and community. Based in Silicon Mountain and grounded in its spirit, I developed LocalHands to give Africa's artisans and labourers the digital visibility they deserve. Fueled by ambition, I write code, think in systems, and believe Africa's builders are just getting started",
+      bio: "I'm a full-stack engineer and founder building at the intersection of tech and community. Based in Silicon Mountain and grounded in its spirit, I developed LocalHands to give Africa's artisans and labourers the digital visibility they deserve. Fueled by ambition, I write code, think in systems, and believe Africa's builders are just getting started",
       shortcuts: "Shortcuts:",
       copyright: "© 2026 | All rights reserved | Made with ❤️ by Tiani Pekins.",
     },

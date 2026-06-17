@@ -53,8 +53,8 @@ export default function Contact() {
 
           {/* Form Container */}
           <div className="w-full max-w-4xl mx-auto mb-24">
-            <form ref={form} onSubmit={handleSubmit} className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <form ref={form} onSubmit={handleSubmit} className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <label className="text-[12px] font-bold text-white px-2">
                     {t("contact.name")}
@@ -63,7 +63,7 @@ export default function Contact() {
                     type="text"
                     name="from_name"
                     required
-                    className="w-full bg-white border-none py-4 px-4 rounded-md focus:ring-0 transition-all font-medium text-base text-[#1a1a1c] outline-none shadow-sm"
+                    className="w-full bg-white border-none py-3 px-9 rounded-md focus:ring-0 transition-all font-medium text-base text-[#1a1a1c] outline-none shadow-sm"
                   />
                 </div>
                 <div className="space-y-2">
@@ -74,12 +74,12 @@ export default function Contact() {
                     type="text"
                     name="from_surname"
                     required
-                    className="w-full bg-white border-none py-4 px-4 rounded-md focus:ring-0 transition-all font-medium text-base text-[#1a1a1c] outline-none shadow-sm"
+                    className="w-full bg-white border-none py-3 px-4 rounded-md focus:ring-0 transition-all font-medium text-base text-[#1a1a1c] outline-none shadow-sm"
                   />
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-4">
                 <div className="space-y-2">
                   <label className="text-[12px] font-bold text-white px-2">
                     {t("contact.email")}
@@ -88,7 +88,7 @@ export default function Contact() {
                     type="email"
                     name="reply_to"
                     required
-                    className="w-full bg-white border-none py-4 px-4 rounded-md focus:ring-0 transition-all font-medium text-base text-[#1a1a1c] outline-none shadow-sm"
+                    className="w-full bg-white border-none py-3 px-4 rounded-md focus:ring-0 transition-all font-medium text-base text-[#1a1a1c] outline-none shadow-sm"
                   />
                 </div>
                 <div className="space-y-2">
@@ -98,7 +98,7 @@ export default function Contact() {
                   <input
                     type="tel"
                     name="phone_number"
-                    className="w-full bg-white border-none py-4 px-4 rounded-md focus:ring-0 transition-all font-medium text-base text-[#1a1a1c] outline-none shadow-sm"
+                    className="w-full bg-white border-none py-3 px-4 rounded-md focus:ring-0 transition-all font-medium text-base text-[#1a1a1c] outline-none shadow-sm"
                   />
                 </div>
               </div>
@@ -122,7 +122,7 @@ export default function Contact() {
                   rows={4}
                   name="message"
                   required
-                  className="w-full bg-white border-none py-4 px-4 rounded-md focus:ring-0 transition-all font-medium text-base text-[#1a1a1c] resize-none outline-none shadow-sm"
+                  className="w-full bg-white border-none py-6 px-2 rounded-md focus:ring-0 transition-all font-medium text-base text-[#1a1a1c] resize-none outline-none shadow-sm"
                 ></textarea>
               </div>
 
@@ -145,31 +145,31 @@ export default function Contact() {
           </div>
 
           {/* Profile Card */}
-          <div className="w-full max-w-lg flex flex-col md:flex-row items-center md:items-start gap-8 mt-10">
-          <div className="w-59 h-69 shrink-0 overflow-hidden rounded-lg group relative">
+          <div className="w-full max-w-lg flex flex-col md:flex-row items-center md:items-start gap-9 mt-18">
+          <div className="w-85 h-124 shrink-0 overflow-hidden rounded-lg group relative">
               <img
                 src="/Tiani.jpg"
                 alt="Tiani Pekins"
-                className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500 group-hover:opacity-60"
+                className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500 group-hover:opacity-80"
                 referrerPolicy="no-referrer"
               />
               <div className="absolute inset-0 bg-[#2e7d32]/0 group-hover:bg-[#2e7d32]/20 transition-colors duration-500"></div>
             </div>
-            <div className="space-y-4 pt-4 md:pt-10">
-              <div className="space-y-1 text-center md:text-left">
-                <h2 className="text-3xl font-display font-medium text-[#1a1a1c]">
+            <div className="space-y-6 pt-6 md:pt-23 ">
+              <div className="space-y-1 text-center md:text-  pt-3">
+                <h2 className="text-3xl font-display font-medium text-[#000000]">
                   Tiani Pekins
                 </h2>
-                <p className="text-[13px] font-bold uppercase tracking-widest text-[#1a1a1c] opacity-60 italic font-mono">
+                <p className="  text-[13px] font-bold lowercase tracking-widest text-[#000000] opacity-70 underline font-mono">
                   {t("contact.role")}
                 </p>
               </div>
-              <p className="text-[14px] leading-relaxed text-[#1a1a1c] font-medium max-w-sm text-center md:text-left">
+              <p className="text-[14px] leading-relaxed text-[#000000] font- max-w-sm text-center  md:text- pt-1">
                 {t("contact.bio")}
               </p>
               <a 
                 href="mailto:tiani@tianipekins.com"
-                className="text-lg font-black text-[#1a1a1c] text-center md:text-left pt-2 hover:underline block"
+                className="text-lg font-black text-[#0D2E75] text-center md:text-left pt-4 hover:underline block "
               >
                 tiani@tianipekins.com
               </a>

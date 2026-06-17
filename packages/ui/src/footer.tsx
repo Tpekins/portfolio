@@ -15,25 +15,25 @@ export function Footer() {
   };
 
   return (
-    <footer className="fixed bottom-0 left-0 right-0 z-20 min-h-[520px] bg-white border-t border-[#eeeeee] pt-12 pb-20 px-6 w-full flex flex-col items-center">
+    <footer className="fixed bottom-0 left-0 right-0 z-20 min-h-[520px] bg-white border-t border-[#eeeeee] pt-2 pb-12 px-2 w-full flex flex-col items-center">
       <div className="max-w-7xl mx-auto w-full flex-grow flex flex-col justify-between">
         <div className="mt-10 grid grid-cols-1 md:grid-cols-12 gap-12 items-start text-center md:text-left">
           {/* Logo Section */}
-          <div className="md:col-span-4 flex flex-col items-center md:items-start space-y-4">
+          <div className="md:col-span-4 flex flex-col items-center md:items-start space-y-0">
             <span className="text-5xl md:text-6xl font-script text-[#2e7d32] tracking-tight pt-20">
               Tiani Pekins
             </span>
-            <span className="text-[11px] font-mono font-medium tracking-[0.2em] text-[#333333]">
-              {`< SOFTWARE ENGINEER />`}
+            <span className="text-[16px] font-mono font-medium tracking-[0.2em] text-[#2e7d32] px-6">
+                {`       <SOFTWARE ENGINEER/>`}
             </span>
           </div>
 
           {/* Bio Section */}
-          <div className="md:col-span-5 space-y-6">
-            <h2 className="text-2xl font-display font-black text-[#1a1a1c]">
+          <div className="md:col-span-5 space-y-4">
+            <h2 className="text-2xl font-display font-text-[#1a1a1c]">
               {t("footer.hi")}
             </h2>
-            <div className="space-y-4 text-[#333333] text-base font-medium">
+            <div className="space-y-4 text-[#333333] text-base font-small">
               <p>
                 {t("footer.bio")}
               </p>
@@ -42,43 +42,43 @@ export function Footer() {
 
           {/* Shortcuts Section */}
           <div className="md:col-span-3 space-y-6">
-            <h2 className="text-2xl font-display font-black text-[#1a1a1c] mb-6">
+            <h2 className="text-2xl font-display font- text-[#1a1a1c] mb-6 px-8">
               {t("footer.shortcuts")}
             </h2>
             <div className="flex flex-col gap-3 items-center md:items-start text-left">
               <a
                 href="/"
-                className="text-base font-bold text-[#1a1a1c] hover:text-[#2e7d32] transition-colors flex items-center gap-3"
+                className="text-base font- text-[#1a1a1c] hover:text-[#2e7d32] transition-colors flex items-center gap-3 px-8"
               >
                 <span className="text-[#2e7d32] font-black">−</span> {t("nav.home")}
               </a>
               <a
                 href="/projects"
-                className="text-base font-bold text-[#1a1a1c] hover:text-[#2e7d32] transition-colors flex items-center gap-3"
+                className="text-base font- text-[#1a1a1c] hover:text-[#2e7d32] transition-colors flex items-center gap-3 px-8"
               >
                 <span className="text-[#2e7d32] font-black">−</span> {t("nav.projects")}
               </a>
               <a
                 href="/about"
-                className="text-base font-bold text-[#1a1a1c] hover:text-[#2e7d32] transition-colors flex items-center gap-3"
+                className="text-base font- text-[#1a1a1c] hover:text-[#2e7d32] transition-colors flex items-center gap-3 px-8"
               >
                 <span className="text-[#2e7d32] font-black">−</span> {t("nav.about")}
               </a>
               <a
                 href="/blog"
-                className="text-base font-bold text-[#1a1a1c] hover:text-[#2e7d32] transition-colors flex items-center gap-3"
+                className="text-base font- text-[#1a1a1c] hover:text-[#2e7d32] transition-colors flex items-center gap-3 px-8"
               >
                 <span className="text-[#2e7d32] font-black">−</span> {t("nav.blog")}
               </a>
               <a
                 href="/feed"
-                className="text-base font-bold text-[#1a1a1c] hover:text-[#2e7d32] transition-colors flex items-center gap-3"
+                className="text-base font- text-[#1a1a1c] hover:text-[#2e7d32] transition-colors flex items-center gap-3 px-8"
               >
                 <span className="text-[#2e7d32] font-black">−</span> {t("nav.feed")}
               </a>
               <a
                 href="/contact"
-                className="text-base font-bold text-[#1a1a1c] hover:text-[#2e7d32] transition-colors flex items-center gap-3"
+                className="text-base font- text-[#1a1a1c] hover:text-[#2e7d32] transition-colors flex items-center gap-3 px-8"
               >
                 <span className="text-[#2e7d32] font-black">−</span> {t("nav.contact")}
               </a>
@@ -87,7 +87,7 @@ export function Footer() {
         </div>
 
         {/* Bottom Section */}
-        <div className="mt-16 flex flex-col items-center space-y-10">
+        <div className="mt-8 flex flex-col items-center space-y-10">
           <button
             onClick={scrollToTop}
             className="w-12 h-12 border-2 border-[#1a1a1c] rounded-lg flex items-center justify-center hover:bg-[#1a1a1c] hover:text-white transition-all group shadow-sm bg-white"
