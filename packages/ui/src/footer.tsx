@@ -15,9 +15,9 @@ export function Footer() {
   };
 
   return (
-    <footer className="fixed bottom-0 left-0 right-0 z-20 h-[520px] bg-white border-t border-[#eeeeee] pt-12 pb-20 px-6 w-full overflow-hidden flex flex-col items-center">
+    <footer className="fixed bottom-0 left-0 right-0 z-20 min-h-[520px] bg-white border-t border-[#eeeeee] pt-12 pb-20 px-6 w-full flex flex-col items-center">
       <div className="max-w-7xl mx-auto w-full flex-grow flex flex-col justify-between">
-        <div className="mt-10 grid grid-cols-1 md:grid-cols-12 gap-20 items-start text-center md:text-left">
+        <div className="mt-10 grid grid-cols-1 md:grid-cols-12 gap-12 items-start text-center md:text-left">
           {/* Logo Section */}
           <div className="md:col-span-4 flex flex-col items-center md:items-start space-y-4">
             <span className="text-5xl md:text-6xl font-script text-[#2e7d32] tracking-tight">
@@ -41,7 +41,7 @@ export function Footer() {
           </div>
 
           {/* Shortcuts Section */}
-          <div className="md:col-span-20 space-y-6">
+          <div className="md:col-span-3 space-y-6">
             <h2 className="text-2xl font-display font-black text-[#1a1a1c] mb-6">
               {t("footer.shortcuts")}
             </h2>
