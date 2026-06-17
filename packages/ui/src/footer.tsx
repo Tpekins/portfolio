@@ -20,7 +20,7 @@ export function Footer() {
         <div className="mt-10 grid grid-cols-1 md:grid-cols-12 gap-12 items-start text-center md:text-left">
           {/* Logo Section */}
           <div className="md:col-span-4 flex flex-col items-center md:items-start space-y-4">
-            <span className="text-5xl md:text-6xl font-script text-[#2e7d32] tracking-tight">
+            <span className="text-5xl md:text-6xl font-script text-[#2e7d32] tracking-tight pt-20">
               Tiani Pekins
             </span>
             <span className="text-[11px] font-mono font-medium tracking-[0.2em] text-[#333333]">
