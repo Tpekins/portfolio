@@ -290,9 +290,9 @@ export default function Home() {
         <div className="max-w-4xl mx-auto">
           <motion.div
             whileHover={{ scale: 1.005 }}
-            className="bg-[#2e7d32] text-white py-5 px-6 md:px-10 rounded-2xl flex flex-col md:flex-row items-center justify-between gap-6 shadow-lg shadow-green-900/10"
+            className="bg-[#2e7d32] text-white py-11 px-6 md:px-10 rounded-2xl flex flex-col md:flex-row items-center justify-between gap-6 shadow-lg shadow-green-900/10"
           >
-            <h3 className="text-lg md:text-xl font-display font-black tracking-tight leading-tight text-center md:text-left">
+            <h3 className="text-lg md:text-xl font-display font-blac tracking-tight leading-tight text-center md:text-left">
               {t("home.ctaTitle")}
             </h3>
             <Link
