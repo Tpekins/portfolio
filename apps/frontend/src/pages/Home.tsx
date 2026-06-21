@@ -292,7 +292,7 @@ export default function Home() {
             whileHover={{ scale: 1.005 }}
             className="bg-[#2e7d32] text-white py-11 px-6 md:px-10 rounded-2xl flex flex-col md:flex-row items-center justify-between gap-6 shadow-lg shadow-green-900/10"
           >
-            <h3 className="text-lg md:text-xl font-display font-blac tracking-tight leading-tight text-center md:text-left">
+            <h3 className="text-lg md:text-xl font-display font..... tracking-tight leading-tight text-center md:text-left">
               {t("home.ctaTitle")}
             </h3>
             <Link
