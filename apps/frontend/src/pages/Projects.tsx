@@ -171,7 +171,7 @@ export default function Projects() {
                     href={project.isLive ? project.live : project.github}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex bg-[#1c1c1c] text-white py-4 px-8 rounded-xl font-bold hover:bg-black transition-all duration-300"
+                    className="inline-flex bg-black text-white py-4 px-8 rounded-xl font-bold hover:bg-[#ffb5b5] transition-all duration-300"
                   >
                     {t("projects.goToWebsite")}
                   </a>
