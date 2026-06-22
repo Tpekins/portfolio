@@ -47,15 +47,37 @@ async function fetchPostStats(url: string): Promise<PostStats> {
   return { comments: null, reactions: null, source: "none" };
 }
 
-function ArrowDivider() {
+function ArrowDivider({
+  fullWidth = false,
+  arrowWidth = 60,
+  arrowHeight = 80,
+  arrowStrokeWidth = 1.5,
+}: {
+  fullWidth?: boolean;
+  arrowWidth?: number;
+  arrowHeight?: number;
+  arrowStrokeWidth?: number;
+}) {
   return (
     <div className="w-full py-20 flex justify-center items-center overflow-hidden">
-      <div className="w-full max-w-7xl px-6 flex items-center">
-        <div className="flex-grow h-px bg-[#1a1a1c] opacity-10"></div>
+      <div
+        className={
+          fullWidth
+            ? "w-full flex items-center"
+            : "w-full max-w-7xl px-6 flex items-center"
+        }
+      >
+        <div
+          className={
+            fullWidth
+              ? "flex-grow h-[2px] bg-[#1a1a1c] opacity-20"
+              : "flex-grow h-px bg-[#1a1a1c] opacity-10"
+          }
+        ></div>
         <div className="relative flex-shrink-0 mx-6">
           <svg
-            width="60"
-            height="80"
+            width={arrowWidth}
+            height={arrowHeight}
             viewBox="0 0 60 80"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -64,20 +86,26 @@ function ArrowDivider() {
             <path
               d="M20 5 C 20 20, 45 25, 45 45 C 45 60, 20 60, 20 45 C 20 25, 55 35, 55 65"
               stroke="currentColor"
-              strokeWidth="1.5"
+              strokeWidth={arrowStrokeWidth}
               strokeLinecap="round"
               strokeLinejoin="round"
             />
             <path
               d="M48 60 L 55 65 L 58 58"
               stroke="currentColor"
-              strokeWidth="1.5"
+              strokeWidth={arrowStrokeWidth}
               strokeLinecap="round"
               strokeLinejoin="round"
             />
           </svg>
         </div>
-        <div className="flex-grow h-px bg-[#1a1a1c] opacity-10"></div>
+        <div
+          className={
+            fullWidth
+              ? "flex-grow h-[2px] bg-[#1a1a1c] opacity-20"
+              : "flex-grow h-px bg-[#1a1a1c] opacity-10"
+          }
+        ></div>
       </div>
     </div>
   );
@@ -118,28 +146,19 @@ export default function Home() {
       title: t("home.softwareDev"),
       icon: <Code2 size={40} className="text-indigo-500" />,
       cardClass: "bg-indigo-50 border-indigo-100",
-      bullets: [
-        t("home.softwareDev1"),
-        t("home.softwareDev2"),
-      ],
+      bullets: [t("home.softwareDev1"), t("home.softwareDev2")],
     },
     {
       title: t("home.communityTech"),
       icon: <Users size={40} className="text-emerald-500" />,
       cardClass: "bg-emerald-50 border-emerald-100",
-      bullets: [
-        t("home.communityTech1"),
-        t("home.communityTech2"),
-      ],
+      bullets: [t("home.communityTech1"), t("home.communityTech2")],
     },
     {
       title: t("home.productStrategy"),
       icon: <Layers size={40} className="text-amber-500" />,
       cardClass: "bg-amber-50 border-amber-100",
-      bullets: [
-        t("home.productStrategy1"),
-        t("home.productStrategy2"),
-      ],
+      bullets: [t("home.productStrategy1"), t("home.productStrategy2")],
     },
   ];
 
@@ -202,7 +221,11 @@ export default function Home() {
 
               <motion.div
                 animate={{ y: [0, -20, 0] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                transition={{
+                  duration: 4,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
                 className="absolute top-[10%] left-[10%] z-20 group"
               >
                 <div className="relative">
@@ -216,7 +239,11 @@ export default function Home() {
 
               <motion.div
                 animate={{ y: [0, 20, 0], rotate: [12, 8, 12] }}
-                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+                transition={{
+                  duration: 5,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
                 className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10"
               >
                 <div className="text-[18rem] md:text-[22rem] font-black text-white drop-shadow-[0_20px_50px_rgba(46,125,50,0.3)] select-none italic relative">
@@ -227,7 +254,11 @@ export default function Home() {
 
               <motion.div
                 animate={{ y: [-15, 15, -15], x: [0, 10, 0] }}
-                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+                transition={{
+                  duration: 6,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
                 className="absolute top-[10%] right-[5%] z-20 space-y-[-40px]"
               >
                 <div className="w-32 h-32 bg-amber-200 border-2 border-white rounded-2xl rotate-[30deg] shadow-xl relative z-30"></div>
@@ -240,7 +271,7 @@ export default function Home() {
       </section>
 
       {/* Quick Summary Section */}
-      <section className="py-20 px-6 bg-white/60 backdrop-blur-md border-y border-[#eeeeee]">
+      <section className="py-25 px-6 bg-white/60 backdrop-blur-md border-y border-[#eeeeee]">
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -266,15 +297,23 @@ export default function Home() {
                 className="space-y-8"
               >
                 <div className="flex flex-col items-center gap-6">
-                  <div className={`w-24 h-24 rounded-3xl border flex items-center justify-center shadow-inner ${section.cardClass}`}>
+                  <div
+                    className={`w-24 h-24 rounded-3xl border flex items-center justify-center shadow-inner ${section.cardClass}`}
+                  >
                     {section.icon}
                   </div>
                   <h3 className="heading-card text-center">{section.title}</h3>
                 </div>
                 <ul className="space-y-4">
                   {section.bullets.map((bullet, idx) => (
-                    <li key={idx} className="flex gap-3 text-[#333333] text-sm leading-relaxed font-medium">
-                      <CheckCircle2 size={18} className="text-[#2e7d32] shrink-0 mt-1" />
+                    <li
+                      key={idx}
+                      className="flex gap-3 text-[#333333] text-sm leading-relaxed font-medium"
+                    >
+                      <CheckCircle2
+                        size={18}
+                        className="text-[#2e7d32] shrink-0 mt-1"
+                      />
                       {bullet}
                     </li>
                   ))}
@@ -286,18 +325,18 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 px-6">
+      <section className="py-25 px-6">
         <div className="max-w-4xl mx-auto">
           <motion.div
             whileHover={{ scale: 1.005 }}
-            className="bg-[#2e7d32] text-white py-11 px-6 md:px-10 rounded-2xl flex flex-col md:flex-row items-center justify-between gap-6 shadow-lg shadow-green-900/10"
+            className="bg-[#2e7d32] text-white py-10 px-6 md:px-10 rounded-2xl flex flex-col md:flex-row items-center justify-between gap-6 shadow-lg shadow-green-900/10"
           >
-            <h3 className="text-lg md:text-xl font-display font..... tracking-tight leading-tight text-center md:text-left">
+            <h3 className="text-lg md:text-xl font-display font-bold tracking-tight leading-tight text-center md:text-left">
               {t("home.ctaTitle")}
             </h3>
             <Link
               to="/contact"
-              className="px-8 py-2.5 bg-black text-white hover:opacity-90 rounded-xl font-bold text-sm transition-all duration-300 shadow-xl whitespace-nowrap shrink-0"
+              className="px-8 py-3 bg-black text-white hover:bg-white hover:text-black border-2 border-black rounded-xl font-bold text-sm transition-all duration-300 shadow-xl whitespace-nowrap shrink-0"
             >
               {t("home.letsTalk")}
             </Link>
@@ -305,22 +344,27 @@ export default function Home() {
         </div>
       </section>
 
-      <ArrowDivider />
+      <ArrowDivider
+        fullWidth
+        arrowWidth={90}
+        arrowHeight={120}
+        arrowStrokeWidth={3}
+      />
 
       {/* Projects Preview Section Header */}
-      <section className="pt-24 pb-12 px-6">
+      <section className="pt-6 pb-12 px-6">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-end gap-8 pb-8 border-b border-[#eeeeee]"
+          className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-end gap-8 pb-8 border-b border-[#eeeeee]/50"
         >
           <div className="space-y-3 max-w-3xl">
             <span className="section-label">{t("home.selectedWork")}</span>
             <h2 className="section-title">{t("home.myProjects")}</h2>
           </div>
-          <Link to="/projects" className="nav-link !text-lg py-3">
+          <Link to="/projects" className="nav-link !text-meduim py-3">
             {t("home.viewAllProjects")}
           </Link>
         </motion.div>
@@ -328,7 +372,7 @@ export default function Home() {
 
       {/* Single Featured Project - LocalHands */}
       <section className="pb-24 px-6 md:px-12">
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-4xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -345,14 +389,17 @@ export default function Home() {
               <div className="absolute inset-0 bg-gradient-to-tr from-[#2e7d32]/5 to-transparent"></div>
             </div>
             <div className="space-y-6">
-              <h3 className="section-title !text-4xl md:!text-5xl group-hover:text-[#2e7d32] transition-colors">
+              <h3 className="section-title !text-4xl md:!text-4xl group-hover:text-[#2e7d32] transition-colors">
                 {t("projects.name")}
               </h3>
               <p className="section-label">{t("home.localhandsLabel")}</p>
               <p className="text-[#333333] font-light">
                 {t("home.localhandsDesc")}
               </p>
-              <Link to="/projects" className="btn-outline !px-10 !py-4 !text-base">
+              <Link
+                to="/projects"
+                className="btn-outline !px-8 !py-4 !text-base"
+              >
                 {t("home.learnMore")}
               </Link>
             </div>
@@ -363,7 +410,7 @@ export default function Home() {
       <ArrowDivider />
 
       {/* Blog Preview Section */}
-      <section className="py-24 px-6 md:px-12 bg-[#fafafa]/30 border-t border-[#eeeeee]">
+      <section className="py-24 px-6 md:px-12 bg-[#fafafa]/30 border-t border-[#eeeeee]/50">
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -378,7 +425,10 @@ export default function Home() {
                 {t("home.insightsTitle")}
               </h2>
             </div>
-            <Link to="/blog" className="nav-link !text-lg py-3 whitespace-nowrap">
+            <Link
+              to="/blog"
+              className="nav-link !text-lg py-3 whitespace-nowrap"
+            >
               {t("home.readAllPosts")}
             </Link>
           </motion.div>
@@ -387,11 +437,21 @@ export default function Home() {
           <div className="relative">
             {previewPosts.length > 3 && (
               <>
-                  <button
+                <button
                   onClick={scrollLeft}
                   className="absolute -left-5 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-white border border-[#eeeeee] rounded-full shadow-md flex items-center justify-center hover:bg-[#fafafa] transition-colors duration-300"
                 >
-                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
                     <path d="M15 18l-6-6 6-6" />
                   </svg>
                 </button>
@@ -399,7 +459,17 @@ export default function Home() {
                   onClick={scrollRight}
                   className="absolute -right-5 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-white border border-[#eeeeee] rounded-full shadow-md flex items-center justify-center hover:bg-[#fafafa] transition-colors duration-300"
                 >
-                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
                     <path d="M9 18l6-6-6-6" />
                   </svg>
                 </button>
@@ -414,7 +484,11 @@ export default function Home() {
                 previewPosts.map((post, i) => {
                   const Wrapper = post.externalUrl
                     ? ({ children }: { children: ReactNode }) => (
-                        <a href={post.externalUrl!} target="_blank" rel="noreferrer">
+                        <a
+                          href={post.externalUrl!}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
                           {children}
                         </a>
                       )
@@ -480,20 +554,23 @@ export default function Home() {
                             )}
 
                             {/* Medium — read link */}
-                            {postStats[i]?.source === "medium" && post.externalUrl && (
-                              <a
-                                href={post.externalUrl}
-                                target="_blank"
-                                rel="noreferrer"
-                                onClick={(e) => e.stopPropagation()}
-                                className="flex items-center gap-1 text-[10px] font-bold uppercase text-[#2e7d32] opacity-70 hover:opacity-100 transition-opacity"
-                              >
-                                {t("home.readOnMedium")} <ExternalLink size={10} />
-                              </a>
-                            )}
+                            {postStats[i]?.source === "medium" &&
+                              post.externalUrl && (
+                                <a
+                                  href={post.externalUrl}
+                                  target="_blank"
+                                  rel="noreferrer"
+                                  onClick={(e) => e.stopPropagation()}
+                                  className="flex items-center gap-1 text-[10px] font-bold uppercase text-[#2e7d32] opacity-70 hover:opacity-100 transition-opacity"
+                                >
+                                  {t("home.readOnMedium")}{" "}
+                                  <ExternalLink size={10} />
+                                </a>
+                              )}
 
                             {/* LinkedIn — likes + read link */}
-                            {(!postStats[i] || postStats[i]?.source === "none") &&
+                            {(!postStats[i] ||
+                              postStats[i]?.source === "none") &&
                               post.externalUrl?.includes("linkedin.com") && (
                                 <div className="flex items-center gap-3">
                                   <span className="text-[10px] font-bold opacity-60">
@@ -508,13 +585,13 @@ export default function Home() {
                                     rel="noreferrer"
                                     onClick={(e) => e.stopPropagation()}
                                     className="flex items-center gap-1 text-[10px] font-bold uppercase text-[#2e7d32] opacity-70 hover:opacity-100 transition-opacity"
-                                  >
-                                  </a>
+                                  ></a>
                                 </div>
                               )}
 
                             {/* Fallback — category */}
-                            {(!postStats[i] || postStats[i]?.source === "none") &&
+                            {(!postStats[i] ||
+                              postStats[i]?.source === "none") &&
                               !post.externalUrl?.includes("linkedin.com") && (
                                 <span className="text-[10px] font-bold opacity-40">
                                   {post.category}
