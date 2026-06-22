@@ -302,7 +302,7 @@ export default function Home() {
                   >
                     {section.icon}
                   </div>
-                  <h3 className="heading-card text-center">{section.title}</h3>
+                  <h3 className="heading-card !text-center">{section.title}</h3>
                 </div>
                 <ul className="space-y-4">
                   {section.bullets.map((bullet, idx) => (
@@ -362,9 +362,9 @@ export default function Home() {
         >
           <div className="space-y-3 max-w-3xl">
             <span className="section-label">{t("home.selectedWork")}</span>
-            <h2 className="section-title">{t("home.myProjects")}</h2>
+            <h2 className="section-title !text-2xl md:!text-3xl lg:!text-4xl">{t("home.myProjects")}</h2>
           </div>
-          <Link to="/projects" className="nav-link !text-meduim py-3">
+          <Link to="/projects" className="nav-link !text-medium py-3">
             {t("home.viewAllProjects")}
           </Link>
         </motion.div>
@@ -389,7 +389,7 @@ export default function Home() {
               <div className="absolute inset-0 bg-gradient-to-tr from-[#2e7d32]/5 to-transparent"></div>
             </div>
             <div className="space-y-6">
-              <h3 className="section-title !text-4xl md:!text-4xl group-hover:text-[#2e7d32] transition-colors">
+              <h3 className="section-title !text-4xl md:!text-4xl !font-normal group-hover:text-[#2e7d32] transition-colors">
                 {t("projects.name")}
               </h3>
               <p className="section-label">{t("home.localhandsLabel")}</p>
@@ -427,7 +427,7 @@ export default function Home() {
             </div>
             <Link
               to="/blog"
-              className="nav-link !text-lg py-3 whitespace-nowrap"
+              className="nav-link !text-lg  py-3 whitespace-nowrap"
             >
               {t("home.readAllPosts")}
             </Link>
