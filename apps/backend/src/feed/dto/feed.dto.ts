@@ -5,6 +5,7 @@ import {
   IsBoolean,
   IsDateString,
   IsInt,
+  IsArray,
   Min,
 } from 'class-validator';
 import { Type } from 'class-transformer';
@@ -19,6 +20,7 @@ export class CreateFeedItemDto {
   @IsDateString()
   date?: string;
 
+  // eslint-disable-next-line prettier/prettier
   @ApiProperty({ example: 'Building a REST API in 20 minutes', required: false })
   @IsOptional()
   @IsString()
@@ -34,10 +36,26 @@ export class CreateFeedItemDto {
   @IsString()
   youtubeId?: string;
 
-  @ApiProperty({ example: 'https://example.com/photo.jpg', required: false })
+  @ApiProperty({
+    example: 'https://example.com/photo.jpg',
+    required: false,
+    description: 'Legacy single photo field — prefer photoUrls instead',
+  })
   @IsOptional()
   @IsString()
   photoUrl?: string;
+
+  @ApiProperty({
+    // eslint-disable-next-line prettier/prettier
+    example: ['https://example.com/photo1.jpg', 'https://example.com/photo2.jpg'],
+    required: false,
+    type: [String],
+    description: 'List of photo URLs, in display order (any number of photos)',
+  })
+  @IsOptional()
+  @IsArray()
+  @IsString({ each: true })
+  photoUrls?: string[];
 
   @ApiProperty({ example: 'Spent the afternoon mentoring...', required: false })
   @IsOptional()
@@ -86,10 +104,24 @@ export class UpdateFeedItemDto {
   @IsString()
   youtubeId?: string;
 
-  @ApiProperty({ required: false })
+  @ApiProperty({
+    required: false,
+    description: 'Legacy single photo field — prefer photoUrls instead',
+  })
   @IsOptional()
   @IsString()
   photoUrl?: string;
+
+  @ApiProperty({
+    required: false,
+    type: [String],
+    description:
+      'List of photo URLs, in display order. If provided, REPLACES all existing photos for this item.',
+  })
+  @IsOptional()
+  @IsArray()
+  @IsString({ each: true })
+  photoUrls?: string[];
 
   @ApiProperty({ required: false })
   @IsOptional()

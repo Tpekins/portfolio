@@ -11,6 +11,8 @@ import {
   MapPin,
   Clock,
   Search,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 import { getFeedItems, type FeedItem } from "../services/api";
 import { useTranslation } from "@repo/ui";
@@ -85,16 +87,35 @@ function TypeBadge({ type }: { type: FeedType }) {
   );
 }
 
-/* ─── Photo Lightbox ─── */
+/* ─── Photo Lightbox — pages through however many photos the item has ─── */
 function PhotoLightbox({
-  photoUrl,
+  photos,
   title,
+  startIndex = 0,
   onClose,
 }: {
-  photoUrl: string;
+  photos: string[];
   title: string;
+  startIndex?: number;
   onClose: () => void;
 }) {
+  const [index, setIndex] = useState(startIndex);
+  const hasMultiple = photos.length > 1;
+
+  const goPrev = () => setIndex((i) => (i - 1 + photos.length) % photos.length);
+  const goNext = () => setIndex((i) => (i + 1) % photos.length);
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "ArrowLeft") goPrev();
+      if (e.key === "ArrowRight") goNext();
+      if (e.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [photos.length]);
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -110,16 +131,155 @@ function PhotoLightbox({
         <X size={28} strokeWidth={2.5} />
       </button>
 
+      {hasMultiple && (
+        <>
+          <button
+            onClick={goPrev}
+            className="fixed left-4 md:left-6 top-1/2 -translate-y-1/2 w-14 h-14 rounded-full bg-white flex items-center justify-center text-black shadow-2xl hover:bg-gray-100 hover:scale-110 transition-all duration-300 z-[70]"
+            aria-label="Previous photo"
+          >
+            <ChevronLeft size={28} strokeWidth={2.5} />
+          </button>
+          <button
+            onClick={goNext}
+            className="fixed right-4 md:right-6 top-1/2 -translate-y-1/2 w-14 h-14 rounded-full bg-white flex items-center justify-center text-black shadow-2xl hover:bg-gray-100 hover:scale-110 transition-all duration-300 z-[70]"
+            aria-label="Next photo"
+          >
+            <ChevronRight size={28} strokeWidth={2.5} />
+          </button>
+
+          <div className="fixed top-4 left-4 md:top-6 md:left-6 px-4 py-2 rounded-full bg-white/90 text-black text-xs font-black tracking-widest z-[70]">
+            {index + 1} / {photos.length}
+          </div>
+        </>
+      )}
+
       <motion.img
+        key={index}
         initial={{ scale: 0.9, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         exit={{ scale: 0.9, opacity: 0 }}
         transition={{ duration: 0.3 }}
-        src={photoUrl}
+        src={photos[index]}
         alt={title}
         className="max-w-full max-h-full object-contain rounded-lg"
       />
+
+      {hasMultiple && (
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-[70] max-w-[90vw] overflow-x-auto px-2">
+          {photos.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setIndex(i)}
+              className={`w-2.5 h-2.5 rounded-full flex-shrink-0 transition-all ${
+                i === index ? "bg-white" : "bg-white/40"
+              }`}
+              aria-label={`Go to photo ${i + 1}`}
+            />
+          ))}
+        </div>
+      )}
     </motion.div>
+  );
+}
+
+/* ─── Fixed-size photo box: every photo, regardless of source dimensions,
+       fills this exact 16:9 box and gets cropped via object-cover ─── */
+function PhotoBox({
+  src,
+  alt,
+  onClick,
+  overlayCount,
+}: {
+  src: string;
+  alt: string;
+  onClick?: () => void;
+  /** If set, shows a "+N" overlay (used on the last visible tile when there are more photos than slots) */
+  overlayCount?: number;
+}) {
+  return (
+    <div
+      className="relative w-full aspect-video rounded-2xl overflow-hidden shadow-xl cursor-pointer group/photo bg-[#e8e8e2]"
+      onClick={onClick}
+    >
+      <img
+        src={src}
+        alt={alt}
+        className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover/photo:scale-105"
+      />
+      {overlayCount ? (
+        <div className="absolute inset-0 bg-black/55 flex items-center justify-center">
+          <span className="text-white text-2xl font-black">+{overlayCount}</span>
+        </div>
+      ) : (
+        <div className="absolute inset-0 bg-black/0 group-hover/photo:bg-black/20 transition-colors duration-500 flex items-center justify-center">
+          <div className="w-16 h-16 rounded-full bg-white/90 flex items-center justify-center text-emerald-600 opacity-0 group-hover/photo:opacity-100 transition-opacity duration-500 scale-75 group-hover/photo:scale-100">
+            <ImageIcon size={28} />
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* ─── Photo grid: lays out 1..N photos as fixed-size boxes.
+       1 photo  -> full width
+       2 photos -> side by side
+       3 photos -> 3-up row
+       4+       -> 2x2 grid, with a "+N" overlay on the 4th tile if there are more than 4 ─── */
+function PhotoGrid({
+  photos,
+  title,
+  onPhotoClick,
+}: {
+  photos: { id: string; url: string }[];
+  title: string;
+  onPhotoClick: (startIndex: number) => void;
+}) {
+  const count = photos.length;
+
+  if (count === 1) {
+    return (
+      <PhotoBox src={photos[0].url} alt={title} onClick={() => onPhotoClick(0)} />
+    );
+  }
+
+  if (count === 2) {
+    return (
+      <div className="grid grid-cols-2 gap-4">
+        {photos.map((p, i) => (
+          <PhotoBox key={p.id} src={p.url} alt={title} onClick={() => onPhotoClick(i)} />
+        ))}
+      </div>
+    );
+  }
+
+  if (count === 3) {
+    return (
+      <div className="grid grid-cols-3 gap-4">
+        {photos.map((p, i) => (
+          <PhotoBox key={p.id} src={p.url} alt={title} onClick={() => onPhotoClick(i)} />
+        ))}
+      </div>
+    );
+  }
+
+  // 4 or more: show a 2x2 grid; if there are extras beyond 4, overlay "+N" on the last tile
+  const visible = photos.slice(0, 4);
+  const extra = count - 4;
+
+  return (
+    <div className="grid grid-cols-2 gap-4">
+      {visible.map((p, i) => (
+        <PhotoBox
+          key={p.id}
+          src={p.url}
+          alt={title}
+          onClick={() => onPhotoClick(i)}
+          overlayCount={i === 3 && extra > 0 ? extra : undefined}
+        />
+      ))}
+    </div>
   );
 }
 
@@ -129,10 +289,11 @@ function FeedItemCard({
   onPhotoClick,
 }: {
   item: FeedItem;
-  onPhotoClick?: (item: FeedItem) => void;
+  onPhotoClick?: (item: FeedItem, startIndex: number) => void;
 }) {
   const { t, locale } = useTranslation();
   const config = typeConfig[item.type];
+  const photos = item.photos ?? [];
 
   return (
     <motion.div
@@ -215,9 +376,9 @@ function FeedItemCard({
               >
                 <ArrowRight size={22} />
               </a>
-            ) : item.type === "photo" && item.photoUrl ? (
+            ) : item.type === "photo" && photos.length > 0 ? (
               <button
-                onClick={() => onPhotoClick?.(item)}
+                onClick={() => onPhotoClick?.(item, 0)}
                 className="w-14 h-14 rounded-2xl bg-white shadow-xl shadow-[#2e7d32]/10 flex items-center justify-center text-[#2e7d32] hover:bg-[#2e7d32] hover:text-white transition-all duration-500 hover:scale-110"
                 aria-label="View photo"
               >
@@ -231,10 +392,10 @@ function FeedItemCard({
           </div>
         </div>
 
-        {/* Inline media for Video */}
+        {/* Inline media for Video — unchanged, already a fixed 16:9 box */}
         {item.type === "video" && item.youtubeId && (
           <div className="mt-8 md:mt-10 md:pl-[calc(16.666%+3rem)] max-w-3xl">
-            <div className="relative w-full rounded-2xl overflow-hidden shadow-xl bg-black" style={{ paddingBottom: "56.25%" }}>
+            <div className="relative w-full rounded-2xl overflow-hidden shadow-xl bg-black aspect-video">
               <iframe
                 src={`https://www.youtube.com/embed/${item.youtubeId}`}
                 title={item.title ?? ""}
@@ -247,24 +408,14 @@ function FeedItemCard({
           </div>
         )}
 
-        {/* Inline media for Photo */}
-        {item.type === "photo" && item.photoUrl && (
+        {/* Inline media for Photo — fixed-size grid, any number of photos */}
+        {item.type === "photo" && photos.length > 0 && (
           <div className="mt-8 md:mt-10 md:pl-[calc(16.666%+3rem)] max-w-3xl">
-            <div
-              className="relative rounded-2xl overflow-hidden shadow-xl cursor-pointer group/photo"
-              onClick={() => onPhotoClick?.(item)}
-            >
-              <img
-                src={item.photoUrl}
-                alt={item.title ?? ""}
-                className="w-full h-auto object-cover transition-transform duration-700 group-hover/photo:scale-105"
-              />
-              <div className="absolute inset-0 bg-black/0 group-hover/photo:bg-black/20 transition-colors duration-500 flex items-center justify-center">
-                <div className="w-16 h-16 rounded-full bg-white/90 flex items-center justify-center text-emerald-600 opacity-0 group-hover/photo:opacity-100 transition-opacity duration-500 scale-75 group-hover/photo:scale-100">
-                  <ImageIcon size={28} />
-                </div>
-              </div>
-            </div>
+            <PhotoGrid
+              photos={photos}
+              title={item.title ?? ""}
+              onPhotoClick={(startIndex) => onPhotoClick?.(item, startIndex)}
+            />
           </div>
         )}
       </div>
@@ -277,7 +428,7 @@ export default function Feed() {
   const { t } = useTranslation();
   const [activeFilter, setActiveFilter] = useState<FeedType | "all">("all");
   const [search, setSearch] = useState("");
-  const [lightboxItem, setLightboxItem] = useState<FeedItem | null>(null);
+  const [lightbox, setLightbox] = useState<{ item: FeedItem; startIndex: number } | null>(null);
   const [feedItems, setFeedItems] = useState<FeedItem[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -307,6 +458,8 @@ export default function Feed() {
       item.type.toLowerCase().includes(search.toLowerCase());
     return matchesCategory && matchesSearch;
   });
+
+  const lightboxPhotoUrls = lightbox ? (lightbox.item.photos ?? []).map((p) => p.url) : [];
 
   return (
     <div className="flex flex-col bg-[#f5f5f0]">
@@ -371,7 +524,7 @@ export default function Feed() {
                   <FeedItemCard
                     key={item.id}
                     item={item}
-                    onPhotoClick={setLightboxItem}
+                    onPhotoClick={(it, startIndex) => setLightbox({ item: it, startIndex })}
                   />
                 ))
               ) : (
@@ -390,11 +543,12 @@ export default function Feed() {
 
       {/* Photo Lightbox */}
       <AnimatePresence>
-        {lightboxItem && lightboxItem.photoUrl && (
+        {lightbox && lightboxPhotoUrls.length > 0 && (
           <PhotoLightbox
-            photoUrl={lightboxItem.photoUrl}
-            title={lightboxItem.title ?? ""}
-            onClose={() => setLightboxItem(null)}
+            photos={lightboxPhotoUrls}
+            title={lightbox.item.title ?? ""}
+            startIndex={lightbox.startIndex}
+            onClose={() => setLightbox(null)}
           />
         )}
       </AnimatePresence>

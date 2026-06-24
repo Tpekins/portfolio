@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider     = "prisma-client"
   output       = "../src/generated/prisma"
@@ -12,53 +9,48 @@ datasource db {
   provider = "postgresql"
 }
 
-// Admin user for authentication
 model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
+  id        String     @id @default(cuid())
+  email     String     @unique
   password  String
   name      String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  blogPosts  BlogPost[]
-  projects   Project[]
-  feedItems  FeedItem[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  blogPosts BlogPost[]
+  feedItems FeedItem[]
+  projects  Project[]
 
   @@map("users")
 }
 
-// Blog posts
 model BlogPost {
   id          String    @id @default(cuid())
   title       String
   slug        String    @unique
-  content     String    @db.Text
+  content     String
   excerpt     String?
-  externalUrl String?
-  category    String // "All", "Tech", "Software", "Life", "Community"
+  category    String
   thumbnail   String?
   tags        String[]  @default([])
-  featured    Boolean  @default(false)
-  published   Boolean  @default(false)
+  featured    Boolean   @default(false)
+  published   Boolean   @default(false)
   publishedAt DateTime?
-  likes       Int      @default(0)
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
-
-  authorId String
-  author   User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
-  comments Comment[]
+  authorId    String
+  externalUrl String?
+  likes       Int       @default(0)
+  author      User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  comments    Comment[]
 
   @@map("blog_posts")
 }
 
-// Projects showcase
 model Project {
   id           String   @id @default(cuid())
   title        String
   slug         String   @unique
-  description  String   @db.Text
+  description  String
   technologies String[] @default([])
   thumbnail    String?
   demoUrl      String?
@@ -66,61 +58,71 @@ model Project {
   featured     Boolean  @default(false)
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
-
-  authorId String
-  author   User   @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId     String
+  author       User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
 
   @@map("projects")
 }
 
-// Contact form submissions
 model ContactSubmission {
   id          String   @id @default(cuid())
   name        String
   surname     String
   email       String
   phone       String?
-  message     String   @db.Text
-  status      String   @default("pending") // "pending", "read", "replied"
+  message     String
+  status      String   @default("pending")
   submittedAt DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
   @@map("contact_submissions")
 }
 
-// Blog comments
 model Comment {
   id         String   @id @default(cuid())
   authorName String
-  content    String   @db.Text
+  content    String
   approved   Boolean  @default(false)
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
-
   blogPostId String
   blogPost   BlogPost @relation(fields: [blogPostId], references: [id], onDelete: Cascade)
 
   @@map("comments")
 }
 
-// Feed items (videos, photos, notes, events)
 model FeedItem {
   id            String   @id @default(cuid())
-  type          String   // "video" | "photo" | "note" | "event"
+  type          String
   date          DateTime @default(now())
   title         String?
-  description   String?  @db.Text
+  description   String?
   youtubeId     String?
   photoUrl      String?
-  noteContent   String?  @db.Text
+  noteContent   String?
   eventLocation String?
   eventTime     String?
   published     Boolean  @default(true)
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
+  authorId      String
+  author        User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
 
-  authorId String
-  author   User   @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  // NEW: unlimited photos per feed item, ordered by `position`
+  photos        FeedItemPhoto[]
 
   @@map("feed_items")
+}
+
+// NEW MODEL — one row per photo, belongs to a FeedItem.
+model FeedItemPhoto {
+  id       String @id @default(cuid())
+  url      String
+  position Int    @default(0)
+
+  feedItemId String
+  feedItem   FeedItem @relation(fields: [feedItemId], references: [id], onDelete: Cascade)
+
+  @@index([feedItemId, position])
+  @@map("feed_item_photos")
 }

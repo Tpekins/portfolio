@@ -59,6 +59,11 @@ export class FeedService {
           eventTime: true,
           published: true,
           createdAt: true,
+          // NEW: unlimited photos, pre-sorted so position 0 is always first
+          photos: {
+            orderBy: { position: 'asc' },
+            select: { id: true, url: true, position: true },
+          },
           author: {
             select: {
               id: true,
@@ -105,6 +110,12 @@ export class FeedService {
         orderBy: { createdAt: 'desc' },
         skip,
         take: limit,
+        // NEW: bring in photos for the admin dashboard too
+        include: {
+          photos: {
+            orderBy: { position: 'asc' },
+          },
+        },
       }),
       this.prisma.feedItem.count({ where }),
     ]);
@@ -137,6 +148,10 @@ export class FeedService {
             name: true,
           },
         },
+        // NEW: unlimited photos, pre-sorted
+        photos: {
+          orderBy: { position: 'asc' },
+        },
       },
     });
 
@@ -162,6 +177,10 @@ export class FeedService {
             name: true,
           },
         },
+        // NEW: unlimited photos, pre-sorted
+        photos: {
+          orderBy: { position: 'asc' },
+        },
       },
     });
 
@@ -184,11 +203,24 @@ export class FeedService {
    *
    * Only fills the fields relevant to the type:
    * - Video: type, title, description, youtubeId
-   * - Photo: type, title, description, photoUrl
+   * - Photo: type, title, description, photoUrls (array, any length)
    * - Note: type, noteContent
    * - Event: type, title, description, eventLocation, eventTime
+   *
+   * photoUrl (singular, legacy) is still accepted for backwards
+   * compatibility but photoUrls (plural array) is the new way.
    */
   async create(createFeedItemDto: CreateFeedItemDto, userId: string) {
+    // Build the list of photo URLs to create, in display order.
+    // Accepts either the new `photoUrls` array or falls back to the
+    // legacy single `photoUrl` field if that's all that was sent.
+    const photoUrls =
+      createFeedItemDto.photoUrls && createFeedItemDto.photoUrls.length > 0
+        ? createFeedItemDto.photoUrls
+        : createFeedItemDto.photoUrl
+          ? [createFeedItemDto.photoUrl]
+          : [];
+
     const data: Prisma.FeedItemCreateInput = {
       type: createFeedItemDto.type,
       date: createFeedItemDto.date
@@ -197,13 +229,22 @@ export class FeedService {
       title: createFeedItemDto.title,
       description: createFeedItemDto.description,
       youtubeId: createFeedItemDto.youtubeId,
-      photoUrl: createFeedItemDto.photoUrl,
+      // Keep legacy photoUrl populated with the first photo for now,
+      // so nothing relying on it breaks while we transition away from it.
+      photoUrl: photoUrls[0],
       noteContent: createFeedItemDto.noteContent,
       eventLocation: createFeedItemDto.eventLocation,
       eventTime: createFeedItemDto.eventTime,
       published: createFeedItemDto.published,
       author: {
         connect: { id: userId },
+      },
+      // NEW: create one FeedItemPhoto row per URL, in array order
+      photos: {
+        create: photoUrls.map((url, index) => ({
+          url,
+          position: index,
+        })),
       },
     };
 
@@ -216,6 +257,9 @@ export class FeedService {
             name: true,
           },
         },
+        photos: {
+          orderBy: { position: 'asc' },
+        },
       },
     });
 
@@ -225,6 +269,10 @@ export class FeedService {
   /**
    * Update an existing feed item.
    * ADMIN ONLY — only the author can update their own items.
+   *
+   * If `photoUrls` is provided, it REPLACES all existing photos for
+   * this item (delete old rows, create new ones in the given order).
+   * If `photoUrls` is omitted, existing photos are left untouched.
    */
   async update(
     id: string,
@@ -245,13 +293,30 @@ export class FeedService {
       );
     }
 
+    // Pull photoUrls out separately since it's a relation, not a scalar
+    // field, and can't be spread directly into Prisma's `data`.
+    const { photoUrls, ...rest } = updateFeedItemDto;
+
     const updatedItem = await this.prisma.feedItem.update({
       where: { id },
       data: {
-        ...updateFeedItemDto,
+        ...rest,
         date: updateFeedItemDto.date
           ? new Date(updateFeedItemDto.date)
           : item.date,
+        // NEW: if photoUrls was sent, replace all existing photos
+        ...(photoUrls
+          ? {
+              photoUrl: photoUrls[0],
+              photos: {
+                deleteMany: {}, // remove all existing photos for this item
+                create: photoUrls.map((url, index) => ({
+                  url,
+                  position: index,
+                })),
+              },
+            }
+          : {}),
       },
       include: {
         author: {
@@ -259,6 +324,9 @@ export class FeedService {
             id: true,
             name: true,
           },
+        },
+        photos: {
+          orderBy: { position: 'asc' },
         },
       },
     });
@@ -269,6 +337,7 @@ export class FeedService {
   /**
    * Delete a feed item.
    * ADMIN ONLY — only the author can delete their own items.
+   * Photos are deleted automatically via onDelete: Cascade in the schema.
    */
   async delete(id: string, userId: string) {
     const item = await this.prisma.feedItem.findUnique({
