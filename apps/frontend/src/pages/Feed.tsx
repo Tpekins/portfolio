@@ -122,10 +122,14 @@ function PhotoLightbox({
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       className="fixed inset-0 z-[60] bg-black/95 flex items-center justify-center p-4 md:p-12"
+      onClick={onClose}
     >
       <button
-        onClick={onClose}
-        className="fixed top-4 right-4 md:top-6 md:right-6 w-14 h-14 rounded-full bg-white flex items-center justify-center text-black shadow-2xl hover:bg-gray-100 hover:scale-110 transition-all duration-300 z-[70]"
+        onClick={(e) => {
+          e.stopPropagation();
+          onClose();
+        }}
+        className="fixed top-4 right-4 md:top-6 md:right-6 w-14 h-14 rounded-full bg-white flex items-center justify-center text-black shadow-2xl hover:bg-gray-100 hover:scale-110 transition-all duration-300 z-[100]"
         aria-label="Close"
       >
         <X size={28} strokeWidth={2.5} />
@@ -134,21 +138,27 @@ function PhotoLightbox({
       {hasMultiple && (
         <>
           <button
-            onClick={goPrev}
-            className="fixed left-4 md:left-6 top-1/2 -translate-y-1/2 w-14 h-14 rounded-full bg-white flex items-center justify-center text-black shadow-2xl hover:bg-gray-100 hover:scale-110 transition-all duration-300 z-[70]"
+            onClick={(e) => {
+              e.stopPropagation();
+              goPrev();
+            }}
+            className="fixed left-4 md:left-6 top-1/2 -translate-y-1/2 w-14 h-14 rounded-full bg-white flex items-center justify-center text-black shadow-2xl hover:bg-gray-100 hover:scale-110 transition-all duration-300 z-[100]"
             aria-label="Previous photo"
           >
             <ChevronLeft size={28} strokeWidth={2.5} />
           </button>
           <button
-            onClick={goNext}
-            className="fixed right-4 md:right-6 top-1/2 -translate-y-1/2 w-14 h-14 rounded-full bg-white flex items-center justify-center text-black shadow-2xl hover:bg-gray-100 hover:scale-110 transition-all duration-300 z-[70]"
+            onClick={(e) => {
+              e.stopPropagation();
+              goNext();
+            }}
+            className="fixed right-4 md:right-6 top-1/2 -translate-y-1/2 w-14 h-14 rounded-full bg-white flex items-center justify-center text-black shadow-2xl hover:bg-gray-100 hover:scale-110 transition-all duration-300 z-[100]"
             aria-label="Next photo"
           >
             <ChevronRight size={28} strokeWidth={2.5} />
           </button>
 
-          <div className="fixed top-4 left-4 md:top-6 md:left-6 px-4 py-2 rounded-full bg-white/90 text-black text-xs font-black tracking-widest z-[70]">
+          <div className="fixed top-4 left-4 md:top-6 md:left-6 px-4 py-2 rounded-full bg-white/90 text-black text-xs font-black tracking-widest z-[100]">
             {index + 1} / {photos.length}
           </div>
         </>
@@ -163,10 +173,14 @@ function PhotoLightbox({
         src={photos[index]}
         alt={title}
         className="max-w-full max-h-full object-contain rounded-lg"
+        onClick={(e) => e.stopPropagation()}
       />
 
       {hasMultiple && (
-        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-[70] max-w-[90vw] overflow-x-auto px-2">
+        <div
+          className="fixed bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-[100] max-w-[90vw] overflow-x-auto px-2"
+          onClick={(e) => e.stopPropagation()}
+        >
           {photos.map((_, i) => (
             <button
               key={i}
@@ -194,7 +208,6 @@ function PhotoBox({
   src: string;
   alt: string;
   onClick?: () => void;
-  /** If set, shows a "+N" overlay (used on the last visible tile when there are more photos than slots) */
   overlayCount?: number;
 }) {
   return (
@@ -222,11 +235,7 @@ function PhotoBox({
   );
 }
 
-/* ─── Photo grid: lays out 1..N photos as fixed-size boxes.
-       1 photo  -> full width
-       2 photos -> side by side
-       3 photos -> 3-up row
-       4+       -> 2x2 grid, with a "+N" overlay on the 4th tile if there are more than 4 ─── */
+/* ─── Photo grid: lays out 1..N photos as fixed-size boxes. ─── */
 function PhotoGrid({
   photos,
   title,
@@ -239,9 +248,7 @@ function PhotoGrid({
   const count = photos.length;
 
   if (count === 1) {
-    return (
-      <PhotoBox src={photos[0].url} alt={title} onClick={() => onPhotoClick(0)} />
-    );
+    return <PhotoBox src={photos[0].url} alt={title} onClick={() => onPhotoClick(0)} />;
   }
 
   if (count === 2) {
@@ -264,7 +271,6 @@ function PhotoGrid({
     );
   }
 
-  // 4 or more: show a 2x2 grid; if there are extras beyond 4, overlay "+N" on the last tile
   const visible = photos.slice(0, 4);
   const extra = count - 4;
 
@@ -279,6 +285,29 @@ function PhotoGrid({
           overlayCount={i === 3 && extra > 0 ? extra : undefined}
         />
       ))}
+    </div>
+  );
+}
+
+/* ─── Event meta: location + time. Shown for ANY item type, whenever
+       the data is actually filled in — not gated by item.type anymore. ─── */
+function EventMeta({ item }: { item: FeedItem }) {
+  if (!item.eventLocation && !item.eventTime) return null;
+
+  return (
+    <div className="flex flex-col gap-1.5">
+      {item.eventLocation && (
+        <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-[#333333]">
+          <MapPin size={12} className="text-rose-500 flex-shrink-0" />
+          {item.eventLocation}
+        </span>
+      )}
+      {item.eventTime && (
+        <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-[#333333]">
+          <Clock size={12} className="text-rose-500 flex-shrink-0" />
+          {item.eventTime}
+        </span>
+      )}
     </div>
   );
 }
@@ -303,14 +332,15 @@ function FeedItemCard({
       className="group relative py-12 md:py-16 border-b border-[#eeeeee] hover:bg-[#2e7d32]/5 transition-colors duration-700"
     >
       <div className="max-w-7xl mx-auto px-6">
-        {/* Header row: date + badge | title + desc | arrow */}
+        {/* Header row: date + badge + location/time | title + desc | arrow */}
         <div className="grid md:grid-cols-12 gap-6 md:gap-12 items-start">
-          {/* Left: Date + Badge */}
+          {/* Left: Date + Badge + (NEW) Location/Time — same slot for every type */}
           <div className="md:col-span-2 flex flex-col gap-3">
             <div className={`text-[10px] font-black uppercase tracking-[0.3em] ${config.dateClass}`}>
               {formatDate(item.date, locale)}
             </div>
             <TypeBadge type={item.type} />
+            <EventMeta item={item} />
           </div>
 
           {/* Middle: Content */}
@@ -330,7 +360,6 @@ function FeedItemCard({
                   {item.description}
                 </p>
 
-                {/* Video: Watch on YouTube */}
                 {item.type === "video" && item.youtubeId && (
                   <a
                     href={`https://www.youtube.com/watch?v=${item.youtubeId}`}
@@ -341,24 +370,6 @@ function FeedItemCard({
                     <ExternalLink size={10} />
                     {t("feed.watchOnYouTube")}
                   </a>
-                )}
-
-                {/* Event: location + time */}
-                {item.type === "event" && (
-                  <div className="flex flex-wrap items-center gap-4 pt-1">
-                    {item.eventLocation && (
-                      <span className="inline-flex items-center gap-1 text-xs font-bold text-[#333333]">
-                        <MapPin size={12} className="text-rose-500" />
-                        {item.eventLocation}
-                      </span>
-                    )}
-                    {item.eventTime && (
-                      <span className="inline-flex items-center gap-1 text-xs font-bold text-[#333333]">
-                        <Clock size={12} className="text-rose-500" />
-                        {item.eventTime}
-                      </span>
-                    )}
-                  </div>
                 )}
               </div>
             )}
@@ -392,7 +403,7 @@ function FeedItemCard({
           </div>
         </div>
 
-        {/* Inline media for Video — unchanged, already a fixed 16:9 box */}
+        {/* Inline media for Video */}
         {item.type === "video" && item.youtubeId && (
           <div className="mt-8 md:mt-10 md:pl-[calc(16.666%+3rem)] max-w-3xl">
             <div className="relative w-full rounded-2xl overflow-hidden shadow-xl bg-black aspect-video">
@@ -408,7 +419,7 @@ function FeedItemCard({
           </div>
         )}
 
-        {/* Inline media for Photo — fixed-size grid, any number of photos */}
+        {/* Inline media for Photo */}
         {item.type === "photo" && photos.length > 0 && (
           <div className="mt-8 md:mt-10 md:pl-[calc(16.666%+3rem)] max-w-3xl">
             <PhotoGrid
@@ -463,7 +474,6 @@ export default function Feed() {
 
   return (
     <div className="flex flex-col bg-[#f5f5f0]">
-      {/* Feed Hero */}
       <section className="pt-48 pb-24 px-6 bg-[#f5f5f0]">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-end gap-8 mb-16 pb-8 border-b border-[#eeeeee]">
@@ -478,7 +488,6 @@ export default function Feed() {
             </div>
           </div>
 
-          {/* Filter Tabs + Search */}
           <div className="flex flex-wrap items-center gap-3 pt-4">
             {filterValues.map((f) => (
               <button
@@ -510,7 +519,6 @@ export default function Feed() {
         </div>
       </section>
 
-      {/* Feed List */}
       <section className="pb-48 px-6">
         <div className="max-w-7xl mx-auto">
             {loading ? (
@@ -541,7 +549,6 @@ export default function Feed() {
         </div>
       </section>
 
-      {/* Photo Lightbox */}
       <AnimatePresence>
         {lightbox && lightboxPhotoUrls.length > 0 && (
           <PhotoLightbox
@@ -555,3 +562,8 @@ export default function Feed() {
     </div>
   );
 }
+
+
+
+
+
