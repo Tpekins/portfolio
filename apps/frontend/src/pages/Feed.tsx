@@ -121,7 +121,7 @@ function PhotoLightbox({
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 z-[60] bg-black/95 flex items-center justify-center p-4 md:p-12"
+      className="fixed inset-0 z-[60] bg-black/95 flex items-center justify-center p-3 md:p-8"
       onClick={onClose}
     >
       <button
@@ -172,7 +172,7 @@ function PhotoLightbox({
         transition={{ duration: 0.3 }}
         src={photos[index]}
         alt={title}
-        className="max-w-full max-h-full object-contain rounded-lg"
+        className="max-w-[92vw] max-h-[88vh] w-auto h-auto object-contain rounded-lg"
         onClick={(e) => e.stopPropagation()}
       />
 
