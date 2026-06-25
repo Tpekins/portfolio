@@ -290,7 +290,7 @@ function PhotoGrid({
 }
 
 /* ─── Event meta: location + time. Shown for ANY item type, whenever
-       the data is actually filled in — not gated by item.type anymore. ─── */
+       the data is actually filled in. ─── */
 function EventMeta({ item }: { item: FeedItem }) {
   if (!item.eventLocation && !item.eventTime) return null;
 
@@ -323,6 +323,10 @@ function FeedItemCard({
   const { t, locale } = useTranslation();
   const config = typeConfig[item.type];
   const photos = item.photos ?? [];
+  // NEW: photo display now depends on actually HAVING photos, not on item.type.
+  // This means an "event" item (like a graduation) can show its photo gallery
+  // too, not just items explicitly typed "photo".
+  const hasPhotos = photos.length > 0;
 
   return (
     <motion.div
@@ -334,7 +338,7 @@ function FeedItemCard({
       <div className="max-w-7xl mx-auto px-6">
         {/* Header row: date + badge + location/time | title + desc | arrow */}
         <div className="grid md:grid-cols-12 gap-6 md:gap-12 items-start">
-          {/* Left: Date + Badge + (NEW) Location/Time — same slot for every type */}
+          {/* Left: Date + Badge + Location/Time — same slot for every type */}
           <div className="md:col-span-2 flex flex-col gap-3">
             <div className={`text-[10px] font-black uppercase tracking-[0.3em] ${config.dateClass}`}>
               {formatDate(item.date, locale)}
@@ -375,7 +379,7 @@ function FeedItemCard({
             )}
           </div>
 
-          {/* Right: Arrow */}
+          {/* Right: Arrow — now checks hasPhotos instead of item.type === "photo" */}
           <div className="md:col-span-2 flex justify-end items-start pt-2">
             {item.type === "video" && item.youtubeId ? (
               <a
@@ -387,7 +391,7 @@ function FeedItemCard({
               >
                 <ArrowRight size={22} />
               </a>
-            ) : item.type === "photo" && photos.length > 0 ? (
+            ) : hasPhotos ? (
               <button
                 onClick={() => onPhotoClick?.(item, 0)}
                 className="w-14 h-14 rounded-2xl bg-white shadow-xl shadow-[#2e7d32]/10 flex items-center justify-center text-[#2e7d32] hover:bg-[#2e7d32] hover:text-white transition-all duration-500 hover:scale-110"
@@ -419,8 +423,10 @@ function FeedItemCard({
           </div>
         )}
 
-        {/* Inline media for Photo */}
-        {item.type === "photo" && photos.length > 0 && (
+        {/* Inline media for Photos — now renders for ANY item type that has photos,
+            not just item.type === "photo". This is what makes the graduation
+            EVENT show its 4-photo gallery. */}
+        {hasPhotos && (
           <div className="mt-8 md:mt-10 md:pl-[calc(16.666%+3rem)] max-w-3xl">
             <PhotoGrid
               photos={photos}
@@ -562,8 +568,3 @@ export default function Feed() {
     </div>
   );
 }
-
-
-
-
-
