@@ -98,7 +98,6 @@ model FeedItem {
   title         String?
   description   String?
   youtubeId     String?
-  photoUrl      String?
   noteContent   String?
   eventLocation String?
   eventTime     String?
