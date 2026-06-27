@@ -197,28 +197,38 @@ function PhotoLightbox({
   );
 }
 
-/* ─── Fixed-size photo box: every photo, regardless of source dimensions,
-       fills this exact 16:9 box and gets cropped via object-cover ─── */
+/* ─── Fixed-size photo box. Aspect ratio is passed in by the parent grid
+       (so a whole grid can share one consistent shape). object-cover still
+       crops to fill, but now the box itself is sized to match the actual
+       photo set, so portrait photos don't lose their heads/feet. ─── */
 function PhotoBox({
   src,
   alt,
   onClick,
   overlayCount,
+  aspectClass,
+  onOrientationDetected,
 }: {
   src: string;
   alt: string;
   onClick?: () => void;
   overlayCount?: number;
+  aspectClass: string;
+  onOrientationDetected?: (isPortrait: boolean) => void;
 }) {
   return (
     <div
-      className="relative w-full aspect-video rounded-2xl overflow-hidden shadow-xl cursor-pointer group/photo bg-[#e8e8e2]"
+      className={`relative w-full ${aspectClass} rounded-2xl overflow-hidden shadow-xl cursor-pointer group/photo bg-[#e8e8e2]`}
       onClick={onClick}
     >
       <img
         src={src}
         alt={alt}
-        className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover/photo:scale-105"
+        onLoad={(e) => {
+          const img = e.currentTarget;
+          onOrientationDetected?.(img.naturalHeight > img.naturalWidth);
+        }}
+        className="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-700 group-hover/photo:scale-105"
       />
       {overlayCount ? (
         <div className="absolute inset-0 bg-black/55 flex items-center justify-center">
@@ -235,7 +245,9 @@ function PhotoBox({
   );
 }
 
-/* ─── Photo grid: lays out 1..N photos as fixed-size boxes. ─── */
+/* ─── Photo grid: lays out 1..N photos as fixed-size boxes, all sharing one
+       aspect ratio. If ANY photo in the set is portrait, the whole grid
+       switches to a taller box so nobody's head/feet get cropped off. ─── */
 function PhotoGrid({
   photos,
   title,
@@ -246,16 +258,42 @@ function PhotoGrid({
   onPhotoClick: (startIndex: number) => void;
 }) {
   const count = photos.length;
+  // Tracks which photo indices have been detected as portrait-oriented.
+  const [portraitFlags, setPortraitFlags] = useState<Record<number, boolean>>({});
+
+  const hasPortrait = Object.values(portraitFlags).some(Boolean);
+  const aspectClass = hasPortrait ? "aspect-[3/4]" : "aspect-video";
+
+  const handleOrientation = (index: number) => (isPortrait: boolean) => {
+    setPortraitFlags((prev) =>
+      prev[index] === isPortrait ? prev : { ...prev, [index]: isPortrait }
+    );
+  };
 
   if (count === 1) {
-    return <PhotoBox src={photos[0].url} alt={title} onClick={() => onPhotoClick(0)} />;
+    return (
+      <PhotoBox
+        src={photos[0].url}
+        alt={title}
+        onClick={() => onPhotoClick(0)}
+        aspectClass={aspectClass}
+        onOrientationDetected={handleOrientation(0)}
+      />
+    );
   }
 
   if (count === 2) {
     return (
       <div className="grid grid-cols-2 gap-4">
         {photos.map((p, i) => (
-          <PhotoBox key={p.id} src={p.url} alt={title} onClick={() => onPhotoClick(i)} />
+          <PhotoBox
+            key={p.id}
+            src={p.url}
+            alt={title}
+            onClick={() => onPhotoClick(i)}
+            aspectClass={aspectClass}
+            onOrientationDetected={handleOrientation(i)}
+          />
         ))}
       </div>
     );
@@ -265,7 +303,14 @@ function PhotoGrid({
     return (
       <div className="grid grid-cols-3 gap-4">
         {photos.map((p, i) => (
-          <PhotoBox key={p.id} src={p.url} alt={title} onClick={() => onPhotoClick(i)} />
+          <PhotoBox
+            key={p.id}
+            src={p.url}
+            alt={title}
+            onClick={() => onPhotoClick(i)}
+            aspectClass={aspectClass}
+            onOrientationDetected={handleOrientation(i)}
+          />
         ))}
       </div>
     );
@@ -283,6 +328,8 @@ function PhotoGrid({
           alt={title}
           onClick={() => onPhotoClick(i)}
           overlayCount={i === 3 && extra > 0 ? extra : undefined}
+          aspectClass={aspectClass}
+          onOrientationDetected={handleOrientation(i)}
         />
       ))}
     </div>
@@ -308,6 +355,28 @@ function EventMeta({ item }: { item: FeedItem }) {
           {item.eventTime}
         </span>
       )}
+    </div>
+  );
+}
+
+/* ─── Expandable text: clamps to 3 lines with a "Read more" toggle.
+       Used for long descriptions so feed cards stay a consistent height. ─── */
+function ExpandableText({ text, className }: { text: string; className?: string }) {
+  const [expanded, setExpanded] = useState(false);
+  const { t } = useTranslation();
+
+  return (
+    <div>
+      <p className={`${className ?? ""} ${expanded ? "" : "line-clamp-3"}`}>
+        {text}
+      </p>
+      <button
+        type="button"
+        onClick={() => setExpanded((e) => !e)}
+        className="mt-1 text-[10px] font-black uppercase tracking-widest text-[#2e7d32] hover:opacity-70 transition-opacity"
+      >
+        {expanded ? t("feed.showLess") : t("feed.readMore")}
+      </button>
     </div>
   );
 }
@@ -360,9 +429,12 @@ function FeedItemCard({
                 <h3 className="section-title !text-2xl md:!text-3xl group-hover:text-[#2e7d32] transition-colors duration-500">
                   {item.title}
                 </h3>
-                <p className="text-[#333333] text-sm font-medium leading-relaxed">
-                  {item.description}
-                </p>
+                {item.description && (
+                  <ExpandableText
+                    text={item.description}
+                    className="text-[#333333] text-sm font-medium leading-relaxed"
+                  />
+                )}
 
                 {item.type === "video" && item.youtubeId && (
                   <a
