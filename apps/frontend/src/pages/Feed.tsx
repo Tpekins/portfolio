@@ -218,7 +218,7 @@ function PhotoBox({
       <img
         src={src}
         alt={alt}
-        className="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-700 group-hover/photo:scale-105"
+        className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover/photo:scale-105"
       />
       {overlayCount ? (
         <div className="absolute inset-0 bg-black/55 flex items-center justify-center">
@@ -312,28 +312,6 @@ function EventMeta({ item }: { item: FeedItem }) {
   );
 }
 
-/* ─── Expandable text: clamps to 3 lines with a "Read more" toggle.
-       Used for long descriptions so feed cards stay a consistent height. ─── */
-function ExpandableText({ text, className }: { text: string; className?: string }) {
-  const [expanded, setExpanded] = useState(false);
-  const { t } = useTranslation();
-
-  return (
-    <div>
-      <p className={`${className ?? ""} ${expanded ? "" : "line-clamp-3"}`}>
-        {text}
-      </p>
-      <button
-        type="button"
-        onClick={() => setExpanded((e) => !e)}
-        className="mt-1 text-[10px] font-black uppercase tracking-widest text-[#2e7d32] hover:opacity-70 transition-opacity"
-      >
-        {expanded ? t("feed.showLess") : t("feed.readMore")}
-      </button>
-    </div>
-  );
-}
-
 /* ─── Feed Item Renderer ─── */
 function FeedItemCard({
   item,
@@ -382,12 +360,9 @@ function FeedItemCard({
                 <h3 className="section-title !text-2xl md:!text-3xl group-hover:text-[#2e7d32] transition-colors duration-500">
                   {item.title}
                 </h3>
-                {item.description && (
-                  <ExpandableText
-                    text={item.description}
-                    className="text-[#333333] text-sm font-medium leading-relaxed"
-                  />
-                )}
+                <p className="text-[#333333] text-sm font-medium leading-relaxed">
+                  {item.description}
+                </p>
 
                 {item.type === "video" && item.youtubeId && (
                   <a
