@@ -25,7 +25,7 @@ export type BlogPost = {
 
 /**
  * FeedPhoto represents a single photo attached to a feed item.
- * A feed item of type "photo" can have any number of these (0, 1, 2, 10...),
+ * A feed item can have any number of these (0, 1, 2, 10...),
  * ordered by `position` (0 = first/cover photo, 1 = second, etc).
  */
 export type FeedPhoto = {
@@ -38,6 +38,9 @@ export type FeedPhoto = {
  * FeedItem represents a single entry in the feed.
  * Can be a video, photo, note, or event.
  * Not all fields are filled — only the ones relevant to the type.
+ *
+ * Photos live exclusively in the `photos` array — there is no more
+ * single photoUrl field.
  */
 export type FeedItem = {
   id: string;
@@ -46,7 +49,6 @@ export type FeedItem = {
   title: string | null;
   description: string | null;
   youtubeId: string | null;
-  photoUrl: string | null;
   /** Unlimited photos per item, pre-sorted by position (ascending) by the backend */
   photos?: FeedPhoto[];
   noteContent: string | null;
