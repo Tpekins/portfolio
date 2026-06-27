@@ -107,13 +107,16 @@ model FeedItem {
   authorId      String
   author        User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
 
-  // NEW: unlimited photos per feed item, ordered by `position`
+  // Unlimited photos per feed item, ordered by `position`
   photos        FeedItemPhoto[]
+
+  // NEW: anonymous visitor reactions (curated emoji set)
+  reactions     FeedItemReaction[]
 
   @@map("feed_items")
 }
 
-// NEW MODEL — one row per photo, belongs to a FeedItem.
+// One row per photo, belongs to a FeedItem.
 model FeedItemPhoto {
   id       String @id @default(cuid())
   url      String
@@ -124,4 +127,20 @@ model FeedItemPhoto {
 
   @@index([feedItemId, position])
   @@map("feed_item_photos")
+}
+
+// NEW MODEL — tracks anonymous visitor reactions on feed items.
+// One reaction per visitor per feed item (switching emoji updates the
+// same row; tapping the same emoji again removes it).
+model FeedItemReaction {
+  id        String   @id @default(cuid())
+  visitorId String
+  emoji     String
+  createdAt DateTime @default(now())
+
+  feedItemId String
+  feedItem   FeedItem @relation(fields: [feedItemId], references: [id], onDelete: Cascade)
+
+  @@unique([feedItemId, visitorId])
+  @@map("feed_item_reactions")
 }
