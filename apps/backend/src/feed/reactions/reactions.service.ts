@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { PrismaService } from '../prisma/prisma.service';
+import { PrismaService } from '../../prisma/prisma.service';
 import { ToggleReactionDto, ALLOWED_REACTIONS } from './reactions.dto';
 
 /**
@@ -96,4 +96,3 @@ export class ReactionsService {
     return this.getSummary(feedItemId, dto.visitorId);
   }
 }
-
