@@ -14,7 +14,15 @@ import {
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
-import { getFeedItems, type FeedItem } from "../services/api";
+import {
+  getFeedItems,
+  getReactions,
+  toggleReaction,
+  type FeedItem,
+  type ReactionEmoji,
+  type ReactionSummary,
+} from "../services/api";
+import { getVisitorId } from "../utils/visitorId";
 import { useTranslation } from "@repo/ui";
 
 type FeedType = "video" | "photo" | "note" | "event";
@@ -312,6 +320,92 @@ function EventMeta({ item }: { item: FeedItem }) {
   );
 }
 
+/* ─── Reaction Bar: curated emoji picker for photo posts.
+       Anonymous per-browser tracking via visitorId — no login needed.
+       Tap to react, tap the same emoji again to un-react, tap a
+       different emoji to switch. ─── */
+const REACTION_EMOJI_MAP: Record<ReactionEmoji, string> = {
+  heart: "❤️",
+  clap: "👏",
+  rocket: "🚀",
+  party: "🎉",
+  flex: "💪",
+};
+
+const REACTION_ORDER: ReactionEmoji[] = ["heart", "clap", "rocket", "party", "flex"];
+
+function ReactionBar({ feedItemId }: { feedItemId: string }) {
+  const [summary, setSummary] = useState<ReactionSummary | null>(null);
+  const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const visitorId = getVisitorId();
+    getReactions(feedItemId, visitorId)
+      .then(setSummary)
+      .catch(() => setSummary(null));
+  }, [feedItemId]);
+
+  const handlePick = async (emoji: ReactionEmoji) => {
+    if (loading) return;
+    setLoading(true);
+    setOpen(false);
+    try {
+      const visitorId = getVisitorId();
+      const updated = await toggleReaction(feedItemId, visitorId, emoji);
+      setSummary(updated);
+    } catch {
+      // Silently ignore — UI just won't update if the request fails
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const totalCount = summary
+    ? Object.values(summary.counts).reduce((a, b) => a + b, 0)
+    : 0;
+
+  const myEmoji = summary?.myReaction ?? null;
+
+  return (
+    <div className="relative inline-flex items-center gap-2 mt-4">
+      <button
+        type="button"
+        onClick={() => setOpen((o) => !o)}
+        disabled={loading}
+        className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border text-xs font-bold transition-all ${
+          myEmoji
+            ? "bg-[#2e7d32]/10 border-[#2e7d32] text-[#2e7d32]"
+            : "bg-white border-[#eeeeee] text-[#333333] hover:border-[#2e7d32]"
+        }`}
+      >
+        <span className="text-base leading-none">
+          {myEmoji ? REACTION_EMOJI_MAP[myEmoji] : "🤍"}
+        </span>
+        {totalCount > 0 && <span>{totalCount}</span>}
+      </button>
+
+      {open && (
+        <div className="absolute bottom-full left-0 mb-2 flex items-center gap-1 bg-white rounded-full shadow-xl border border-[#eeeeee] px-2 py-1.5 z-10">
+          {REACTION_ORDER.map((emoji) => (
+            <button
+              key={emoji}
+              type="button"
+              onClick={() => handlePick(emoji)}
+              className={`text-xl w-9 h-9 rounded-full flex items-center justify-center transition-transform hover:scale-125 ${
+                myEmoji === emoji ? "bg-[#2e7d32]/10" : ""
+              }`}
+              aria-label={emoji}
+            >
+              {REACTION_EMOJI_MAP[emoji]}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 /* ─── Feed Item Renderer ─── */
 function FeedItemCard({
   item,
@@ -323,9 +417,6 @@ function FeedItemCard({
   const { t, locale } = useTranslation();
   const config = typeConfig[item.type];
   const photos = item.photos ?? [];
-  // NEW: photo display now depends on actually HAVING photos, not on item.type.
-  // This means an "event" item (like a graduation) can show its photo gallery
-  // too, not just items explicitly typed "photo".
   const hasPhotos = photos.length > 0;
 
   return (
@@ -433,6 +524,7 @@ function FeedItemCard({
               title={item.title ?? ""}
               onPhotoClick={(startIndex) => onPhotoClick?.(item, startIndex)}
             />
+            <ReactionBar feedItemId={item.id} />
           </div>
         )}
       </div>
