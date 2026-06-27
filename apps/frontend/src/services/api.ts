@@ -119,3 +119,48 @@ export async function getFeedItems(params?: {
     `${API_URL}/feed${qs ? `?${qs}` : ""}`
   );
 }
+
+// PATCH for apps/frontend/src/services/api.ts
+// Add these types and functions — everything else in the file stays
+// exactly as it is.
+
+export type ReactionEmoji = "heart" | "clap" | "rocket" | "party" | "flex";
+
+export type ReactionSummary = {
+  feedItemId: string;
+  counts: Record<ReactionEmoji, number>;
+  myReaction: ReactionEmoji | null;
+};
+
+/**
+ * Get reaction counts for a feed item, plus the current visitor's
+ * own reaction (if any).
+ */
+export async function getReactions(
+  feedItemId: string,
+  visitorId: string
+): Promise<ReactionSummary> {
+  return fetchJson<ReactionSummary>(
+    `${API_URL}/feed/${feedItemId}/reactions?visitorId=${encodeURIComponent(visitorId)}`
+  );
+}
+
+/**
+ * Toggle a reaction on a feed item for the given visitor.
+ * Returns the updated summary.
+ */
+export async function toggleReaction(
+  feedItemId: string,
+  visitorId: string,
+  emoji: ReactionEmoji
+): Promise<ReactionSummary> {
+  const res = await fetch(`${API_URL}/feed/${feedItemId}/reactions`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ visitorId, emoji }),
+  });
+  if (!res.ok) {
+    throw new Error(`API error: ${res.status} ${res.statusText}`);
+  }
+  return res.json();
+}
