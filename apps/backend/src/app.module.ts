@@ -13,6 +13,7 @@ import { CommentsModule } from './comments/comments.module';
 import { FileUploadModule } from './file-upload/file-upload.module';
 import { EmailModule } from './email/email.module';
 import { AiModule } from './ai/ai.module';
+import { ReactionsModule } from './feed/reactions/reactions.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { AiModule } from './ai/ai.module';
     AuthModule,
     BlogModule,
     FeedModule,
+    ReactionsModule,
     ProjectsModule,
     ContactModule,
     CommentsModule,
