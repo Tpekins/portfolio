@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { ApiProperty } from '@nestjs/swagger';
 import {
   IsString,
@@ -20,7 +21,6 @@ export class CreateFeedItemDto {
   @IsDateString()
   date?: string;
 
-  // eslint-disable-next-line prettier/prettier
   @ApiProperty({ example: 'Building a REST API in 20 minutes', required: false })
   @IsOptional()
   @IsString()
@@ -37,16 +37,6 @@ export class CreateFeedItemDto {
   youtubeId?: string;
 
   @ApiProperty({
-    example: 'https://example.com/photo.jpg',
-    required: false,
-    description: 'Legacy single photo field — prefer photoUrls instead',
-  })
-  @IsOptional()
-  @IsString()
-  photoUrl?: string;
-
-  @ApiProperty({
-    // eslint-disable-next-line prettier/prettier
     example: ['https://example.com/photo1.jpg', 'https://example.com/photo2.jpg'],
     required: false,
     type: [String],
@@ -103,14 +93,6 @@ export class UpdateFeedItemDto {
   @IsOptional()
   @IsString()
   youtubeId?: string;
-
-  @ApiProperty({
-    required: false,
-    description: 'Legacy single photo field — prefer photoUrls instead',
-  })
-  @IsOptional()
-  @IsString()
-  photoUrl?: string;
 
   @ApiProperty({
     required: false,
