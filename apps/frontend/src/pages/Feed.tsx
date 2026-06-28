@@ -252,7 +252,7 @@ function PhotoBox({
           className="absolute bottom-3 left-3 opacity-0 group-hover/photo:opacity-100 transition-opacity duration-300"
           onClick={(e) => e.stopPropagation()}
         >
-          <ReactionBar feedItemId={feedItemId} variant="overlay" />
+          <ReactionBar feedItemId={feedItemId} />
         </div>
       )}
     </div>
@@ -373,7 +373,15 @@ const REACTION_EMOJI_MAP: Record<ReactionEmoji, string> = {
 
 const REACTION_ORDER: ReactionEmoji[] = ["heart", "clap", "rocket", "party", "flex"];
 
-function ReactionBar({ feedItemId }: { feedItemId: string }) {
+function ReactionBar({
+  feedItemId,
+  minimal = false,
+}: {
+  feedItemId: string;
+  /** Notes have no photo to hover over, so they show a small, always-
+   * visible icon instead of relying on a hover trigger from a parent. */
+  minimal?: boolean;
+}) {
   const [summary, setSummary] = useState<ReactionSummary | null>(null);
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -406,23 +414,30 @@ function ReactionBar({ feedItemId }: { feedItemId: string }) {
 
   // Icon priority: the visitor's own pick first (so they always see their
   // own choice reflected), otherwise the most recently placed reaction by
-  // anyone (so the feed feels alive/varied), otherwise a neutral default.
+  // ANYONE, anywhere — this is global, the same for every visitor on the
+  // site — otherwise a neutral default when nobody has reacted at all.
   const myEmoji = summary?.myReaction ?? null;
   const displayEmoji = myEmoji ?? summary?.lastReaction ?? null;
 
   return (
-    <div className="relative inline-flex items-center gap-2 mt-4">
+    <div className={`relative inline-flex items-center gap-2 ${minimal ? "" : "mt-0"}`}>
       <button
         type="button"
         onClick={() => setOpen((o) => !o)}
         disabled={loading}
-        className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border text-xs font-bold transition-all ${
-          myEmoji
-            ? "bg-[#2e7d32]/10 border-[#2e7d32] text-[#2e7d32]"
-            : "bg-white border-[#eeeeee] text-[#333333] hover:border-[#2e7d32]"
-        }`}
+        className={
+          minimal
+            ? `inline-flex items-center gap-1 px-2 py-1 rounded-full text-[11px] font-bold transition-all ${
+                myEmoji ? "text-[#2e7d32]" : "text-[#999999] hover:text-[#2e7d32]"
+              }`
+            : `inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border text-xs font-bold shadow-lg transition-all ${
+                myEmoji
+                  ? "bg-[#2e7d32]/10 border-[#2e7d32] text-[#2e7d32]"
+                  : "bg-white border-[#eeeeee] text-[#333333] hover:border-[#2e7d32]"
+              }`
+        }
       >
-        <span className="text-base leading-none">
+        <span className={minimal ? "text-sm leading-none" : "text-base leading-none"}>
           {displayEmoji ? REACTION_EMOJI_MAP[displayEmoji] : "🤍"}
         </span>
         {totalCount > 0 && <span>{totalCount}</span>}
@@ -559,15 +574,24 @@ function FeedItemCard({
 
         {/* Inline media for Photos — now renders for ANY item type that has photos,
             not just item.type === "photo". This is what makes the graduation
-            EVENT show its 4-photo gallery. */}
+            EVENT show its 4-photo gallery. The reaction bar lives INSIDE
+            PhotoGrid/PhotoBox now, hidden until hover — nothing permanent here. */}
         {hasPhotos && (
           <div className="mt-8 md:mt-10 md:pl-[calc(16.666%+3rem)] max-w-3xl">
             <PhotoGrid
               photos={photos}
               title={item.title ?? ""}
               onPhotoClick={(startIndex) => onPhotoClick?.(item, startIndex)}
+              feedItemId={item.id}
             />
-            <ReactionBar feedItemId={item.id} />
+          </div>
+        )}
+
+        {/* Notes have no photo to hover over, so they get a small,
+            always-visible (but minimal) reaction icon instead. */}
+        {item.type === "note" && (
+          <div className="mt-4 pl-6">
+            <ReactionBar feedItemId={item.id} minimal />
           </div>
         )}
       </div>
