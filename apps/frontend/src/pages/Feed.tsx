@@ -206,22 +206,17 @@ function PhotoLightbox({
 }
 
 /* ─── Fixed-size photo box: every photo, regardless of source dimensions,
-       fills this exact 16:9 box and gets cropped via object-cover.
-       Optionally shows a reaction bar overlay on hover (desktop) —
-       used only on the first tile of a feed item's photo grid. ─── */
+       fills this exact 16:9 box and gets cropped via object-cover. ─── */
 function PhotoBox({
   src,
   alt,
   onClick,
   overlayCount,
-  feedItemId,
 }: {
   src: string;
   alt: string;
   onClick?: () => void;
   overlayCount?: number;
-  /** If provided, shows a reaction bar overlay (bottom-left) on hover */
-  feedItemId?: string;
 }) {
   return (
     <div
@@ -244,59 +239,31 @@ function PhotoBox({
           </div>
         </div>
       )}
-
-      {/* Hover-only reaction bar (desktop). Stops propagation so clicking
-          it doesn't also trigger the lightbox open. */}
-      {feedItemId && (
-        <div
-          className="absolute bottom-3 left-3 opacity-0 group-hover/photo:opacity-100 transition-opacity duration-300"
-          onClick={(e) => e.stopPropagation()}
-        >
-          <ReactionBar feedItemId={feedItemId} />
-        </div>
-      )}
     </div>
   );
 }
 
-/* ─── Photo grid: lays out 1..N photos as fixed-size boxes.
-       feedItemId is passed only to the first tile, so the hover reaction
-       bar appears once per post (not once per photo). ─── */
+/* ─── Photo grid: lays out 1..N photos as fixed-size boxes. ─── */
 function PhotoGrid({
   photos,
   title,
   onPhotoClick,
-  feedItemId,
 }: {
   photos: { id: string; url: string }[];
   title: string;
   onPhotoClick: (startIndex: number) => void;
-  feedItemId: string;
 }) {
   const count = photos.length;
 
   if (count === 1) {
-    return (
-      <PhotoBox
-        src={photos[0].url}
-        alt={title}
-        onClick={() => onPhotoClick(0)}
-        feedItemId={feedItemId}
-      />
-    );
+    return <PhotoBox src={photos[0].url} alt={title} onClick={() => onPhotoClick(0)} />;
   }
 
   if (count === 2) {
     return (
       <div className="grid grid-cols-2 gap-4">
         {photos.map((p, i) => (
-          <PhotoBox
-            key={p.id}
-            src={p.url}
-            alt={title}
-            onClick={() => onPhotoClick(i)}
-            feedItemId={i === 0 ? feedItemId : undefined}
-          />
+          <PhotoBox key={p.id} src={p.url} alt={title} onClick={() => onPhotoClick(i)} />
         ))}
       </div>
     );
@@ -306,13 +273,7 @@ function PhotoGrid({
     return (
       <div className="grid grid-cols-3 gap-4">
         {photos.map((p, i) => (
-          <PhotoBox
-            key={p.id}
-            src={p.url}
-            alt={title}
-            onClick={() => onPhotoClick(i)}
-            feedItemId={i === 0 ? feedItemId : undefined}
-          />
+          <PhotoBox key={p.id} src={p.url} alt={title} onClick={() => onPhotoClick(i)} />
         ))}
       </div>
     );
@@ -430,10 +391,10 @@ function ReactionBar({
             ? `inline-flex items-center gap-1 px-2 py-1 rounded-full text-[11px] font-bold transition-all ${
                 myEmoji ? "text-[#2e7d32]" : "text-[#999999] hover:text-[#2e7d32]"
               }`
-            : `inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border text-xs font-bold shadow-lg transition-all ${
+            : `inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border-2 text-xs font-bold shadow-md transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 ${
                 myEmoji
                   ? "bg-[#2e7d32]/10 border-[#2e7d32] text-[#2e7d32]"
-                  : "bg-white border-[#eeeeee] text-[#333333] hover:border-[#2e7d32]"
+                  : "bg-white border-[#d4d4cc] text-[#333333] hover:border-[#2e7d32]"
               }`
         }
       >
@@ -572,26 +533,29 @@ function FeedItemCard({
           </div>
         )}
 
-        {/* Inline media for Photos — now renders for ANY item type that has photos,
-            not just item.type === "photo". This is what makes the graduation
-            EVENT show its 4-photo gallery. The reaction bar lives INSIDE
-            PhotoGrid/PhotoBox now, hidden until hover — nothing permanent here. */}
+        {/* Inline media for Photos — renders for ANY item type that has
+            photos, not just item.type === "photo". This is what makes the
+            graduation EVENT show its 4-photo gallery. The reaction bar sits
+            below the grid as a clearly clickable bordered pill — not on
+            top of the photos, and not permanently faded-in/out. */}
         {hasPhotos && (
           <div className="mt-8 md:mt-10 md:pl-[calc(16.666%+3rem)] max-w-3xl">
             <PhotoGrid
               photos={photos}
               title={item.title ?? ""}
               onPhotoClick={(startIndex) => onPhotoClick?.(item, startIndex)}
-              feedItemId={item.id}
             />
+            <div className="mt-4">
+              <ReactionBar feedItemId={item.id} />
+            </div>
           </div>
         )}
 
-        {/* Notes have no photo to hover over, so they get a small,
-            always-visible (but minimal) reaction icon instead. */}
+        {/* Notes have no photo at all, so they get the same bordered-pill
+            reaction bar, placed under the quote text. */}
         {item.type === "note" && (
-          <div className="mt-4 pl-6">
-            <ReactionBar feedItemId={item.id} minimal />
+          <div className="mt-4 md:pl-[calc(16.666%+3rem)]">
+            <ReactionBar feedItemId={item.id} />
           </div>
         )}
       </div>
