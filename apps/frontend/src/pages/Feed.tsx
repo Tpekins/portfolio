@@ -337,11 +337,17 @@ const REACTION_ORDER: ReactionEmoji[] = ["heart", "clap", "rocket", "party", "fl
 function ReactionBar({
   feedItemId,
   minimal = false,
+  revealOnGroupHover = false,
 }: {
   feedItemId: string;
   /** Notes have no photo to hover over, so they show a small, always-
    * visible icon instead of relying on a hover trigger from a parent. */
   minimal?: boolean;
+  /** When true, this bar stays invisible (opacity-0) until the ancestor
+   * with `group/grid` is hovered, keeping the feed clean by default.
+   * Stays visible regardless of hover once the picker is open, so it
+   * never vanishes mid-interaction. */
+  revealOnGroupHover?: boolean;
 }) {
   const [summary, setSummary] = useState<ReactionSummary | null>(null);
   const [open, setOpen] = useState(false);
@@ -380,8 +386,17 @@ function ReactionBar({
   const myEmoji = summary?.myReaction ?? null;
   const displayEmoji = myEmoji ?? summary?.lastReaction ?? null;
 
+  // When revealOnGroupHover is set: invisible by default, fades in on
+  // hovering the parent `group/grid`. If the picker is open, force it
+  // visible regardless of hover (so it can't vanish mid-click).
+  const visibilityClass = revealOnGroupHover
+    ? `transition-opacity duration-200 ${
+        open ? "opacity-100" : "opacity-0 group-hover/grid:opacity-100"
+      }`
+    : "";
+
   return (
-    <div className={`relative inline-flex items-center gap-2 ${minimal ? "" : "mt-0"}`}>
+    <div className={`relative inline-flex items-center gap-2 ${visibilityClass}`}>
       <button
         type="button"
         onClick={() => setOpen((o) => !o)}
@@ -391,14 +406,14 @@ function ReactionBar({
             ? `inline-flex items-center gap-1 px-2 py-1 rounded-full text-[11px] font-bold transition-all ${
                 myEmoji ? "text-[#2e7d32]" : "text-[#999999] hover:text-[#2e7d32]"
               }`
-            : `inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border-2 text-xs font-bold shadow-md transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 ${
+            : `inline-flex items-center gap-1 px-2.5 py-1 rounded-full border text-[11px] font-bold shadow-sm transition-all duration-200 hover:shadow-md hover:-translate-y-0.5 ${
                 myEmoji
                   ? "bg-[#2e7d32]/10 border-[#2e7d32] text-[#2e7d32]"
                   : "bg-white border-[#d4d4cc] text-[#333333] hover:border-[#2e7d32]"
               }`
         }
       >
-        <span className={minimal ? "text-sm leading-none" : "text-base leading-none"}>
+        <span className={minimal ? "text-sm leading-none" : "text-sm leading-none"}>
           {displayEmoji ? REACTION_EMOJI_MAP[displayEmoji] : "🤍"}
         </span>
         {totalCount > 0 && <span>{totalCount}</span>}
@@ -535,24 +550,25 @@ function FeedItemCard({
 
         {/* Inline media for Photos — renders for ANY item type that has
             photos, not just item.type === "photo". This is what makes the
-            graduation EVENT show its 4-photo gallery. The reaction bar sits
-            below the grid as a clearly clickable bordered pill — not on
-            top of the photos, and not permanently faded-in/out. */}
+            graduation EVENT show its 4-photo gallery. The reaction bar is
+            hidden by default (clean, professional look) and only fades in
+            when hovering anywhere over the grid — disappears again once
+            the mouse leaves, unless the picker is actively open. */}
         {hasPhotos && (
-          <div className="mt-8 md:mt-10 md:pl-[calc(16.666%+3rem)] max-w-3xl">
+          <div className="mt-8 md:mt-10 md:pl-[calc(16.666%+3rem)] max-w-3xl group/grid">
             <PhotoGrid
               photos={photos}
               title={item.title ?? ""}
               onPhotoClick={(startIndex) => onPhotoClick?.(item, startIndex)}
             />
-            <div className="mt-4">
-              <ReactionBar feedItemId={item.id} />
+            <div className="mt-5">
+              <ReactionBar feedItemId={item.id} revealOnGroupHover />
             </div>
           </div>
         )}
 
         {/* Notes have no photo at all, so they get the same bordered-pill
-            reaction bar, placed under the quote text. */}
+            reaction bar, always visible since there's no grid to hover. */}
         {item.type === "note" && (
           <div className="mt-4 md:pl-[calc(16.666%+3rem)]">
             <ReactionBar feedItemId={item.id} />
