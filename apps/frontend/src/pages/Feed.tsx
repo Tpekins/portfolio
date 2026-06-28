@@ -206,17 +206,22 @@ function PhotoLightbox({
 }
 
 /* ─── Fixed-size photo box: every photo, regardless of source dimensions,
-       fills this exact 16:9 box and gets cropped via object-cover ─── */
+       fills this exact 16:9 box and gets cropped via object-cover.
+       Optionally shows a reaction bar overlay on hover (desktop) —
+       used only on the first tile of a feed item's photo grid. ─── */
 function PhotoBox({
   src,
   alt,
   onClick,
   overlayCount,
+  feedItemId,
 }: {
   src: string;
   alt: string;
   onClick?: () => void;
   overlayCount?: number;
+  /** If provided, shows a reaction bar overlay (bottom-left) on hover */
+  feedItemId?: string;
 }) {
   return (
     <div
@@ -239,31 +244,59 @@ function PhotoBox({
           </div>
         </div>
       )}
+
+      {/* Hover-only reaction bar (desktop). Stops propagation so clicking
+          it doesn't also trigger the lightbox open. */}
+      {feedItemId && (
+        <div
+          className="absolute bottom-3 left-3 opacity-0 group-hover/photo:opacity-100 transition-opacity duration-300"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <ReactionBar feedItemId={feedItemId} variant="overlay" />
+        </div>
+      )}
     </div>
   );
 }
 
-/* ─── Photo grid: lays out 1..N photos as fixed-size boxes. ─── */
+/* ─── Photo grid: lays out 1..N photos as fixed-size boxes.
+       feedItemId is passed only to the first tile, so the hover reaction
+       bar appears once per post (not once per photo). ─── */
 function PhotoGrid({
   photos,
   title,
   onPhotoClick,
+  feedItemId,
 }: {
   photos: { id: string; url: string }[];
   title: string;
   onPhotoClick: (startIndex: number) => void;
+  feedItemId: string;
 }) {
   const count = photos.length;
 
   if (count === 1) {
-    return <PhotoBox src={photos[0].url} alt={title} onClick={() => onPhotoClick(0)} />;
+    return (
+      <PhotoBox
+        src={photos[0].url}
+        alt={title}
+        onClick={() => onPhotoClick(0)}
+        feedItemId={feedItemId}
+      />
+    );
   }
 
   if (count === 2) {
     return (
       <div className="grid grid-cols-2 gap-4">
         {photos.map((p, i) => (
-          <PhotoBox key={p.id} src={p.url} alt={title} onClick={() => onPhotoClick(i)} />
+          <PhotoBox
+            key={p.id}
+            src={p.url}
+            alt={title}
+            onClick={() => onPhotoClick(i)}
+            feedItemId={i === 0 ? feedItemId : undefined}
+          />
         ))}
       </div>
     );
@@ -273,7 +306,13 @@ function PhotoGrid({
     return (
       <div className="grid grid-cols-3 gap-4">
         {photos.map((p, i) => (
-          <PhotoBox key={p.id} src={p.url} alt={title} onClick={() => onPhotoClick(i)} />
+          <PhotoBox
+            key={p.id}
+            src={p.url}
+            alt={title}
+            onClick={() => onPhotoClick(i)}
+            feedItemId={i === 0 ? feedItemId : undefined}
+          />
         ))}
       </div>
     );
@@ -365,7 +404,11 @@ function ReactionBar({ feedItemId }: { feedItemId: string }) {
     ? Object.values(summary.counts).reduce((a, b) => a + b, 0)
     : 0;
 
+  // Icon priority: the visitor's own pick first (so they always see their
+  // own choice reflected), otherwise the most recently placed reaction by
+  // anyone (so the feed feels alive/varied), otherwise a neutral default.
   const myEmoji = summary?.myReaction ?? null;
+  const displayEmoji = myEmoji ?? summary?.lastReaction ?? null;
 
   return (
     <div className="relative inline-flex items-center gap-2 mt-4">
@@ -380,7 +423,7 @@ function ReactionBar({ feedItemId }: { feedItemId: string }) {
         }`}
       >
         <span className="text-base leading-none">
-          {myEmoji ? REACTION_EMOJI_MAP[myEmoji] : "🤍"}
+          {displayEmoji ? REACTION_EMOJI_MAP[displayEmoji] : "🤍"}
         </span>
         {totalCount > 0 && <span>{totalCount}</span>}
       </button>
