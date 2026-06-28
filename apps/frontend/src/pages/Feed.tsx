@@ -340,13 +340,7 @@ function ReactionBar({
   revealOnGroupHover = false,
 }: {
   feedItemId: string;
-  /** Notes have no photo to hover over, so they show a small, always-
-   * visible icon instead of relying on a hover trigger from a parent. */
   minimal?: boolean;
-  /** When true, this bar stays invisible (opacity-0) until the ancestor
-   * with `group/grid` is hovered, keeping the feed clean by default.
-   * Stays visible regardless of hover once the picker is open, so it
-   * never vanishes mid-interaction. */
   revealOnGroupHover?: boolean;
 }) {
   const [summary, setSummary] = useState<ReactionSummary | null>(null);
@@ -379,16 +373,13 @@ function ReactionBar({
     ? Object.values(summary.counts).reduce((a, b) => a + b, 0)
     : 0;
 
-  // Icon priority: the visitor's own pick first (so they always see their
-  // own choice reflected), otherwise the most recently placed reaction by
-  // ANYONE, anywhere — this is global, the same for every visitor on the
-  // site — otherwise a neutral default when nobody has reacted at all.
   const myEmoji = summary?.myReaction ?? null;
   const displayEmoji = myEmoji ?? summary?.lastReaction ?? null;
 
-  // When revealOnGroupHover is set: invisible by default, fades in on
-  // hovering the parent `group/grid`. If the picker is open, force it
-  // visible regardless of hover (so it can't vanish mid-click).
+  // CRITICAL: this is the line that makes hover-based reveal actually work.
+  // When revealOnGroupHover is true, the bar is opacity-0 by default and
+  // ONLY becomes visible when the ancestor `group/grid` is hovered (or
+  // while the picker is open, so it can't vanish mid-click).
   const visibilityClass = revealOnGroupHover
     ? `transition-opacity duration-200 ${
         open ? "opacity-100" : "opacity-0 group-hover/grid:opacity-100"
@@ -413,7 +404,7 @@ function ReactionBar({
               }`
         }
       >
-        <span className={minimal ? "text-sm leading-none" : "text-sm leading-none"}>
+        <span className="text-sm leading-none">
           {displayEmoji ? REACTION_EMOJI_MAP[displayEmoji] : "🤍"}
         </span>
         {totalCount > 0 && <span>{totalCount}</span>}
@@ -504,7 +495,7 @@ function FeedItemCard({
             )}
           </div>
 
-          {/* Right: Arrow — now checks hasPhotos instead of item.type === "photo" */}
+          {/* Right: Arrow */}
           <div className="md:col-span-2 flex justify-end items-start pt-2">
             {item.type === "video" && item.youtubeId ? (
               <a
@@ -548,14 +539,8 @@ function FeedItemCard({
           </div>
         )}
 
-        {/* Inline media for Photos — renders for ANY item type that has
-            photos, not just item.type === "photo". This is what makes the
-            graduation EVENT show its 4-photo gallery. The reaction bar is
-            hidden by default (clean, professional look) and only fades in
-            when hovering anywhere over the CARD (the group/grid scope now
-            lives on the outer card, so this matches notes' behavior too).
-            Disappears again once the mouse leaves, unless the picker is
-            actively open. */}
+        {/* Inline media for Photos — reaction bar hidden by default,
+            fades in on hovering anywhere over the card (group/grid). */}
         {hasPhotos && (
           <div className="mt-8 md:mt-10 md:pl-[calc(16.666%+3rem)] max-w-3xl">
             <PhotoGrid
@@ -569,9 +554,8 @@ function FeedItemCard({
           </div>
         )}
 
-        {/* Notes have no photo, but use the same hover-the-whole-card
-            reveal as photos — hidden by default, fades in on hovering
-            anywhere over this note's card. */}
+        {/* Notes: same hover-the-card reveal as photos. Hidden by default,
+            fades in on hovering anywhere over this note's card area. */}
         {item.type === "note" && (
           <div className="mt-4 md:pl-[calc(16.666%+3rem)]">
             <ReactionBar feedItemId={item.id} revealOnGroupHover />
