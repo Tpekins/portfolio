@@ -458,7 +458,7 @@ function FeedItemCard({
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      className="group relative py-12 md:py-16 border-b border-[#eeeeee] hover:bg-[#2e7d32]/5 transition-colors duration-700"
+      className="group group/grid relative py-12 md:py-16 border-b border-[#eeeeee] hover:bg-[#2e7d32]/5 transition-colors duration-700"
     >
       <div className="max-w-7xl mx-auto px-6">
         {/* Header row: date + badge + location/time | title + desc | arrow */}
@@ -552,26 +552,29 @@ function FeedItemCard({
             photos, not just item.type === "photo". This is what makes the
             graduation EVENT show its 4-photo gallery. The reaction bar is
             hidden by default (clean, professional look) and only fades in
-            when hovering anywhere over the grid — disappears again once
-            the mouse leaves, unless the picker is actively open. */}
+            when hovering anywhere over the CARD (the group/grid scope now
+            lives on the outer card, so this matches notes' behavior too).
+            Disappears again once the mouse leaves, unless the picker is
+            actively open. */}
         {hasPhotos && (
-          <div className="mt-8 md:mt-10 md:pl-[calc(16.666%+3rem)] max-w-3xl group/grid">
+          <div className="mt-8 md:mt-10 md:pl-[calc(16.666%+3rem)] max-w-3xl">
             <PhotoGrid
               photos={photos}
               title={item.title ?? ""}
               onPhotoClick={(startIndex) => onPhotoClick?.(item, startIndex)}
             />
-            <div className="mt-5">
+            <div className="mt-3">
               <ReactionBar feedItemId={item.id} revealOnGroupHover />
             </div>
           </div>
         )}
 
-        {/* Notes have no photo at all, so they get the same bordered-pill
-            reaction bar, always visible since there's no grid to hover. */}
+        {/* Notes have no photo, but use the same hover-the-whole-card
+            reveal as photos — hidden by default, fades in on hovering
+            anywhere over this note's card. */}
         {item.type === "note" && (
           <div className="mt-4 md:pl-[calc(16.666%+3rem)]">
-            <ReactionBar feedItemId={item.id} />
+            <ReactionBar feedItemId={item.id} revealOnGroupHover />
           </div>
         )}
       </div>
