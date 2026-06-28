@@ -120,21 +120,21 @@ export async function getFeedItems(params?: {
   );
 }
 
-// PATCH for apps/frontend/src/services/api.ts
-// Add these types and functions — everything else in the file stays
-// exactly as it is.
-
 export type ReactionEmoji = "heart" | "clap" | "rocket" | "party" | "flex";
 
 export type ReactionSummary = {
   feedItemId: string;
   counts: Record<ReactionEmoji, number>;
   myReaction: ReactionEmoji | null;
+  /** The most recently placed reaction on this item, by anyone. Null if
+   * the item has zero active reactions. Used as the default display
+   * icon so the feed shows a live, varied icon per post. */
+  lastReaction: ReactionEmoji | null;
 };
 
 /**
  * Get reaction counts for a feed item, plus the current visitor's
- * own reaction (if any).
+ * own reaction (if any) and the most recently placed reaction overall.
  */
 export async function getReactions(
   feedItemId: string,
