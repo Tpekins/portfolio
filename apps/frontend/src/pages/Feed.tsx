@@ -1,5 +1,5 @@
-/* eslint-disable react-hooks/set-state-in-effect */
 import { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "motion/react";
 import {
   ArrowRight,
@@ -145,7 +145,14 @@ function PhotoLightbox({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [photos.length]);
 
-  return (
+  // Rendered via a portal straight onto document.body. This is the real
+  // fix: the navbar is `position: fixed` *and* uses `backdrop-blur`, which
+  // forces the browser to composite it on its own layer — in that setup, a
+  // higher z-index on a normally-nested element isn't reliably enough to
+  // paint above it. Mounting the lightbox as a direct sibling of <nav> on
+  // <body> sidesteps that entirely; it's no longer nested under anything
+  // the navbar could ever render on top of.
+  return createPortal(
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
@@ -226,7 +233,8 @@ function PhotoLightbox({
           ))}
         </div>
       )}
-    </motion.div>
+    </motion.div>,
+    document.body
   );
 }
 
