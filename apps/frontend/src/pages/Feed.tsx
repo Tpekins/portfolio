@@ -161,7 +161,7 @@ function PhotoLightbox({
       // (the previous z-[60] was being out-ranked by the navbar's own
       // stacking context, which is what caused both the missing close
       // button and the off-center image).
-      className="fixed inset-0 z-[9999] bg-black/80 flex items-center justify-center p-3 md:p-8"
+      className="fixed inset-0 z-[9999] bg-black/85 flex items-center justify-center p-3 md:p-8"
       onClick={onClose}
     >
       <button
