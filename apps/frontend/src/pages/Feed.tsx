@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import {
@@ -95,7 +96,17 @@ function TypeBadge({ type }: { type: FeedType }) {
   );
 }
 
-/* ─── Photo Lightbox — pages through however many photos the item has ─── */
+/* ─── Photo Lightbox — pages through however many photos the item has ───
+   FIX (matching the foundation's FieldLog.tsx lightbox behavior):
+   1. Close button was being visually covered by the site navbar. Raised
+      the overlay's z-index well above any reasonable navbar z-index, and
+      added a scroll-lock on <body> while open so the page underneath can't
+      visually bleed through or shift the layout.
+   2. Image looked uncentered/cut off at the top because the navbar (fixed,
+      outside this component's stacking context) was rendering on top of
+      the lightbox and visually eating into the top of the viewport. With
+      the stacking fixed, the existing flex-center layout now centers the
+      image in the *true* full viewport, exactly like FieldLog's lightbox. */
 function PhotoLightbox({
   photos,
   title,
@@ -120,7 +131,17 @@ function PhotoLightbox({
       if (e.key === "Escape") onClose();
     };
     window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
+
+    // Lock body scroll while the lightbox is open, and restore it on close.
+    // This also stops the underlying page (and its fixed navbar) from
+    // visually competing with the overlay while it's open.
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.body.style.overflow = previousOverflow;
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [photos.length]);
 
@@ -129,7 +150,11 @@ function PhotoLightbox({
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 z-[60] bg-black/95 flex items-center justify-center p-3 md:p-8"
+      // z-[9999]: deliberately set above any reasonable site navbar z-index
+      // (the previous z-[60] was being out-ranked by the navbar's own
+      // stacking context, which is what caused both the missing close
+      // button and the off-center image).
+      className="fixed inset-0 z-[9999] bg-black/95 flex items-center justify-center p-3 md:p-8"
       onClick={onClose}
     >
       <button
@@ -137,7 +162,7 @@ function PhotoLightbox({
           e.stopPropagation();
           onClose();
         }}
-        className="fixed top-4 right-4 md:top-6 md:right-6 w-14 h-14 rounded-full bg-white flex items-center justify-center text-black shadow-2xl hover:bg-gray-100 hover:scale-110 transition-all duration-300 z-[100]"
+        className="fixed top-4 right-4 md:top-6 md:right-6 w-14 h-14 rounded-full bg-white flex items-center justify-center text-black shadow-2xl hover:bg-gray-100 hover:scale-110 transition-all duration-300 z-[10000]"
         aria-label="Close"
       >
         <X size={28} strokeWidth={2.5} />
@@ -150,7 +175,7 @@ function PhotoLightbox({
               e.stopPropagation();
               goPrev();
             }}
-            className="fixed left-4 md:left-6 top-1/2 -translate-y-1/2 w-14 h-14 rounded-full bg-white flex items-center justify-center text-black shadow-2xl hover:bg-gray-100 hover:scale-110 transition-all duration-300 z-[100]"
+            className="fixed left-4 md:left-6 top-1/2 -translate-y-1/2 w-14 h-14 rounded-full bg-white flex items-center justify-center text-black shadow-2xl hover:bg-gray-100 hover:scale-110 transition-all duration-300 z-[10000]"
             aria-label="Previous photo"
           >
             <ChevronLeft size={28} strokeWidth={2.5} />
@@ -160,13 +185,13 @@ function PhotoLightbox({
               e.stopPropagation();
               goNext();
             }}
-            className="fixed right-4 md:right-6 top-1/2 -translate-y-1/2 w-14 h-14 rounded-full bg-white flex items-center justify-center text-black shadow-2xl hover:bg-gray-100 hover:scale-110 transition-all duration-300 z-[100]"
+            className="fixed right-4 md:right-6 top-1/2 -translate-y-1/2 w-14 h-14 rounded-full bg-white flex items-center justify-center text-black shadow-2xl hover:bg-gray-100 hover:scale-110 transition-all duration-300 z-[10000]"
             aria-label="Next photo"
           >
             <ChevronRight size={28} strokeWidth={2.5} />
           </button>
 
-          <div className="fixed top-4 left-4 md:top-6 md:left-6 px-4 py-2 rounded-full bg-white/90 text-black text-xs font-black tracking-widest z-[100]">
+          <div className="fixed top-4 left-4 md:top-6 md:left-6 px-4 py-2 rounded-full bg-white/90 text-black text-xs font-black tracking-widest z-[10000]">
             {index + 1} / {photos.length}
           </div>
         </>
@@ -186,7 +211,7 @@ function PhotoLightbox({
 
       {hasMultiple && (
         <div
-          className="fixed bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-[100] max-w-[90vw] overflow-x-auto px-2"
+          className="fixed bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-[10000] max-w-[90vw] overflow-x-auto px-2"
           onClick={(e) => e.stopPropagation()}
         >
           {photos.map((_, i) => (
