@@ -25,6 +25,7 @@ import {
 } from "../services/api";
 import { getVisitorId } from "../utils/visitorId";
 import { useTranslation } from "@repo/ui";
+import { Helmet } from "react-helmet-async";
 
 type FeedType = "video" | "photo" | "note" | "event";
 
@@ -639,6 +640,22 @@ export default function Feed() {
 
   return (
     <div className="flex flex-col bg-[#f5f5f0]">
+      <Helmet>
+        <title>Feed | Tiani Pekins Ebika — Updates & Activities</title>
+        <meta name="description" content="Stay updated with Tiani Pekins Ebika's latest activities, videos, photos, notes, and events. Follow along with projects and community work." />
+        <meta name="keywords" content="Tiani Pekins Ebika, feed, updates, videos, photos, notes, events, activities, Cameroon" />
+        <link rel="canonical" href="https://tianipekins.com/feed" />
+        <meta property="og:title" content="Feed | Tiani Pekins Ebika — Updates & Activities" />
+        <meta property="og:description" content="Stay updated with Tiani Pekins Ebika's latest activities, videos, photos, notes, and events." />
+        <meta property="og:url" content="https://tianipekins.com/feed" />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="https://tianipekins.com/Tiani.jpg" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Feed | Tiani Pekins Ebika — Updates & Activities" />
+        <meta name="twitter:description" content="Stay updated with Tiani Pekins Ebika's latest activities, videos, photos, notes, and events." />
+        <meta name="twitter:image" content="https://tianipekins.com/Tiani.jpg" />
+      </Helmet>
+
       <section className="pt-48 pb-24 px-6 bg-[#f5f5f0]">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-end gap-8 mb-16 pb-8 border-b border-[#eeeeee]">

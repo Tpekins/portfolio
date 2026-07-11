@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import { getBlogPosts, type BlogPost } from "../services/api";
 import { useTranslation } from "@repo/ui";
+import { Helmet } from "react-helmet-async";
 
 type PostStats = {
   comments: number | null;
@@ -164,6 +165,22 @@ export default function Home() {
 
   return (
     <div className="flex flex-col">
+      <Helmet>
+        <title>Tiani Pekins Ebika | Software Engineer & Founder of LocalHands.Africa</title>
+        <meta name="description" content="Tiani Pekins Ebika — Full-stack Software Engineer, Founder of LocalHands.Africa, and Researcher. Based in Cameroon, Silicon Mountain." />
+        <meta name="keywords" content="Tiani Pekins Ebika, software engineer, Buea, LocalHands Africa, portfolio, Cameroon, full-stack developer, researcher" />
+        <link rel="canonical" href="https://tianipekins.com" />
+        <meta property="og:title" content="Tiani Pekins Ebika | Software Engineer & Founder of LocalHands.Africa" />
+        <meta property="og:description" content="Full-stack Software Engineer, Researcher, and Founder of LocalHands.Africa. Published on Zenodo and ResearchGate." />
+        <meta property="og:url" content="https://tianipekins.com" />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="https://tianipekins.com/Tiani.jpg" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Tiani Pekins Ebika | Software Engineer & Founder" />
+        <meta name="twitter:description" content="Full-stack Software Engineer, Researcher, and Founder of LocalHands.Africa." />
+        <meta name="twitter:image" content="https://tianipekins.com/Tiani.jpg" />
+      </Helmet>
+
       {/* Hero Section */}
       <section className="pt-32 pb-12 px-6 relative overflow-hidden">
         <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center relative z-10">

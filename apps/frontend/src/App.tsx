@@ -8,6 +8,7 @@ import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
 import Feed from "./pages/Feed";
 import Contact from "./pages/Contact";
+import { HelmetProvider } from "react-helmet-async";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -43,30 +44,32 @@ export default function App() {
   }, []);
 
   return (
-    <Router>
-      <ScrollToTop />
-      <div className="min-h-screen flex flex-col relative bg-white">
-        <Navbar />
-        <main className="site-wrapper flex-grow" style={{ pointerEvents: footerOpacity > 0.95 ? "none" : "auto" }}>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/projects" element={<Projects />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/blog" element={<Blog />} />
-            <Route path="/blog/:slug" element={<BlogPost />} />
-            <Route path="/feed" element={<Feed />} />
-            <Route path="/contact" element={<Contact />} />
-          </Routes>
-        </main>
-        <div
-          className="fixed bottom-0 left-0 right-0 z-10"
-          style={{ opacity: footerOpacity, pointerEvents: footerOpacity === 0 ? "none" : "auto", transition: "opacity 0.1s ease-in-out" }}
-        >
-          <div className="pointer-events-auto">
-            <Footer />
+    <HelmetProvider>
+      <Router>
+        <ScrollToTop />
+        <div className="min-h-screen flex flex-col relative bg-white">
+          <Navbar />
+          <main className="site-wrapper flex-grow" style={{ pointerEvents: footerOpacity > 0.95 ? "none" : "auto" }}>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/projects" element={<Projects />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/blog" element={<Blog />} />
+              <Route path="/blog/:slug" element={<BlogPost />} />
+              <Route path="/feed" element={<Feed />} />
+              <Route path="/contact" element={<Contact />} />
+            </Routes>
+          </main>
+          <div
+            className="fixed bottom-0 left-0 right-0 z-10"
+            style={{ opacity: footerOpacity, pointerEvents: footerOpacity === 0 ? "none" : "auto", transition: "opacity 0.1s ease-in-out" }}
+          >
+            <div className="pointer-events-auto">
+              <Footer />
+            </div>
           </div>
         </div>
-      </div>
-    </Router>
+      </Router>
+    </HelmetProvider>
   );
 }

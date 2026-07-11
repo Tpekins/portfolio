@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "@repo/ui";
+import { Helmet } from "react-helmet-async";
 
 export default function Projects() {
   const { t } = useTranslation();
@@ -39,6 +40,22 @@ export default function Projects() {
 
   return (
     <div className="flex flex-col min-h-screen">
+      <Helmet>
+        <title>Projects | Tiani Pekins Ebika — Software Engineer</title>
+        <meta name="description" content="Explore projects by Tiani Pekins Ebika including LocalHands.Africa — a platform empowering Africa's informal economy. Built with modern technologies." />
+        <meta name="keywords" content="Tiani Pekins Ebika, projects, LocalHands Africa, software engineer, portfolio, Cameroon, full-stack developer" />
+        <link rel="canonical" href="https://tianipekins.com/projects" />
+        <meta property="og:title" content="Projects | Tiani Pekins Ebika — Software Engineer" />
+        <meta property="og:description" content="Explore projects by Tiani Pekins Ebika including LocalHands.Africa — a platform empowering Africa's informal economy." />
+        <meta property="og:url" content="https://tianipekins.com/projects" />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="https://tianipekins.com/Tiani.jpg" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Projects | Tiani Pekins Ebika — Software Engineer" />
+        <meta name="twitter:description" content="Explore projects by Tiani Pekins Ebika including LocalHands.Africa." />
+        <meta name="twitter:image" content="https://tianipekins.com/Tiani.jpg" />
+      </Helmet>
+
       {/* Projects Hero - Pink Banner */}
       <section className="bg-[#ffb5b5] pt-48 pb-24 px-6 md:px-12">
         <div className="max-w-7xl mx-auto text-center space-y-10 pt-14">
