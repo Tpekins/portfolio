@@ -618,7 +618,6 @@ export default function Feed() {
   };
 
   useEffect(() => {
-    setLoading(true);
     getFeedItems()
       .then((res) => setFeedItems(res.data))
       .catch(() => setFeedItems([]))

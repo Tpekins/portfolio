@@ -33,6 +33,32 @@ export default function About() {
         <meta name="twitter:title" content="About Tiani Pekins Ebika | Software Engineer & Founder" />
         <meta name="twitter:description" content="Learn about Tiani Pekins Ebika — Full-stack Software Engineer, Founder of LocalHands.Africa." />
         <meta name="twitter:image" content="https://tianipekins.com/Tiani.jpg" />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Person",
+            "name": "Tiani Pekins Ebika",
+            "url": "https://tianipekins.com/about",
+            "jobTitle": "Software Engineer",
+            "description": "Full-stack Software Engineer, Founder of LocalHands.Africa, and MS Software Engineering student at University of Buea.",
+            "image": "https://tianipekins.com/Tiani.jpg",
+            "sameAs": [
+              "https://github.com/Tpekins",
+              "https://www.linkedin.com/in/tiani-pekins-ebika/",
+              "https://x.com/TianiPekins",
+              "https://medium.com/@TianiPekinsEbika",
+              "https://dev.to/tianipekinsebika"
+            ],
+            "alumniOf": {
+              "@type": "CollegeOrUniversity",
+              "name": "University of Buea"
+            },
+            "worksFor": {
+              "@type": "Organization",
+              "name": "LocalHands.Africa"
+            }
+          })}
+        </script>
       </Helmet>
 
       {/* Hero */}

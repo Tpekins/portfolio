@@ -13,6 +13,7 @@ import { CommentsModule } from './comments/comments.module';
 import { FileUploadModule } from './file-upload/file-upload.module';
 import { EmailModule } from './email/email.module';
 import { AiModule } from './ai/ai.module';
+import { SitemapModule } from './sitemap/sitemap.module';
 import { ReactionsModule } from './feed/reactions/reactions.module';
 
 @Module({
@@ -32,6 +33,7 @@ import { ReactionsModule } from './feed/reactions/reactions.module';
     FileUploadModule,
     EmailModule,
     AiModule,
+    SitemapModule,
   ],
   controllers: [AppController],
   providers: [AppService],

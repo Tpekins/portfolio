@@ -54,6 +54,30 @@ export default function Projects() {
         <meta name="twitter:title" content="Projects | Tiani Pekins Ebika — Software Engineer" />
         <meta name="twitter:description" content="Explore projects by Tiani Pekins Ebika including LocalHands.Africa." />
         <meta name="twitter:image" content="https://tianipekins.com/Tiani.jpg" />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "CollectionPage",
+            "name": "Projects by Tiani Pekins Ebika",
+            "description": "Explore projects by Tiani Pekins Ebika including LocalHands.Africa — a platform empowering Africa's informal economy.",
+            "url": "https://tianipekins.com/projects",
+            "author": {
+              "@type": "Person",
+              "name": "Tiani Pekins Ebika",
+              "url": "https://tianipekins.com"
+            },
+            "hasPart": [
+              {
+                "@type": "SoftwareApplication",
+                "name": "LocalHands.Africa",
+                "description": "A platform empowering Africa's informal economy",
+                "url": "https://localhands.africa",
+                "applicationCategory": "WebApplication",
+                "operatingSystem": "Web"
+              }
+            ]
+          })}
+        </script>
       </Helmet>
 
       {/* Projects Hero - Pink Banner */}
