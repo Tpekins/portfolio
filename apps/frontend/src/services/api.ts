@@ -37,9 +37,9 @@ export type FeedPhoto = {
 /**
  * FeedItem represents a single entry in the feed.
  * Can be a video, photo, note, or event.
- * Not all fields are filled — only the ones relevant to the type.
+ * Not all fields are filled only the ones relevant to the type.
  *
- * Photos live exclusively in the `photos` array — there is no more
+ * Photos live exclusively in the `photos` array there is no more
  * single photoUrl field.
  */
 export type FeedItem = {

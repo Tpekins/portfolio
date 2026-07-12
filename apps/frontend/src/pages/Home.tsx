@@ -167,7 +167,7 @@ export default function Home() {
     <div className="flex flex-col">
       <Helmet>
         <title>Tiani Pekins Ebika | Software Engineer & Founder of LocalHands.Africa</title>
-        <meta name="description" content="Tiani Pekins Ebika — Full-stack Software Engineer, Founder of LocalHands.Africa, and Researcher. Based in Cameroon, Silicon Mountain." />
+        <meta name="description" content="Tiani Pekins Ebika Full-stack Software Engineer, Founder of LocalHands.Africa, and Researcher. Based in Cameroon, Silicon Mountain." />
         <meta name="keywords" content="Tiani Pekins Ebika, software engineer, Buea, LocalHands Africa, portfolio, Cameroon, full-stack developer, researcher" />
         <link rel="canonical" href="https://tianipekins.com" />
         <meta property="og:title" content="Tiani Pekins Ebika | Software Engineer & Founder of LocalHands.Africa" />
@@ -554,7 +554,7 @@ export default function Home() {
                               <CheckCircle2 size={14} /> {post.author.name}
                             </div>
 
-                            {/* Dev.to — auto stats */}
+                            {/* Dev.to auto stats */}
                             {postStats[i]?.source === "devto" && (
                               <div className="flex gap-4 text-[10px] font-bold opacity-60">
                                 <span>
@@ -570,7 +570,7 @@ export default function Home() {
                               </div>
                             )}
 
-                            {/* Medium — read link */}
+                            {/* Medium read link */}
                             {postStats[i]?.source === "medium" &&
                               post.externalUrl && (
                                 <a
@@ -585,7 +585,7 @@ export default function Home() {
                                 </a>
                               )}
 
-                            {/* LinkedIn — likes + read link */}
+                            {/* LinkedIn likes + read link */}
                             {(!postStats[i] ||
                               postStats[i]?.source === "none") &&
                               post.externalUrl?.includes("linkedin.com") && (
@@ -606,7 +606,7 @@ export default function Home() {
                                 </div>
                               )}
 
-                            {/* Fallback — category */}
+                            {/* Fallback category */}
                             {(!postStats[i] ||
                               postStats[i]?.source === "none") &&
                               !post.externalUrl?.includes("linkedin.com") && (

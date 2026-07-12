@@ -1,10 +1,10 @@
 /**
  * Returns a stable anonymous visitor ID for this browser.
- * Generated once and stored in localStorage — the same visitor will
+ * Generated once and stored in localStorage the same visitor will
  * get the same ID back on every future visit from this browser,
  * until they clear their browser data or use a different browser/device.
  *
- * Not tied to any real account or personal info — purely a random
+ * Not tied to any real account or personal info purely a random
  * string used to prevent the same browser from reacting to the same
  * feed item more than once.
  */

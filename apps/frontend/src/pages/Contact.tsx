@@ -42,17 +42,17 @@ export default function Contact() {
     <div className="min-h-screen flex flex-col bg-[#8ecc91]">
       <Helmet>
         <title>Contact Tiani Pekins Ebika | Software Engineer</title>
-        <meta name="description" content="Get in touch with Tiani Pekins Ebika — Full-stack Software Engineer and Founder of LocalHands.Africa. Available for projects, consulting, and collaboration." />
+        <meta name="description" content="Get in touch with Tiani Pekins Ebika Full-stack Software Engineer and Founder of LocalHands.Africa. Available for projects, consulting, and collaboration." />
         <meta name="keywords" content="Tiani Pekins Ebika, contact, software engineer, hire, collaborate, Cameroon, Full-stack developer" />
         <link rel="canonical" href="https://tianipekins.com/contact" />
         <meta property="og:title" content="Contact Tiani Pekins Ebika | Software Engineer" />
-        <meta property="og:description" content="Get in touch with Tiani Pekins Ebika — Full-stack Software Engineer and Founder of LocalHands.Africa." />
+        <meta property="og:description" content="Get in touch with Tiani Pekins Ebika Full-stack Software Engineer and Founder of LocalHands.Africa." />
         <meta property="og:url" content="https://tianipekins.com/contact" />
         <meta property="og:type" content="website" />
         <meta property="og:image" content="https://tianipekins.com/Tiani.jpg" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Contact Tiani Pekins Ebika | Software Engineer" />
-        <meta name="twitter:description" content="Get in touch with Tiani Pekins Ebika — Full-stack Software Engineer and Founder of LocalHands.Africa." />
+        <meta name="twitter:description" content="Get in touch with Tiani Pekins Ebika Full-stack Software Engineer and Founder of LocalHands.Africa." />
         <meta name="twitter:image" content="https://tianipekins.com/Tiani.jpg" />
       </Helmet>
 

@@ -18,7 +18,7 @@ import { Prisma } from '../generated/prisma/client';
  * Public users can read. Only admin can create, update, or delete.
  *
  * Photos live exclusively in the FeedItemPhoto relation (feed_item_photos
- * table) — there is no more single photoUrl column on FeedItem.
+ * table) there is no more single photoUrl column on FeedItem.
  */
 @Injectable()
 export class FeedService {
@@ -26,7 +26,7 @@ export class FeedService {
 
   /**
    * Get all published feed items with optional type filter and pagination.
-   * This is a PUBLIC endpoint — anyone can view the feed.
+   * This is a PUBLIC endpoint anyone can view the feed.
    */
   async findAll(query: FeedItemQueryDto) {
     const page = query.page || 1;
@@ -131,7 +131,7 @@ export class FeedService {
 
   /**
    * Get a single feed item by ID.
-   * PUBLIC endpoint — anyone can view a published item.
+   * PUBLIC endpoint anyone can view a published item.
    */
   async findOne(id: string) {
     const item = await this.prisma.feedItem.findFirst({
@@ -195,7 +195,7 @@ export class FeedService {
 
   /**
    * Create a new feed item.
-   * ADMIN ONLY — requires authentication.
+   * ADMIN ONLY requires authentication.
    *
    * Only fills the fields relevant to the type:
    * - Video: type, title, description, youtubeId
@@ -249,7 +249,7 @@ export class FeedService {
 
   /**
    * Update an existing feed item.
-   * ADMIN ONLY — only the author can update their own items.
+   * ADMIN ONLY only the author can update their own items.
    *
    * If `photoUrls` is provided, it REPLACES all existing photos for
    * this item (delete old rows, create new ones in the given order).
@@ -313,7 +313,7 @@ export class FeedService {
 
   /**
    * Delete a feed item.
-   * ADMIN ONLY — only the author can delete their own items.
+   * ADMIN ONLY only the author can delete their own items.
    * Photos are deleted automatically via onDelete: Cascade in the schema.
    */
   async delete(id: string, userId: string) {

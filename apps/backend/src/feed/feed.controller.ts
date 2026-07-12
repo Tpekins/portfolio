@@ -32,14 +32,14 @@ import { Roles, RolesGuard } from '../auth/guards/roles.guard';
  * FeedController handles all HTTP requests for feed items.
  *
  * PUBLIC endpoints (no auth required):
- * - GET /feed          — list all published feed items
- * - GET /feed/:id      — get a single published feed item
+ * - GET /feed          list all published feed items
+ * - GET /feed/:id      get a single published feed item
  *
  * ADMIN endpoints (JWT + admin role required):
- * - GET /feed/admin/all   — list all items (published + unpublished)
- * - POST /feed            — create a new feed item
- * - PUT /feed/:id         — update an existing feed item
- * - DELETE /feed/:id      — delete a feed item
+ * - GET /feed/admin/all   list all items (published + unpublished)
+ * - POST /feed            create a new feed item
+ * - PUT /feed/:id         update an existing feed item
+ * - DELETE /feed/:id      delete a feed item
  */
 @ApiTags('feed')
 @Controller('feed')
@@ -48,7 +48,7 @@ export class FeedController {
 
   /**
    * Get all published feed items.
-   * PUBLIC — anyone can view.
+   * PUBLIC anyone can view.
    * Optional query params: type (video|photo|note|event), page, limit.
    */
   @Get()
@@ -64,7 +64,7 @@ export class FeedController {
 
   /**
    * Get all feed items for admin dashboard.
-   * ADMIN ONLY — requires auth + admin role.
+   * ADMIN ONLY requires auth + admin role.
    * Shows both published and unpublished items.
    */
   @Get('admin/all')
@@ -80,7 +80,7 @@ export class FeedController {
 
   /**
    * Get a single published feed item by ID.
-   * PUBLIC — anyone can view.
+   * PUBLIC anyone can view.
    */
   @Get(':id')
   @ApiOperation({ summary: 'Get single feed item by ID' })
@@ -92,7 +92,7 @@ export class FeedController {
 
   /**
    * Create a new feed item.
-   * ADMIN ONLY — requires auth + admin role.
+   * ADMIN ONLY requires auth + admin role.
    *
    * When creating, only fill the fields relevant to the type:
    * - Video: type="video", title, description, youtubeId
@@ -115,7 +115,7 @@ export class FeedController {
 
   /**
    * Update an existing feed item.
-   * ADMIN ONLY — only the author can update.
+   * ADMIN ONLY only the author can update.
    */
   @Put(':id')
   @UseGuards(JwtAuthGuard, RolesGuard)
@@ -133,7 +133,7 @@ export class FeedController {
 
   /**
    * Delete a feed item.
-   * ADMIN ONLY — only the author can delete.
+   * ADMIN ONLY only the author can delete.
    */
   @Delete(':id')
   @UseGuards(JwtAuthGuard, RolesGuard)

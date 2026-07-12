@@ -97,7 +97,7 @@ function TypeBadge({ type }: { type: FeedType }) {
   );
 }
 
-/* ─── Photo Lightbox — pages through however many photos the item has ───
+/* ─── Photo Lightbox pages through however many photos the item has ───
    FIX (matching the foundation's FieldLog.tsx lightbox behavior):
    1. Close button was being visually covered by the site navbar. Raised
       the overlay's z-index well above any reasonable navbar z-index, and
@@ -148,7 +148,7 @@ function PhotoLightbox({
 
   // Rendered via a portal straight onto document.body. This is the real
   // fix: the navbar is `position: fixed` *and* uses `backdrop-blur`, which
-  // forces the browser to composite it on its own layer — in that setup, a
+  // forces the browser to composite it on its own layer in that setup, a
   // higher z-index on a normally-nested element isn't reliably enough to
   // paint above it. Mounting the lightbox as a direct sibling of <nav> on
   // <body> sidesteps that entirely; it's no longer nested under anything
@@ -355,7 +355,7 @@ function EventMeta({ item }: { item: FeedItem }) {
 }
 
 /* ─── Reaction Bar: curated emoji picker for photo posts.
-       Anonymous per-browser tracking via visitorId — no login needed.
+       Anonymous per-browser tracking via visitorId no login needed.
        Tap to react, tap the same emoji again to un-react, tap a
        different emoji to switch. ─── */
 const REACTION_EMOJI_MAP: Record<ReactionEmoji, string> = {
@@ -397,7 +397,7 @@ function ReactionBar({
       const updated = await toggleReaction(feedItemId, visitorId, emoji);
       setSummary(updated);
     } catch {
-      // Silently ignore — UI just won't update if the request fails
+      // Silently ignore UI just won't update if the request fails
     } finally {
       setLoading(false);
     }
@@ -488,7 +488,7 @@ function FeedItemCard({
       <div className="max-w-7xl mx-auto px-6">
         {/* Header row: date + badge + location/time | title + desc | arrow */}
         <div className="grid md:grid-cols-12 gap-6 md:gap-12 items-start">
-          {/* Left: Date + Badge + Location/Time — same slot for every type */}
+          {/* Left: Date + Badge + Location/Time same slot for every type */}
           <div className="md:col-span-2 flex flex-col gap-3">
             <div className={`text-[10px] font-black uppercase tracking-[0.3em] ${config.dateClass}`}>
               {formatDate(item.date, locale)}
@@ -573,7 +573,7 @@ function FeedItemCard({
           </div>
         )}
 
-        {/* Inline media for Photos — reaction bar hidden by default,
+        {/* Inline media for Photos reaction bar hidden by default,
             fades in on hovering anywhere over the card (group/grid). */}
         {hasPhotos && (
           <div className="mt-8 md:mt-10 md:pl-[calc(16.666%+3rem)] max-w-3xl">
@@ -640,17 +640,17 @@ export default function Feed() {
   return (
     <div className="flex flex-col bg-[#f5f5f0]">
       <Helmet>
-        <title>Feed | Tiani Pekins Ebika — Updates & Activities</title>
+        <title>Feed | Tiani Pekins Ebika Updates & Activities</title>
         <meta name="description" content="Stay updated with Tiani Pekins Ebika's latest activities, videos, photos, notes, and events. Follow along with projects and community work." />
         <meta name="keywords" content="Tiani Pekins Ebika, feed, updates, videos, photos, notes, events, activities, Cameroon" />
         <link rel="canonical" href="https://tianipekins.com/feed" />
-        <meta property="og:title" content="Feed | Tiani Pekins Ebika — Updates & Activities" />
+        <meta property="og:title" content="Feed | Tiani Pekins Ebika Updates & Activities" />
         <meta property="og:description" content="Stay updated with Tiani Pekins Ebika's latest activities, videos, photos, notes, and events." />
         <meta property="og:url" content="https://tianipekins.com/feed" />
         <meta property="og:type" content="website" />
         <meta property="og:image" content="https://tianipekins.com/Tiani.jpg" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Feed | Tiani Pekins Ebika — Updates & Activities" />
+        <meta name="twitter:title" content="Feed | Tiani Pekins Ebika Updates & Activities" />
         <meta name="twitter:description" content="Stay updated with Tiani Pekins Ebika's latest activities, videos, photos, notes, and events." />
         <meta name="twitter:image" content="https://tianipekins.com/Tiani.jpg" />
       </Helmet>

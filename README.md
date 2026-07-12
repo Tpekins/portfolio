@@ -19,7 +19,7 @@ flowchart TB
 
     Client -->|HTTP/REST API| API
 
-    subgraph API["⚡ API Gateway — NestJS"]
+    subgraph API["⚡ API Gateway NestJS"]
         direction TB
         BLOG["📝 /blog<br/>CRUD + Filter"]
         PROJ["📁 /projects<br/>CRUD"]
@@ -31,7 +31,7 @@ flowchart TB
 
     API -->|Prisma ORM| DB
 
-    subgraph DB["🗄️ Database — PostgreSQL"]
+    subgraph DB["🗄️ Database PostgreSQL"]
         direction LR
         U["👤 users"]
         BP2["📝 blog_posts"]
@@ -202,7 +202,7 @@ yarn prisma db seed
 
 ### 4️⃣ Run the entire stack (Turborepo)
 ```bash
-# From root — starts all packages in parallel
+# From root starts all packages in parallel
 yarn dev
 ```
 
@@ -301,7 +301,7 @@ flowchart LR
 
 ## License
 
-MIT — feel free to fork, learn, and build your own.
+MIT feel free to fork, learn, and build your own.
 
 ---
 

@@ -249,8 +249,8 @@ flowchart TD
 | 🗺️ React Router | 7 | Client-side routing |
 | 🎨 Tailwind CSS | 4 | Utility-first styling |
 | ✨ Framer Motion | `motion/react` | Animations, scroll-linked effects |
-| 🔣 Lucide React | — | Icon library |
-| 🌐 Native fetch | — | API calls |
+| 🔣 Lucide React | | Icon library |
+| 🌐 Native fetch | | API calls |
 
 ---
 
@@ -260,12 +260,12 @@ flowchart TD
 
 | 🎯 Token | 🎨 Value | 💡 Usage |
 |----------|----------|----------|
-| `--color-primary` | `#2e7d32` 🟢 | Green — buttons, active states, links |
+| `--color-primary` | `#2e7d32` 🟢 | Green buttons, active states, links |
 | `--color-primary-light` | `#f1f8f1` 🟩 | Light green background |
-| `--color-bg-primary` | `#ffffff` ⬜ | White — main background |
-| `--color-bg-secondary` | `#fafafa` ⬜ | Off-white — secondary bg |
-| `--color-text-primary` | `#000000` ⬛ | Black — headings |
-| `--color-text-secondary` | `#666666` 🔘 | Gray — body text |
+| `--color-bg-primary` | `#ffffff` ⬜ | White main background |
+| `--color-bg-secondary` | `#fafafa` ⬜ | Off-white secondary bg |
+| `--color-text-primary` | `#000000` ⬛ | Black headings |
+| `--color-text-secondary` | `#666666` 🔘 | Gray body text |
 | `--color-card` | `#ffffff` ⬜ | Card background |
 | `--color-border-subtle` | `#eeeeee` 🔘 | Light borders |
 
@@ -368,7 +368,7 @@ flowchart TB
 # 🖥️ Development
 VITE_API_URL=http://localhost:3000
 
-# 🚀 Production (private — set in deployment platform)
+# 🚀 Production (private set in deployment platform)
 # VITE_API_URL=https://your-backend-url.com
 ```
 

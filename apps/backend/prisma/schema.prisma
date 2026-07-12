@@ -129,7 +129,7 @@ model FeedItemPhoto {
   @@map("feed_item_photos")
 }
 
-// NEW MODEL — tracks anonymous visitor reactions on feed items.
+// NEW MODEL tracks anonymous visitor reactions on feed items.
 // One reaction per visitor per feed item (switching emoji updates the
 // same row; tapping the same emoji again removes it).
 model FeedItemReaction {

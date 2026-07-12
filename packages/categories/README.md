@@ -117,7 +117,7 @@ Current:  All, Software, Tech, Life, Community
                     "Programming" replaced by "Community"
 ```
 
-> **Note**: The database stores `category` as a plain `String`, so no migration is required when updating the enum. Only posts with the old category value (`"Programming"`) will no longer have a dedicated filter button — they will still appear under the **"All"** filter.
+> **Note**: The database stores `category` as a plain `String`, so no migration is required when updating the enum. Only posts with the old category value (`"Programming"`) will no longer have a dedicated filter button they will still appear under the **"All"** filter.
 
 ---
 

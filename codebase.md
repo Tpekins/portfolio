@@ -14499,7 +14499,7 @@ export default function App() {
   @apply text-base md:text-lg text-text-secondary leading-relaxed;
 }
 
-/* Content wrapper — flat bottom edge */
+/* Content wrapper flat bottom edge */
 .site-wrapper {
   position: relative;
   z-index: 10;
@@ -14509,7 +14509,7 @@ export default function App() {
   @apply shadow-2xl;
 }
 
-/* Footer — starts slightly invisible, fades in as revealed */
+/* Footer starts slightly invisible, fades in as revealed */
 .sticky-footer {
   position: fixed;
   bottom: 0;
@@ -14757,7 +14757,7 @@ export default function About() {
       logoText: "M",
       logoBg: "bg-[#00274c]",
       quote:
-        "The future belongs to those who believe in the beauty of their dreams and work relentlessly to turn them into reality. — Eleanor Roosevelt",
+        "The future belongs to those who believe in the beauty of their dreams and work relentlessly to turn them into reality. Eleanor Roosevelt",
     },
     /*
     {
@@ -14767,7 +14767,7 @@ export default function About() {
       desc: "At Microsoft, within the Windows + Devices and later on in the Sustainability Team, I developed cross-platform applications using Xamarin and C# to create scalable solutions for both Android and Apple devices. I was nominated for the Diversity & Inclusion Microsoft Award and earned the Site Lead Award for the Microsoft Global Hackathon. During the hackathon, I led the development of Ndovu Network, a mentorship matching web application, showcasing my leadership and innovation.",
       logoText: "MS",
       logoBg: "bg-white border-2 border-slate-100",
-      quote: "The best way to predict the future is to invent it — Alan Kay",
+      quote: "The best way to predict the future is to invent it Alan Kay",
     },
     
     {
@@ -14778,7 +14778,7 @@ export default function About() {
       logoText: "LEAP",
       logoBg: "bg-white border-2 border-slate-100",
       quote:
-        "Success is the sum of small efforts, repeated day in and day out — Robert Collier",
+        "Success is the sum of small efforts, repeated day in and day out Robert Collier",
     },
     */
   ];
@@ -15729,7 +15729,7 @@ export default function Home() {
             {[
               {
                 title:
-                  "How I Got Into Microsoft through the Microsoft LEAP Apprenticeship Program — Nairobi Cohort 1",
+                  "How I Got Into Microsoft through the Microsoft LEAP Apprenticeship Program Nairobi Cohort 1",
                 date: "May 10, 2026",
                 author: "Tiani",
               },
@@ -15740,7 +15740,7 @@ export default function Home() {
               },
               {
                 title:
-                  "Where To Start When Learning How To Code — My Perspective",
+                  "Where To Start When Learning How To Code My Perspective",
                 date: "October 12, 2021",
                 author: "Tiani",
               },

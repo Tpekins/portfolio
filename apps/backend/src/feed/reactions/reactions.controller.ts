@@ -11,7 +11,7 @@ import { ReactionsService } from './reactions.service';
 import { ToggleReactionDto } from './reactions.dto';
 
 /**
- * ReactionsController — fully public, no auth required.
+ * ReactionsController fully public, no auth required.
  * Anyone visiting the site can react; visitor identity is just an
  * anonymous client-generated ID, not a real account.
  */

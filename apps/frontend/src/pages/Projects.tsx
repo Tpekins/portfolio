@@ -41,17 +41,17 @@ export default function Projects() {
   return (
     <div className="flex flex-col min-h-screen">
       <Helmet>
-        <title>Projects | Tiani Pekins Ebika — Software Engineer</title>
-        <meta name="description" content="Explore projects by Tiani Pekins Ebika including LocalHands.Africa — a platform empowering Africa's informal economy. Built with modern technologies." />
+        <title>Projects | Tiani Pekins Ebika Software Engineer</title>
+        <meta name="description" content="Explore projects by Tiani Pekins Ebika including LocalHands.Africa a platform empowering Africa's informal economy. Built with modern technologies." />
         <meta name="keywords" content="Tiani Pekins Ebika, projects, LocalHands Africa, software engineer, portfolio, Cameroon, full-stack developer" />
         <link rel="canonical" href="https://tianipekins.com/projects" />
-        <meta property="og:title" content="Projects | Tiani Pekins Ebika — Software Engineer" />
-        <meta property="og:description" content="Explore projects by Tiani Pekins Ebika including LocalHands.Africa — a platform empowering Africa's informal economy." />
+        <meta property="og:title" content="Projects | Tiani Pekins Ebika Software Engineer" />
+        <meta property="og:description" content="Explore projects by Tiani Pekins Ebika including LocalHands.Africa a platform empowering Africa's informal economy." />
         <meta property="og:url" content="https://tianipekins.com/projects" />
         <meta property="og:type" content="website" />
         <meta property="og:image" content="https://tianipekins.com/Tiani.jpg" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Projects | Tiani Pekins Ebika — Software Engineer" />
+        <meta name="twitter:title" content="Projects | Tiani Pekins Ebika Software Engineer" />
         <meta name="twitter:description" content="Explore projects by Tiani Pekins Ebika including LocalHands.Africa." />
         <meta name="twitter:image" content="https://tianipekins.com/Tiani.jpg" />
         <script type="application/ld+json">
@@ -59,7 +59,7 @@ export default function Projects() {
             "@context": "https://schema.org",
             "@type": "CollectionPage",
             "name": "Projects by Tiani Pekins Ebika",
-            "description": "Explore projects by Tiani Pekins Ebika including LocalHands.Africa — a platform empowering Africa's informal economy.",
+            "description": "Explore projects by Tiani Pekins Ebika including LocalHands.Africa a platform empowering Africa's informal economy.",
             "url": "https://tianipekins.com/projects",
             "author": {
               "@type": "Person",

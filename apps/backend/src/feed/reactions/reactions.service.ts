@@ -11,12 +11,12 @@ import { ToggleReactionDto, ALLOWED_REACTIONS } from './reactions.dto';
  *   - tapping a DIFFERENT emoji than they had -> switches to the new one
  *     (and counts as a fresh "most recent" action)
  *
- * No login required — visitors are identified by a random ID their
+ * No login required visitors are identified by a random ID their
  * browser generates and stores in localStorage.
  *
  * `lastReaction` in the summary is whichever emoji was most recently
  * placed (by anyone), so the feed shows a live, varied icon per post
- * instead of a static default — falls back to null only when a post
+ * instead of a static default falls back to null only when a post
  * has zero active reactions.
  */
 @Injectable()

@@ -304,11 +304,11 @@ flowchart TD
 | ⚡ NestJS | 10 | Framework, DI, modular architecture |
 | 🗄️ Prisma | 6 | ORM, type-safe queries, migrations |
 | 💾 PostgreSQL | 15+ | Relational database |
-| 🔐 JWT | — | Stateless auth tokens |
-| 🛡️ Passport | — | Auth strategies |
-| ✅ class-validator | — | DTO validation |
-| 📖 Swagger | — | API documentation |
-| 🔒 bcrypt | — | Password hashing |
+| 🔐 JWT | | Stateless auth tokens |
+| 🛡️ Passport | | Auth strategies |
+| ✅ class-validator | | DTO validation |
+| 📖 Swagger | | API documentation |
+| 🔒 bcrypt | | Password hashing |
 
 ---
 
@@ -382,8 +382,8 @@ yarn install
 
 # ⚙️ Environment setup
 cp .env.example .env
-# Edit .env — set DATABASE_URL, JWT_SECRET
-# (Database URL is private — never commit this file)
+# Edit .env set DATABASE_URL, JWT_SECRET
+# (Database URL is private never commit this file)
 
 # 🗄️ Database
 yarn prisma migrate dev
@@ -491,17 +491,17 @@ flowchart LR
     style CM fill:#f3e5f5
 ```
 
-> 💡 Stored as plain `String` in PostgreSQL — no migration needed to add new categories.
+> 💡 Stored as plain `String` in PostgreSQL no migration needed to add new categories.
 
 ---
 
 ## 📝 Notes for Reviewers
 
-- 🗄️ **Prisma client is generated** inside `src/generated/prisma/` — do not edit manually.
+- 🗄️ **Prisma client is generated** inside `src/generated/prisma/` do not edit manually.
 - ✅ **DTOs use class-validator** for runtime type checking, not just TypeScript.
-- 🎯 **All services return Prisma-select optimized data** — no over-fetching.
-- 🧪 **E2E tests use the real database** — ensure `DATABASE_URL` is set before running.
-- 💬 **Comments are moderated** — `approved: false` by default, admin can approve.
+- 🎯 **All services return Prisma-select optimized data** no over-fetching.
+- 🧪 **E2E tests use the real database** ensure `DATABASE_URL` is set before running.
+- 💬 **Comments are moderated** `approved: false` by default, admin can approve.
 
 ---
 

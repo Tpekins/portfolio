@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsString, IsIn } from 'class-validator';
 
 // The curated set of allowed reactions. Adding/removing an emoji here
-// requires no database migration — it's enforced purely by validation.
+// requires no database migration it's enforced purely by validation.
 export const ALLOWED_REACTIONS = [
   'heart', // ❤️ appreciate / love
   'clap', // 👏 congrats / proud

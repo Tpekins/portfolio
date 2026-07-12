@@ -56,7 +56,7 @@ export default function BlogPostPage() {
     <div className="flex flex-col min-h-screen bg-white">
       <Helmet>
         <title>{post.title} | Tiani Pekins Ebika</title>
-        <meta name="description" content={post.excerpt || `Read ${post.title} by Tiani Pekins Ebika — Software Engineer and Founder of LocalHands.Africa.`} />
+        <meta name="description" content={post.excerpt || `Read ${post.title} by Tiani Pekins Ebika Software Engineer and Founder of LocalHands.Africa.`} />
         <meta name="keywords" content={`${post.tags.join(", ")}, ${post.category}, Tiani Pekins Ebika, software engineer`} />
         <link rel="canonical" href={`https://tianipekins.com/blog/${post.slug}`} />
         <meta property="og:title" content={`${post.title} | Tiani Pekins Ebika`} />
