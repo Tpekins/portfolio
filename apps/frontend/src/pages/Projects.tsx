@@ -49,11 +49,11 @@ export default function Projects() {
         <meta property="og:description" content="Explore projects by Tiani Pekins Ebika including LocalHands.Africa a platform empowering Africa's informal economy." />
         <meta property="og:url" content="https://tianipekins.com/projects" />
         <meta property="og:type" content="website" />
-        <meta property="og:image" content="https://tianipekins.com/Tiani.jpg" />
+        <meta property="og:image" content="https://tianipekins.com/og-image.svg" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Projects | Tiani Pekins Ebika Software Engineer" />
         <meta name="twitter:description" content="Explore projects by Tiani Pekins Ebika including LocalHands.Africa." />
-        <meta name="twitter:image" content="https://tianipekins.com/Tiani.jpg" />
+        <meta name="twitter:image" content="https://tianipekins.com/og-image.svg" />
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",

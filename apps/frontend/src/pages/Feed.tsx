@@ -648,11 +648,11 @@ export default function Feed() {
         <meta property="og:description" content="Stay updated with Tiani Pekins Ebika's latest activities, videos, photos, notes, and events." />
         <meta property="og:url" content="https://tianipekins.com/feed" />
         <meta property="og:type" content="website" />
-        <meta property="og:image" content="https://tianipekins.com/Tiani.jpg" />
+        <meta property="og:image" content="https://tianipekins.com/og-image.svg" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Feed | Tiani Pekins Ebika Updates & Activities" />
         <meta name="twitter:description" content="Stay updated with Tiani Pekins Ebika's latest activities, videos, photos, notes, and events." />
-        <meta name="twitter:image" content="https://tianipekins.com/Tiani.jpg" />
+        <meta name="twitter:image" content="https://tianipekins.com/og-image.svg" />
       </Helmet>
 
       <section className="pt-48 pb-24 px-6 bg-[#f5f5f0]">

@@ -28,11 +28,11 @@ export default function About() {
         <meta property="og:description" content="Learn about Tiani Pekins Ebika Full-stack Software Engineer, Founder of LocalHands.Africa, and MS Software Engineering student at University of Buea." />
         <meta property="og:url" content="https://tianipekins.com/about" />
         <meta property="og:type" content="profile" />
-        <meta property="og:image" content="https://tianipekins.com/Tiani.jpg" />
+        <meta property="og:image" content="https://tianipekins.com/og-image.svg" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="About Tiani Pekins Ebika | Software Engineer & Founder" />
         <meta name="twitter:description" content="Learn about Tiani Pekins Ebika Full-stack Software Engineer, Founder of LocalHands.Africa." />
-        <meta name="twitter:image" content="https://tianipekins.com/Tiani.jpg" />
+        <meta name="twitter:image" content="https://tianipekins.com/og-image.svg" />
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",

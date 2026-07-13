@@ -126,7 +126,7 @@ function PostCard({ post }: { post: BlogPost }) {
 }
 
 function formatDate(dateStr: string | null, locale: string): string {
-  if (!dateStr) return "—";
+  if (!dateStr) return "-";
   return new Date(dateStr)
     .toLocaleDateString(locale, {
       month: "short",
@@ -196,11 +196,11 @@ export default function Blog() {
         <meta property="og:description" content="Read articles by Tiani Pekins Ebika on software engineering, tech, community building, and life in Cameroon's Silicon Mountain." />
         <meta property="og:url" content="https://tianipekins.com/blog" />
         <meta property="og:type" content="website" />
-        <meta property="og:image" content="https://tianipekins.com/Tiani.jpg" />
+        <meta property="og:image" content="https://tianipekins.com/og-image.svg" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Blog | Tiani Pekins Ebika Tech, Software &amp; Life" />
         <meta name="twitter:description" content="Read articles by Tiani Pekins Ebika on software engineering, tech, community building." />
-        <meta name="twitter:image" content="https://tianipekins.com/Tiani.jpg" />
+        <meta name="twitter:image" content="https://tianipekins.com/og-image.svg" />
       </Helmet>
 
       {/* Blog Hero */}

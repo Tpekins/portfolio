@@ -174,11 +174,11 @@ export default function Home() {
         <meta property="og:description" content="Full-stack Software Engineer, Researcher, and Founder of LocalHands.Africa. Published on Zenodo and ResearchGate." />
         <meta property="og:url" content="https://tianipekins.com" />
         <meta property="og:type" content="website" />
-        <meta property="og:image" content="https://tianipekins.com/Tiani.jpg" />
+        <meta property="og:image" content="https://tianipekins.com/og-image.svg" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Tiani Pekins Ebika | Software Engineer & Founder" />
         <meta name="twitter:description" content="Full-stack Software Engineer, Researcher, and Founder of LocalHands.Africa." />
-        <meta name="twitter:image" content="https://tianipekins.com/Tiani.jpg" />
+        <meta name="twitter:image" content="https://tianipekins.com/og-image.svg" />
       </Helmet>
 
       {/* Hero Section */}
@@ -544,7 +544,7 @@ export default function Home() {
                                     year: "numeric",
                                   })
                                   .toUpperCase()
-                              : "—"}
+                              : "-"}
                           </span>
                           <h4 className="text-2xl font-bold leading-tight group-hover:text-[#2e7d32] transition-colors line-clamp-3">
                             {post.title}
@@ -560,12 +560,12 @@ export default function Home() {
                                 <span>
                                   {postStats[i].reactions !== null
                                     ? `${postStats[i].reactions} ${t("home.react")}`
-                                    : "—"}
+                                    : "-"}
                                 </span>
                                 <span>
                                   {postStats[i].comments !== null
                                     ? `${postStats[i].comments} ${t("home.comm")}`
-                                    : "—"}
+                                    : "-"}
                                 </span>
                               </div>
                             )}

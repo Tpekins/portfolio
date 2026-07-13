@@ -49,11 +49,11 @@ export default function Contact() {
         <meta property="og:description" content="Get in touch with Tiani Pekins Ebika Full-stack Software Engineer and Founder of LocalHands.Africa." />
         <meta property="og:url" content="https://tianipekins.com/contact" />
         <meta property="og:type" content="website" />
-        <meta property="og:image" content="https://tianipekins.com/Tiani.jpg" />
+        <meta property="og:image" content="https://tianipekins.com/og-image.svg" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Contact Tiani Pekins Ebika | Software Engineer" />
         <meta name="twitter:description" content="Get in touch with Tiani Pekins Ebika Full-stack Software Engineer and Founder of LocalHands.Africa." />
-        <meta name="twitter:image" content="https://tianipekins.com/Tiani.jpg" />
+        <meta name="twitter:image" content="https://tianipekins.com/og-image.svg" />
       </Helmet>
 
       <div className="flex-grow pt-40 pb-20 px-6">

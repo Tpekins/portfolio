@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <style>
+      .label { font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; font-size: 15px; font-weight: 800; letter-spacing: 4px; fill: #f0b429; text-transform: uppercase; }
+      .heading { font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; font-size: 62px; font-weight: 900; fill: #ffffff; line-height: 1.08; letter-spacing: -0.5px; }
+      .subtitle { font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; font-size: 19px; font-weight: 400; fill: #c0d8f0; line-height: 1.55; }
+      .footer-text { font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; }
+    </style>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#f0b429"/>
+      <stop offset="100%" stop-color="#e08a1e"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Blue background -->
+  <rect width="1200" height="630" fill="#2c5282"/>
+
+  <!-- Soft glow -->
+  <circle cx="0" cy="0" r="450" fill="#3a6fa8" opacity="0.12"/>
+
+  <!-- Content area -->
+  <g transform="translate(90, 120)">
+    <!-- Vertical accent line - gold -->
+    <rect x="0" y="8" width="4" height="75" rx="2" fill="url(#accentGrad)"/>
+
+    <!-- Label -->
+    <text x="24" y="26" class="label">TIANI PEKINS</text>
+
+    <!-- Heading -->
+    <text class="heading">
+      <tspan x="24" y="110">Engineering solutions</tspan>
+      <tspan x="24" y="180">from Cameroon to</tspan>
+      <tspan x="24" y="250">the world.</tspan>
+    </text>
+
+    <!-- Subtitle -->
+    <text class="subtitle">
+      <tspan x="24" y="312">Full-stack Software Engineer &amp; Founder of LocalHands.Africa,</tspan>
+      <tspan x="24" y="342">building smart systems from Buea, Cameroon.</tspan>
+    </text>
+  </g>
+
+  <!-- Footer bar -->
+  <rect x="0" y="570" width="1200" height="60" fill="#1a365d"/>
+  <line x1="0" y1="570" x2="1200" y2="570" stroke="#f0b429" stroke-width="2" opacity="0.5"/>
+
+  <!-- Footer text -->
+  <text x="90" y="607" class="footer-text" fill="#ffffff">tianipekins.com</text>
+  <text x="1110" y="607" class="footer-text" fill="#90b8e0" text-anchor="end">BUEA, SILICON MOUNTAIN</text>
+</svg>

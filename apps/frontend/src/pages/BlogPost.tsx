@@ -63,11 +63,11 @@ export default function BlogPostPage() {
         <meta property="og:description" content={post.excerpt || `Read ${post.title} by Tiani Pekins Ebika.`} />
         <meta property="og:url" content={`https://tianipekins.com/blog/${post.slug}`} />
         <meta property="og:type" content="article" />
-        <meta property="og:image" content={post.thumbnail || "https://tianipekins.com/Tiani.jpg"} />
+        <meta property="og:image" content={post.thumbnail || "https://tianipekins.com/og-image.svg"} />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={`${post.title} | Tiani Pekins Ebika`} />
         <meta name="twitter:description" content={post.excerpt || `Read ${post.title} by Tiani Pekins Ebika.`} />
-        <meta name="twitter:image" content={post.thumbnail || "https://tianipekins.com/Tiani.jpg"} />
+        <meta name="twitter:image" content={post.thumbnail || "https://tianipekins.com/og-image.svg"} />
       </Helmet>
 
       <main className="flex-grow pt-48 pb-32 px-6">
@@ -89,7 +89,7 @@ export default function BlogPostPage() {
                       day: "numeric",
                       year: "numeric",
                     })
-                  : "—"}
+                  : "-"}
               </span>
             </div>
             <h1 className="heading-hero !text-3xl md:!text-4xl lg:!text-5xl">
