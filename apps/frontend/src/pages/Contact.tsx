@@ -41,18 +41,17 @@ export default function Contact() {
   return (
     <div className="min-h-screen flex flex-col bg-[#8ecc91]">
       <Helmet>
-        <title>Contact Tiani Pekins Ebika | Software Engineer</title>
-        <meta name="description" content="Get in touch with Tiani Pekins Ebika Full-stack Software Engineer and Founder of LocalHands.Africa. Available for projects, consulting, and collaboration." />
-        <meta name="keywords" content="Tiani Pekins Ebika, contact, software engineer, hire, collaborate, Cameroon, Full-stack developer" />
+        <title>Contact - Tiani Pekins</title>
+        <meta name="description" content="Hi there! Open to projects and collaboration. I'm a full-stack software engineer and founder of LocalHands.Africa based in Cameroon." />
         <link rel="canonical" href="https://tianipekins.com/contact" />
-        <meta property="og:title" content="Contact Tiani Pekins Ebika | Software Engineer" />
-        <meta property="og:description" content="Get in touch with Tiani Pekins Ebika Full-stack Software Engineer and Founder of LocalHands.Africa." />
+        <meta property="og:title" content="Contact - Tiani Pekins" />
+        <meta property="og:description" content="Hi there! Open to projects and collaboration. I'm a full-stack software engineer and founder of LocalHands.Africa based in Cameroon." />
         <meta property="og:url" content="https://tianipekins.com/contact" />
         <meta property="og:type" content="website" />
         <meta property="og:image" content="https://tianipekins.com/og-image.svg" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Contact Tiani Pekins Ebika | Software Engineer" />
-        <meta name="twitter:description" content="Get in touch with Tiani Pekins Ebika Full-stack Software Engineer and Founder of LocalHands.Africa." />
+        <meta name="twitter:title" content="Contact - Tiani Pekins" />
+        <meta name="twitter:description" content="Hi there! Open to projects and collaboration. I'm a full-stack software engineer and founder of LocalHands.Africa based in Cameroon." />
         <meta name="twitter:image" content="https://tianipekins.com/og-image.svg" />
       </Helmet>
 

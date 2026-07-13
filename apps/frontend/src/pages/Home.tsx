@@ -166,18 +166,17 @@ export default function Home() {
   return (
     <div className="flex flex-col">
       <Helmet>
-        <title>Tiani Pekins Ebika | Software Engineer & Founder of LocalHands.Africa</title>
-        <meta name="description" content="Tiani Pekins Ebika Full-stack Software Engineer, Founder of LocalHands.Africa, and Researcher. Based in Cameroon, Silicon Mountain." />
-        <meta name="keywords" content="Tiani Pekins Ebika, software engineer, Buea, LocalHands Africa, portfolio, Cameroon, full-stack developer, researcher" />
+        <title>Tiani Pekins - Software Engineer</title>
+        <meta name="description" content="I'm a full-stack software engineer, founder of LocalHands.Africa, and researcher. Based in Cameroon, Silicon Mountain." />
         <link rel="canonical" href="https://tianipekins.com" />
-        <meta property="og:title" content="Tiani Pekins Ebika | Software Engineer & Founder of LocalHands.Africa" />
-        <meta property="og:description" content="Full-stack Software Engineer, Researcher, and Founder of LocalHands.Africa. Published on Zenodo and ResearchGate." />
+        <meta property="og:title" content="Tiani Pekins - Software Engineer" />
+        <meta property="og:description" content="I'm a full-stack software engineer, founder of LocalHands.Africa, and researcher. Based in Cameroon, Silicon Mountain." />
         <meta property="og:url" content="https://tianipekins.com" />
         <meta property="og:type" content="website" />
         <meta property="og:image" content="https://tianipekins.com/og-image.svg" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Tiani Pekins Ebika | Software Engineer & Founder" />
-        <meta name="twitter:description" content="Full-stack Software Engineer, Researcher, and Founder of LocalHands.Africa." />
+        <meta name="twitter:title" content="Tiani Pekins - Software Engineer" />
+        <meta name="twitter:description" content="I'm a full-stack software engineer, founder of LocalHands.Africa, and researcher. Based in Cameroon, Silicon Mountain." />
         <meta name="twitter:image" content="https://tianipekins.com/og-image.svg" />
       </Helmet>
 

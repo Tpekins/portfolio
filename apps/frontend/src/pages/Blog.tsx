@@ -188,18 +188,17 @@ export default function Blog() {
   return (
     <div className="flex flex-col bg-white">
       <Helmet>
-        <title>Blog | Tiani Pekins Ebika Tech, Software &amp; Life</title>
-        <meta name="description" content="Read articles by Tiani Pekins Ebika on software engineering, tech, community building, and life in Cameroon's Silicon Mountain." />
-        <meta name="keywords" content="Tiani Pekins Ebika, blog, software engineering, tech articles, Medium, Dev.to, Cameroon, Silicon Mountain" />
+        <title>My Blog - Tiani Pekins</title>
+        <meta name="description" content="Articles on software engineering, tech, community building, and life in Cameroon's Silicon Mountain. Including insights from my research experience." />
         <link rel="canonical" href="https://tianipekins.com/blog" />
-        <meta property="og:title" content="Blog | Tiani Pekins Ebika Tech, Software &amp; Life" />
-        <meta property="og:description" content="Read articles by Tiani Pekins Ebika on software engineering, tech, community building, and life in Cameroon's Silicon Mountain." />
+        <meta property="og:title" content="My Blog - Tiani Pekins" />
+        <meta property="og:description" content="Articles on software engineering, tech, community building, and life in Cameroon's Silicon Mountain. Including insights from my research experience." />
         <meta property="og:url" content="https://tianipekins.com/blog" />
         <meta property="og:type" content="website" />
         <meta property="og:image" content="https://tianipekins.com/og-image.svg" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Blog | Tiani Pekins Ebika Tech, Software &amp; Life" />
-        <meta name="twitter:description" content="Read articles by Tiani Pekins Ebika on software engineering, tech, community building." />
+        <meta name="twitter:title" content="My Blog - Tiani Pekins" />
+        <meta name="twitter:description" content="Articles on software engineering, tech, community building, and life in Cameroon's Silicon Mountain. Including insights from my research experience." />
         <meta name="twitter:image" content="https://tianipekins.com/og-image.svg" />
       </Helmet>
 

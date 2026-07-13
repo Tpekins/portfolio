@@ -20,18 +20,17 @@ export default function About() {
   return (
     <div className="flex flex-col">
       <Helmet>
-        <title>About Tiani Pekins Ebika | Software Engineer & Founder</title>
-        <meta name="description" content="Learn about Tiani Pekins Ebika Full-stack Software Engineer, Founder of LocalHands.Africa, and MS Software Engineering student at University of Buea. Based in Cameroon, Silicon Mountain." />
-        <meta name="keywords" content="Tiani Pekins Ebika, about, software engineer, University of Buea, LocalHands Africa, Cameroon, full-stack developer" />
+        <title>About - Tiani Pekins</title>
+        <meta name="description" content="Learn about a Full-stack Software Engineer, Founder of LocalHands.Africa, and MS Software Engineering student at University of Buea. Based in Cameroon, Silicon Mountain." />
         <link rel="canonical" href="https://tianipekins.com/about" />
-        <meta property="og:title" content="About Tiani Pekins Ebika | Software Engineer & Founder" />
-        <meta property="og:description" content="Learn about Tiani Pekins Ebika Full-stack Software Engineer, Founder of LocalHands.Africa, and MS Software Engineering student at University of Buea." />
+        <meta property="og:title" content="About - Tiani Pekins" />
+        <meta property="og:description" content="Learn about a Full-stack Software Engineer, Founder of LocalHands.Africa, and MS Software Engineering student at University of Buea. Based in Cameroon, Silicon Mountain." />
         <meta property="og:url" content="https://tianipekins.com/about" />
         <meta property="og:type" content="profile" />
         <meta property="og:image" content="https://tianipekins.com/og-image.svg" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="About Tiani Pekins Ebika | Software Engineer & Founder" />
-        <meta name="twitter:description" content="Learn about Tiani Pekins Ebika Full-stack Software Engineer, Founder of LocalHands.Africa." />
+        <meta name="twitter:title" content="About - Tiani Pekins" />
+        <meta name="twitter:description" content="Learn about a Full-stack Software Engineer, Founder of LocalHands.Africa, and MS Software Engineering student at University of Buea. Based in Cameroon, Silicon Mountain." />
         <meta name="twitter:image" content="https://tianipekins.com/og-image.svg" />
         <script type="application/ld+json">
           {JSON.stringify({
