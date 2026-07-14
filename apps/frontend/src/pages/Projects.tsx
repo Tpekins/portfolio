@@ -2,11 +2,11 @@ import { motion } from "motion/react";
 import {
   Github,
   Linkedin,
-  Facebook,
   Twitter,
   Check,
   Minus,
 } from "lucide-react";
+import { MediumIcon, DevToIcon, OrcidIcon } from "@repo/ui";
 import { Link } from "react-router-dom";
 import { useTranslation } from "@repo/ui";
 import { Helmet } from "react-helmet-async";
@@ -103,14 +103,20 @@ export default function Projects() {
               <a href="https://github.com/Tpekins" target="_blank" rel="noreferrer" className="hover:text-white transition-colors">
                 <Github size={18} />
               </a>
-              <a href="https://www.facebook.com/TianiPekins/" target="_blank" rel="noreferrer" className="hover:text-white transition-colors">
-                <Facebook size={18} />
+              <a href="https://www.linkedin.com/in/tiani-pekins-ebika/" target="_blank" rel="noreferrer" className="hover:text-white transition-colors">
+                <Linkedin size={18} />
+              </a>
+              <a href="https://medium.com/@TianiPekinsEbika" target="_blank" rel="noreferrer" className="hover:text-white transition-colors">
+                <MediumIcon size={18} />
+              </a>
+              <a href="https://dev.to/tianipekinsebika" target="_blank" rel="noreferrer" className="hover:text-white transition-colors">
+                <DevToIcon size={18} />
+              </a>
+              <a href="https://orcid.org/0009-0007-2550-3797" target="_blank" rel="noreferrer" className="hover:text-white transition-colors">
+                <OrcidIcon size={18} />
               </a>
               <a href="https://x.com/TianiPekins" target="_blank" rel="noreferrer" className="hover:text-white transition-colors">
                 <Twitter size={18} />
-              </a>
-              <a href="https://www.linkedin.com/in/tiani-pekins-ebika/" target="_blank" rel="noreferrer" className="hover:text-white transition-colors">
-                <Linkedin size={18} />
               </a>
             </div>
           </div>

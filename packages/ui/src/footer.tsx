@@ -1,11 +1,10 @@
 import {
   Github,
-  Facebook,
   Twitter,
   Linkedin,
-  Instagram,
   ChevronUp,
 } from "lucide-react";
+import { MediumIcon, DevToIcon, OrcidIcon } from "./icons";
 import { useTranslation } from "./i18n";
 
 export function Footer() {
@@ -103,10 +102,11 @@ export function Footer() {
 
             <div className="flex justify-center gap-6 height- drop-shadow-hover">
               <a href="https://github.com/Tpekins" target="_blank" rel="noreferrer" className="text-[#1a1a1c] hover:text-[#2e7d32] transition-colors"><Github size={18} /></a>
-              <a href="https://www.facebook.com/TianiPekins/" target="_blank" rel="noreferrer" className="text-[#1a1a1c] hover:text-[#2e7d32] transition-colors"><Facebook size={18} /></a>
-              <a href="https://x.com/TianiPekins" target="_blank" rel="noreferrer" className="text-[#1a1a1c] hover:text-[#2e7d32] transition-colors"><Twitter size={18} /></a>
               <a href="https://www.linkedin.com/in/tiani-pekins-ebika/" target="_blank" rel="noreferrer" className="text-[#1a1a1c] hover:text-[#2e7d32] transition-colors"><Linkedin size={18} /></a>
-              <a href="https://www.instagram.com/tianperkins/" target="_blank" rel="noreferrer" className="text-[#1a1a1c] hover:text-[#2e7d32] transition-colors"><Instagram size={18} /></a>
+              <a href="https://medium.com/@TianiPekinsEbika" target="_blank" rel="noreferrer" className="text-[#1a1a1c] hover:text-[#2e7d32] transition-colors"><MediumIcon size={18} /></a>
+              <a href="https://dev.to/tianipekinsebika" target="_blank" rel="noreferrer" className="text-[#1a1a1c] hover:text-[#2e7d32] transition-colors"><DevToIcon size={18} /></a>
+              <a href="https://orcid.org/0009-0007-2550-3797" target="_blank" rel="noreferrer" className="text-[#1a1a1c] hover:text-[#2e7d32] transition-colors"><OrcidIcon size={18} /></a>
+              <a href="https://x.com/TianiPekins" target="_blank" rel="noreferrer" className="text-[#1a1a1c] hover:text-[#2e7d32] transition-colors"><Twitter size={18} /></a>
             </div>
           </div>
         </div>
