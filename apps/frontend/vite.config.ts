@@ -1,83 +1,59 @@
 import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
 import path from "path";
+import { fileURLToPath } from "url";
 import { defineConfig } from "vite";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const config: any = {
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+const META_TAG_RE =
+  /<(title>[^<]*<\/title>|meta[^>]+\/?>|link[^>]*rel=["']canonical["'][^>]*\/?>)/g;
+
+export default defineConfig({
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  // @ts-expect-error ssgOptions is augmented by vite-react-ssg
   ssgOptions: {
-    onBeforePageRender(_route: string, html: string) {
-      // Strip default meta tags from <head> so Helmet's per-page tags take precedence
-      const cleaned = html
+    includedRoutes(paths: string[]) {
+      return paths.filter((p: string) => !p.includes(":"));
+    },
+    onBeforePageRender(_route: string, indexHTML: string) {
+      return indexHTML
         .replace(/<title>[^<]*<\/title>/, "")
         .replace(/<meta name="description"[^>]*>/, "")
-        .replace(/<meta property="og:title"[^>]*>/, "")
-        .replace(/<meta property="og:description"[^>]*>/, "")
-        .replace(/<meta property="og:url"[^>]*>/, "")
-        .replace(/<meta property="og:type"[^>]*>/, "")
-        .replace(/<meta property="og:image"[^>]*>/, "")
-        .replace(/<meta name="twitter:card"[^>]*>/, "")
-        .replace(/<meta name="twitter:title"[^>]*>/, "")
-        .replace(/<meta name="twitter:description"[^>]*>/, "")
-        .replace(/<meta name="twitter:image"[^>]*>/, "")
+        .replace(/<meta property="og:[^"]*"[^>]*>/g, "")
+        .replace(/<meta name="twitter:[^"]*"[^>]*>/g, "")
         .replace(/<link rel="canonical"[^>]*>/, "");
-      return cleaned;
     },
-    onPageRendered(_route: string, html: string) {
-      // Extract Helmet meta tags from inside <div id="root"> and move to <head>
-      const rootMatch = html.match(/<div id="root"[^>]*>([\s\S]*?)<\/div><script/);
-      if (!rootMatch) return html;
+    onPageRendered(_route: string, renderedHTML: string) {
+      const marker = 'data-server-rendered="true">';
+      const markerIdx = renderedHTML.indexOf(marker);
+      if (markerIdx === -1) return renderedHTML;
 
-      const rootContent = rootMatch[1];
+      const afterMarker = renderedHTML.substring(markerIdx + marker.length);
 
-      // Extract meta tags, title, link rel=canonical from the root content
-      const headTags: string[] = [];
-      const tagPatterns = [
-        /<title>[^<]*<\/title>/g,
-        /<meta name="description"[^>]*>/g,
-        /<meta property="og:title"[^>]*>/g,
-        /<meta property="og:description"[^>]*>/g,
-        /<meta property="og:url"[^>]*>/g,
-        /<meta property="og:type"[^>]*>/g,
-        /<meta property="og:image"[^>]*>/g,
-        /<meta name="twitter:card"[^>]*>/g,
-        /<meta name="twitter:title"[^>]*>/g,
-        /<meta name="twitter:description"[^>]*>/g,
-        /<meta name="twitter:image"[^>]*>/g,
-        /<link rel="canonical"[^>]*>/g,
-        /<link rel="preload"[^>]*>/g,
-      ];
+      const tagsToMove: string[] = [];
+      let match;
+      while ((match = META_TAG_RE.exec(afterMarker)) !== null) {
+        tagsToMove.push(match[0]);
+      }
 
-      for (const pattern of tagPatterns) {
-        const matches = rootContent.match(pattern);
-        if (matches) {
-          headTags.push(...matches);
+      if (tagsToMove.length === 0) return renderedHTML;
+
+      let updated = renderedHTML;
+      for (const tag of tagsToMove) {
+        const idx = updated.indexOf(tag, markerIdx);
+        if (idx !== -1) {
+          updated = updated.substring(0, idx) + updated.substring(idx + tag.length);
         }
       }
 
-      if (headTags.length === 0) return html;
-
-      // Remove the extracted tags from root content
-      let cleanedRoot = rootContent;
-      for (const tag of headTags) {
-        cleanedRoot = cleanedRoot.replace(tag, "");
-      }
-
-      // Insert tags into <head> before </head>
-      const headInsert = headTags.join("");
-      const updatedHtml = html
-        .replace(/<div id="root"[\s\S]*?<\/div><script/, `<div id="root" data-server-rendered="true">${cleanedRoot}</div><script`)
-        .replace("</head>", `${headInsert}</head>`);
-
-      return updatedHtml;
+      updated = updated.replace("</head>", tagsToMove.join("") + "</head>");
+      return updated;
     },
   },
-};
-
-export default defineConfig(config);
+});

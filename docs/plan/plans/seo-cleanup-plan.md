@@ -1,4 +1,4 @@
-# SEO Cleanup Plan - Clean, Concise Meta Tags
+# SEO Cleanup Plan — Clean, Concise Meta Tags
 
 ## Goal
 Clean hyphen-separated titles, no keyword stuffing, no redundant name in descriptions. Titles say "Tiani Pekins", descriptions describe the content.
