@@ -1,7 +1,7 @@
 import { type RouteRecord } from "vite-react-ssg";
 import React from "react";
-import Layout from "./App";
 
+const Layout = React.lazy(() => import("./App"));
 const Home = React.lazy(() => import("./pages/Home"));
 const Projects = React.lazy(() => import("./pages/Projects"));
 const About = React.lazy(() => import("./pages/About"));
