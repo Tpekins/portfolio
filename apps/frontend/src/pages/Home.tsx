@@ -167,16 +167,16 @@ export default function Home() {
     <div className="flex flex-col">
       <Helmet>
         <title>Tiani Pekins - Software Engineer</title>
-        <meta name="description" content="I'm a full-stack software engineer, founder of LocalHands.Africa, and researcher. Based in Cameroon, Silicon Mountain." />
+        <meta name="description" content="I'm a Software Engineer and Researcher focusing on distributed architectures, database optimization, and HCI in resource-constrained environments." />
         <link rel="canonical" href="https://tianipekins.com" />
         <meta property="og:title" content="Tiani Pekins - Software Engineer" />
-        <meta property="og:description" content="I'm a full-stack software engineer, founder of LocalHands.Africa, and researcher. Based in Cameroon, Silicon Mountain." />
+        <meta property="og:description" content="I'm a Software Engineer and Researcher focusing on distributed architectures, database optimization, and HCI in resource-constrained environments." />
         <meta property="og:url" content="https://tianipekins.com" />
         <meta property="og:type" content="website" />
         <meta property="og:image" content="https://tianipekins.com/og-image.svg" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Tiani Pekins - Software Engineer" />
-        <meta name="twitter:description" content="I'm a full-stack software engineer, founder of LocalHands.Africa, and researcher. Based in Cameroon, Silicon Mountain." />
+        <meta name="twitter:description" content="I'm a Software Engineer and Researcher focusing on distributed architectures, database optimization, and HCI in resource-constrained environments." />
         <meta name="twitter:image" content="https://tianipekins.com/og-image.svg" />
       </Helmet>
 
