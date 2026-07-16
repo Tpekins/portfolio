@@ -22,7 +22,7 @@ const translations = {
     // Footer
     footer: {
       hi: "Hi there,",
-      bio: "I'm a full-stack engineer and founder building at the intersection of tech and community. Based in Silicon Mountain and grounded in its spirit, I developed LocalHands to give Africa's artisans and labourers the digital visibility they deserve. Fueled by ambition, I write code, think in systems, and believe Africa's builders are just getting started",
+      bio: "I'm a software engineer and researcher building at the intersection of technology, human-computer interaction (HCI), and community. Based in Silicon Mountain, I developed LocalHands to explore how secure, digital systems can build trust within informal economies. Grounded in real-world research and clean backend design, I write code, think in systems, and build tools to empower Africa's builders.",
       shortcuts: "Shortcuts:",
       copyright: "© 2026 | All rights reserved | Made with ❤️ by Tiani Pekins.",
     },
@@ -173,7 +173,7 @@ const translations = {
     // Footer
     footer: {
       hi: "Salut,",
-      bio: "Je suis Tiani, ingénieur full-stack et fondateur qui construit à l'intersection de la technologie et de la communauté. Basé à Silicon Mountain et ancré dans son esprit, j'ai développé LocalHands pour donner aux artisans et travailleurs d'Afrique la visibilité numérique qu'ils méritent. Animé par l'ambition, j'écris du code, je pense en systèmes, et je crois que les bâtisseurs de l'Afrique ne font que commencer.",
+      bio: "Je suis ingénieur logiciel et chercheur construisant à l'intersection de la technologie, de l'interaction homme-machine (IHM) et de la communauté. Basé à Silicon Mountain, j'ai développé LocalHands pour explorer comment les systèmes numériques sécurisés peuvent établir la confiance dans les économies informelles. Enraciné dans la recherche réelle et une conception backend solide, j'écris du code, je pense en systèmes et je construis des outils pour autonomiser les bâtisseurs de l'Afrique.",
       shortcuts: "Raccourcis :",
       copyright: "© 2026 | Tous droits réservés | Fait avec ❤️ par Tiani Pekins.",
     },
@@ -324,7 +324,7 @@ const translations = {
     // Footer
     footer: {
       hi: "안녕하세요,",
-      bio: "저는 기술과 커뮤니티의 교차점에서 개발하는 풀스택 엔지니어이자 창업자입니다. 실리콘 마운틴에 기반을 두고 그 정신을 바탕으로, LocalHands를 개발하여 아프리카의 장인과 노동자들이 디지털 가시성을 얻을 수 있도록 했습니다. 야심으로 추진되며, 저는 코드를 작성하고 시스템을 생각하며, 아프리카의 건설자들이 이제 막 시작하고 있다고 믿습니다.",
+      bio: "저는 기술, 인간-컴퓨터 상호작용(HCI), 커뮤니티의 교차점에서 활동하는 소프트웨어 엔지니어이자 연구자입니다. 실리콘 마운틴에 기반을 두고, 저는 안전한 디지털 시스템이 비공식 경제에서 신뢰를 구축할 수 있는 방법을 탐구하기 위해 LocalHands를 개발했습니다. 실제 연구와 견고한 백엔드 설계에 기반하여, 코드를 작성하고, 시스템으로 사고하며, 아프리카의 빌더들을 강화하는 도구를 구축합니다.",
       shortcuts: "바로가기:",
       copyright: "© 2026 | 모든 권리 보유 | Tiani Pekins가 ❤️으로 제작",
     },
