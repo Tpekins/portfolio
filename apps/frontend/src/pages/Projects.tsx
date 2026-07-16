@@ -24,6 +24,7 @@ export default function Projects() {
         t("projects.resp2"),
         t("projects.resp3"),
         t("projects.resp4"),
+        t("projects.resp5"),
       ],
       tools: [
         t("projects.tool1"),
