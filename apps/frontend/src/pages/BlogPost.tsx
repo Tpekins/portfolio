@@ -56,16 +56,16 @@ export default function BlogPostPage() {
     <div className="flex flex-col min-h-screen bg-white">
       <Helmet>
         <title>{post.title} - Tiani Pekins</title>
-        <meta name="description" content={post.excerpt || ""} />
+        <meta name="description" content={post.excerpt || `Read ${post.title} by Tiani Pekins.`} />
         <link rel="canonical" href={`https://tianipekins.com/blog/${post.slug}`} />
         <meta property="og:title" content={`${post.title} - Tiani Pekins`} />
-        <meta property="og:description" content={post.excerpt || ""} />
+        <meta property="og:description" content={post.excerpt || `Read ${post.title} by Tiani Pekins.`} />
         <meta property="og:url" content={`https://tianipekins.com/blog/${post.slug}`} />
         <meta property="og:type" content="article" />
         <meta property="og:image" content={post.thumbnail || "https://tianipekins.com/og-image.svg"} />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={`${post.title} - Tiani Pekins`} />
-        <meta name="twitter:description" content={post.excerpt || ""} />
+        <meta name="twitter:description" content={post.excerpt || `Read ${post.title} by Tiani Pekins.`} />
         <meta name="twitter:image" content={post.thumbnail || "https://tianipekins.com/og-image.svg"} />
       </Helmet>
 
