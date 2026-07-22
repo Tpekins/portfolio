@@ -396,7 +396,7 @@ export default function Home() {
             transition={{ duration: 1, ease: "easeOut" }}
             className="grid md:grid-cols-2 gap-8 md:gap-16 items-center group"
           >
-            <div className="bg-[#fafafa] border border-[#eeeeee] rounded-2xl md:rounded-[3rem] overflow-hidden aspect-square relative flex items-center justify-center p-8 md:p-16 shadow-inner group-hover:scale-[1.01] transition-transform duration-1000">
+            <div className="bg-[#fafafa] border border-[#eeeeee] rounded-2xl md:rounded-[3rem] overflow-hidden aspect-[4/3] md:aspect-square relative flex items-center justify-center p-6 md:p-16 shadow-inner group-hover:scale-[1.01] transition-transform duration-1000">
               <img
                 src="/logo.png"
                 alt="LocalHands logo"
@@ -518,7 +518,7 @@ export default function Home() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true, margin: "-50px" }}
                         transition={{ duration: 0.5, delay: i * 0.1 }}
-                        className="bg-white border border-[#eeeeee] rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 group cursor-pointer flex-shrink-0 w-[280px] md:w-[350px] snap-start"
+                        className="bg-white border border-[#eeeeee] rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 group cursor-pointer flex-shrink-0 w-[260px] md:w-[350px] snap-start"
                       >
                         {/* Thumbnail */}
                         <div className="aspect-video bg-[#fafafa] overflow-hidden">
@@ -533,8 +533,8 @@ export default function Home() {
                           )}
                         </div>
 
-                        <div className="p-5 md:p-8 space-y-4 md:space-y-6">
-                          <span className="text-[10px] font-black italic text-[#2e7d32] uppercase opacity-60">
+                        <div className="p-4 md:p-8 space-y-3 md:space-y-6">
+                          <span className="text-[9px] md:text-[10px] font-black italic text-[#2e7d32] uppercase opacity-60">
                             {post.publishedAt
                               ? new Date(post.publishedAt)
                                   .toLocaleDateString(locale, {
@@ -545,7 +545,7 @@ export default function Home() {
                                   .toUpperCase()
                               : "-"}
                           </span>
-                          <h4 className="text-lg md:text-2xl font-bold leading-tight group-hover:text-[#2e7d32] transition-colors line-clamp-3">
+                          <h4 className="text-base md:text-2xl font-bold leading-tight group-hover:text-[#2e7d32] transition-colors line-clamp-3">
                             {post.title}
                           </h4>
                           <div className="flex items-center justify-between pt-4 border-t border-[#eeeeee]">

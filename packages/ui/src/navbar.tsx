@@ -220,17 +220,13 @@ export function Navbar() {
     <AnimatePresence>
       {isOpen && (
         <>
-          {/* Backdrop overlay */}
+          {/* Backdrop overlay - no click handler, menu only closes via X button */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
             className="md:hidden fixed inset-0 z-40 bg-black/40"
-            onClick={() => {
-              setIsOpen(false);
-              setShowLanguageMenu(false);
-            }}
           />
 
           {/* Slide-in panel from right */}
@@ -241,14 +237,14 @@ export function Navbar() {
             transition={{ type: "spring", damping: 25, stiffness: 200 }}
             className="md:hidden fixed top-0 right-0 z-50 h-full w-[80%] max-w-[340px] bg-white shadow-2xl flex flex-col"
           >
-            {/* Close button */}
+            {/* Close button - plain X, no hover effect */}
             <div className="flex justify-end p-6">
               <button
                 onClick={() => {
                   setIsOpen(false);
                   setShowLanguageMenu(false);
                 }}
-                className="w-12 h-12 flex items-center justify-center bg-[#2e7d32] text-white hover:bg-[#1b5e20] transition-colors rounded-lg"
+                className="w-12 h-12 flex items-center justify-center text-[#1a1a1c]"
                 aria-label="Close menu"
               >
                 <X size={24} />
