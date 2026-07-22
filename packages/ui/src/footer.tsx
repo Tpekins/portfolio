@@ -14,12 +14,12 @@ export function Footer() {
   };
 
   return (
-    <footer className="relative md:fixed md:bottom-0 md:left-0 md:right-0 z-20 bg-white border-t border-[#eeeeee] pt-24 pb-12 px-6 w-full flex flex-col items-center">
+    <footer className="relative md:fixed md:bottom-0 md:left-0 md:right-0 z-20 bg-white border-t border-[#eeeeee] pt-12 md:pt-24 pb-12 px-6 w-full flex flex-col items-center">
       <div className="max-w-7xl mx-auto w-full flex-grow flex flex-col justify-between">
-        <div className="mt-10 grid grid-cols-1 md:grid-cols-12 gap-12 items-start text-center md:text-left">
+        <div className="mt-6 md:mt-10 grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-start text-center md:text-left">
           {/* Logo Section */}
           <div className="md:col-span-4 flex flex-col items-center md:items-start space-y-0">
-            <span className="text-5xl md:text-6xl font-script text-[#2e7d32] tracking-tight pt-20">
+            <span className="text-5xl md:text-6xl font-script text-[#2e7d32] tracking-tight pt-10 md:pt-20">
               Tiani Pekins
             </span>
             <span className="text-[16px] font-mono font-medium tracking-[0.2em] text-[#2e7d32] px-6">
@@ -86,7 +86,7 @@ export function Footer() {
         </div>
 
         {/* Bottom Section */}
-        <div className="mt-8 flex flex-col items-center space-y-10">
+        <div className="mt-6 md:mt-8 flex flex-col items-center space-y-6 md:space-y-10">
           <button
             onClick={scrollToTop}
             className="w-12 h-12 border-2 border-[#1a1a1c] rounded-lg flex items-center justify-center hover:bg-[#1a1a1c] hover:text-white transition-all group shadow-sm bg-white"

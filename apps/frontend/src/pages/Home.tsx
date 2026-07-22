@@ -60,7 +60,7 @@ function ArrowDivider({
   arrowStrokeWidth?: number;
 }) {
   return (
-    <div className="w-full py-20 flex justify-center items-center overflow-hidden">
+    <div className="w-full py-10 md:py-20 flex justify-center items-center overflow-hidden">
       <div
         className={
           fullWidth
@@ -181,27 +181,27 @@ export default function Home() {
       </Helmet>
 
       {/* Hero Section */}
-      <section className="pt-32 pb-12 px-6 relative overflow-hidden">
-        <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center relative z-10">
+      <section className="pt-24 md:pt-32 pb-8 md:pb-12 px-6 relative overflow-hidden">
+        <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-8 md:gap-12 items-center relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="space-y-12"
+            className="space-y-8 md:space-y-12"
           >
             <div className="space-y-6">
               <h1 className="heading-hero text-[#1a1a1c] max-w-2xl">
                 {t("home.heroTitle")}
               </h1>
-              <p className="text-[#333333] font-bold max-w-lg pt-4">
+              <p className="text-sm md:text-base text-[#333333] font-bold max-w-lg pt-4">
                 {t("home.heroSubtitle")}
               </p>
             </div>
 
-            <div className="flex flex-wrap items-center gap-4">
+            <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4">
               <Link
                 to="/contact"
-                className="inline-block px-12 py-5 bg-[#1a1a1c] text-white hover:bg-[#2e7d32] rounded-xl font-bold text-xl transition-all duration-500 shadow-xl"
+                className="w-full sm:w-auto text-center px-8 py-4 md:px-12 md:py-5 bg-[#1a1a1c] text-white hover:bg-[#2e7d32] rounded-xl font-bold text-base md:text-xl transition-all duration-500 shadow-xl"
               >
                 {t("home.letsTalk")}
               </Link>
@@ -209,7 +209,7 @@ export default function Home() {
               <a
                 href="/cv.pdf"
                 download="Tiani_Pekins_CV.pdf"
-                className="inline-flex items-center gap-2 px-3 py-5 border-2 border-[#1a1a1c] text-[#1a1a1c] hover:bg-[#1a1a1c] hover:text-white rounded-xl font-bold text-xl transition-all duration-500"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-3 py-4 md:py-5 border-2 border-[#1a1a1c] text-[#1a1a1c] hover:bg-[#1a1a1c] hover:text-white rounded-xl font-bold text-base md:text-xl transition-all duration-500"
               >
                 {t("home.downloadCV")}
                 <svg
@@ -246,8 +246,8 @@ export default function Home() {
               >
                 <div className="relative">
                   <Lightbulb
-                    size={100}
-                    className="text-amber-400 fill-amber-400/20 group-hover:fill-amber-400 transition-colors duration-500"
+                    size={60}
+                    className="text-amber-400 fill-amber-400/20 group-hover:fill-amber-400 transition-colors duration-500 md:size-100"
                   />
                   <div className="absolute top-0 left-0 w-full h-full bg-amber-400 blur-3xl opacity-20 -z-10 group-hover:opacity-40 transition-opacity"></div>
                 </div>
@@ -262,7 +262,7 @@ export default function Home() {
                 }}
                 className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10"
               >
-                <div className="text-[18rem] md:text-[22rem] font-black text-white drop-shadow-[0_20px_50px_rgba(46,125,50,0.3)] select-none italic relative">
+                <div className="text-[10rem] md:text-[18rem] lg:text-[22rem] font-black text-white drop-shadow-[0_20px_50px_rgba(46,125,50,0.3)] select-none italic relative">
                   <span className="bg-gradient-to-br from-indigo-400 via-[#2e7d32]/40 to-teal-400 bg-clip-text text-transparent">{`</>`}</span>
                   <div className="absolute -inset-4 bg-white/20 blur-3xl -z-10 rounded-full opacity-50"></div>
                 </div>
@@ -275,11 +275,11 @@ export default function Home() {
                   repeat: Infinity,
                   ease: "easeInOut",
                 }}
-                className="absolute top-[10%] right-[5%] z-20 space-y-[-40px]"
+                className="absolute top-[10%] right-[5%] z-20 space-y-[-20px] md:space-y-[-40px]"
               >
-                <div className="w-32 h-32 bg-amber-200 border-2 border-white rounded-2xl rotate-[30deg] shadow-xl relative z-30"></div>
-                <div className="w-32 h-32 bg-rose-200 border-2 border-white rounded-2xl rotate-[30deg] shadow-xl relative z-20 translate-x-4"></div>
-                <div className="w-32 h-32 bg-teal-200 border-2 border-white rounded-2xl rotate-[30deg] shadow-xl relative z-10"></div>
+                <div className="w-20 h-20 md:w-32 md:h-32 bg-amber-200 border-2 border-white rounded-2xl rotate-[30deg] shadow-xl relative z-30"></div>
+                <div className="w-20 h-20 md:w-32 md:h-32 bg-rose-200 border-2 border-white rounded-2xl rotate-[30deg] shadow-xl relative z-20 translate-x-4"></div>
+                <div className="w-20 h-20 md:w-32 md:h-32 bg-teal-200 border-2 border-white rounded-2xl rotate-[30deg] shadow-xl relative z-10"></div>
               </motion.div>
             </div>
           </motion.div>
@@ -287,14 +287,14 @@ export default function Home() {
       </section>
 
       {/* Quick Summary Section */}
-      <section className="py-25 px-6 bg-white/60 backdrop-blur-md border-y border-[#eeeeee]">
+      <section className="py-12 md:py-25 px-6 bg-white/60 backdrop-blur-md border-y border-[#eeeeee]">
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8 }}
-            className="text-center mb-20"
+            className="text-center mb-12 md:mb-20"
           >
             <span className="section-label">{t("home.quickSummary")}</span>
             <h2 className="text-2xl md:text-3xl lg:text-[36px] font-display font-black tracking-tight mt-4 leading-tight">
@@ -302,7 +302,7 @@ export default function Home() {
             </h2>
           </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-12">
+          <div className="grid md:grid-cols-3 gap-8 md:gap-12">
             {summarySections.map((section, i) => (
               <motion.div
                 key={i}
@@ -312,19 +312,19 @@ export default function Home() {
                 transition={{ delay: i * 0.1 }}
                 className="space-y-8"
               >
-                <div className="flex flex-col items-center gap-6">
+                <div className="flex flex-col items-center gap-4 md:gap-6">
                   <div
-                    className={`w-24 h-24 rounded-3xl border flex items-center justify-center shadow-inner ${section.cardClass}`}
+                    className={`w-16 h-16 md:w-24 md:h-24 rounded-2xl md:rounded-3xl border flex items-center justify-center shadow-inner ${section.cardClass}`}
                   >
                     {section.icon}
                   </div>
                   <h3 className="heading-card !text-center">{section.title}</h3>
                 </div>
-                <ul className="space-y-4">
+                <ul className="space-y-3 md:space-y-4">
                   {section.bullets.map((bullet, idx) => (
                     <li
                       key={idx}
-                      className="flex gap-3 text-[#333333] text-sm leading-relaxed font-medium"
+                      className="flex gap-3 text-[#333333] text-xs md:text-sm leading-relaxed font-medium"
                     >
                       <CheckCircle2
                         size={18}
@@ -341,13 +341,13 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-25 px-6">
+      <section className="py-12 md:py-25 px-6">
         <div className="max-w-4xl mx-auto">
           <motion.div
             whileHover={{ scale: 1.005 }}
             className="bg-[#2e7d32] text-white py-10 px-6 md:px-10 rounded-2xl flex flex-col md:flex-row items-center justify-between gap-6 shadow-lg shadow-green-900/10"
           >
-            <h3 className="text-lg md:text-xl font-display font-bold tracking-tight leading-tight text-center md:text-left">
+            <h3 className="text-base md:text-lg lg:text-xl font-display font-bold tracking-tight leading-tight text-center md:text-left">
               {t("home.ctaTitle")}
             </h3>
             <Link
@@ -368,13 +368,13 @@ export default function Home() {
       />
 
       {/* Projects Preview Section Header */}
-      <section className="pt-6 pb-12 px-6">
+      <section className="pt-6 pb-8 md:pb-12 px-6">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-end gap-8 pb-8 border-b border-[#eeeeee]/50"
+          className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-end gap-6 md:gap-8 pb-6 md:pb-8 border-b border-[#eeeeee]/50"
         >
           <div className="space-y-3 max-w-3xl">
             <span className="section-label">{t("home.selectedWork")}</span>
@@ -387,16 +387,16 @@ export default function Home() {
       </section>
 
       {/* Single Featured Project - LocalHands */}
-      <section className="pb-24 px-6 md:px-12">
+      <section className="pb-12 md:pb-24 px-6 md:px-12">
         <div className="max-w-4xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 1, ease: "easeOut" }}
-            className="grid md:grid-cols-2 gap-16 items-center group"
+            className="grid md:grid-cols-2 gap-8 md:gap-16 items-center group"
           >
-            <div className="bg-[#fafafa] border border-[#eeeeee] rounded-[3rem] overflow-hidden aspect-square relative flex items-center justify-center p-16 shadow-inner group-hover:scale-[1.01] transition-transform duration-1000">
+            <div className="bg-[#fafafa] border border-[#eeeeee] rounded-2xl md:rounded-[3rem] overflow-hidden aspect-square relative flex items-center justify-center p-8 md:p-16 shadow-inner group-hover:scale-[1.01] transition-transform duration-1000">
               <img
                 src="/logo.png"
                 alt="LocalHands logo"
@@ -404,17 +404,17 @@ export default function Home() {
               />
               <div className="absolute inset-0 bg-gradient-to-tr from-[#2e7d32]/5 to-transparent"></div>
             </div>
-            <div className="space-y-6">
-              <h3 className="section-title !text-4xl md:!text-4xl !font-normal group-hover:text-[#2e7d32] transition-colors">
+            <div className="space-y-4 md:space-y-6">
+              <h3 className="section-title !text-3xl md:!text-4xl !font-normal group-hover:text-[#2e7d32] transition-colors">
                 {t("projects.name")}
               </h3>
               <p className="section-label">{t("home.localhandsLabel")}</p>
-              <p className="text-[#333333] font-light">
+              <p className="text-sm md:text-base text-[#333333] font-light">
                 {t("home.localhandsDesc")}
               </p>
               <Link
                 to="/projects"
-                className="btn-outline !px-8 !py-4 !text-base"
+                className="btn-outline !px-6 !py-3 md:!px-8 md:!py-4 !text-sm md:!text-base"
               >
                 {t("home.learnMore")}
               </Link>
@@ -426,14 +426,14 @@ export default function Home() {
       <ArrowDivider />
 
       {/* Blog Preview Section */}
-      <section className="py-24 px-6 md:px-12 bg-[#fafafa]/30 border-y border-[#eeeeee]/50">
+      <section className="py-12 md:py-24 px-6 md:px-12 bg-[#fafafa]/30 border-y border-[#eeeeee]/50">
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8 }}
-            className="flex flex-col md:flex-row justify-between items-end gap-8 mb-16 pb-8 border-b border-[#eeeeee]/50"
+            className="flex flex-col md:flex-row justify-between items-end gap-6 md:gap-8 mb-8 md:mb-16 pb-6 md:pb-8 border-b border-[#eeeeee]/50"
           >
             <div className="space-y-3 max-w-4xl">
               <span className="section-label">{t("home.myThoughts")}</span>
@@ -494,7 +494,7 @@ export default function Home() {
 
             <div
               ref={scrollRef}
-              className="flex gap-8 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide"
+              className="flex gap-4 md:gap-8 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide"
             >
               {previewPosts.length > 0 ? (
                 previewPosts.map((post, i) => {
@@ -518,7 +518,7 @@ export default function Home() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true, margin: "-50px" }}
                         transition={{ duration: 0.5, delay: i * 0.1 }}
-                        className="bg-white border border-[#eeeeee] rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 group cursor-pointer flex-shrink-0 w-[350px] snap-start"
+                        className="bg-white border border-[#eeeeee] rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 group cursor-pointer flex-shrink-0 w-[280px] md:w-[350px] snap-start"
                       >
                         {/* Thumbnail */}
                         <div className="aspect-video bg-[#fafafa] overflow-hidden">
@@ -533,7 +533,7 @@ export default function Home() {
                           )}
                         </div>
 
-                        <div className="p-8 space-y-6">
+                        <div className="p-5 md:p-8 space-y-4 md:space-y-6">
                           <span className="text-[10px] font-black italic text-[#2e7d32] uppercase opacity-60">
                             {post.publishedAt
                               ? new Date(post.publishedAt)
@@ -545,7 +545,7 @@ export default function Home() {
                                   .toUpperCase()
                               : "-"}
                           </span>
-                          <h4 className="text-2xl font-bold leading-tight group-hover:text-[#2e7d32] transition-colors line-clamp-3">
+                          <h4 className="text-lg md:text-2xl font-bold leading-tight group-hover:text-[#2e7d32] transition-colors line-clamp-3">
                             {post.title}
                           </h4>
                           <div className="flex items-center justify-between pt-4 border-t border-[#eeeeee]">
