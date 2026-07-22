@@ -61,7 +61,7 @@ export default function About() {
       </Helmet>
 
       {/* Hero */}
-      <section className="pt-24 pb-12 md:pt-32 md:pb-20 px-6 bg-[#f5f0eb]">
+      <section className="pt-32 pb-12 md:pt-40 md:pb-20 px-6 bg-[#f5f0eb]">
         <div className="max-w-7xl mx-auto flex flex-col items-center text-center space-y-16">
           <motion.h1
             initial={{ opacity: 0, y: 30 }}

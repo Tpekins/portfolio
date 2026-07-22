@@ -181,7 +181,7 @@ export default function Home() {
       </Helmet>
 
       {/* Hero Section */}
-      <section className="pt-24 md:pt-32 pb-8 md:pb-12 px-6 relative overflow-hidden">
+      <section className="pt-32 md:pt-40 pb-8 md:pb-12 px-6 relative overflow-hidden">
         <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-8 md:gap-12 items-center relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 30 }}

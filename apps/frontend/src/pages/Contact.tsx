@@ -55,7 +55,7 @@ export default function Contact() {
         <meta name="twitter:image" content="https://tianipekins.com/og-image.svg" />
       </Helmet>
 
-      <div className="flex-grow pt-24 md:pt-40 pb-12 md:pb-20 px-4 md:px-6">
+      <div className="flex-grow pt-32 md:pt-40 pb-12 md:pb-20 px-4 md:px-6">
         <div className="max-w-7xl mx-auto flex flex-col items-center">
           {/* Main Heading */}
           <div className="text-center space-y-3 md:space-y-4 mb-12 md:mb-20">

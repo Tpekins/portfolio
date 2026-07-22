@@ -203,7 +203,7 @@ export default function Blog() {
       </Helmet>
 
       {/* Blog Hero */}
-      <section className="pt-24 pb-8 md:pt-48 md:pb-24 px-4 md:px-6 bg-white">
+      <section className="pt-32 md:pt-48 pb-8 md:pb-24 px-4 md:px-6 bg-white">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-center md:items-end gap-4 md:gap-8 mb-10 md:mb-16 pb-6 md:pb-8 border-b border-[#eeeeee]">
             <div className="space-y-2 md:space-y-3 max-w-3xl text-center md:text-left">

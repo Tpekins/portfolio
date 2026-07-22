@@ -361,7 +361,7 @@ export function Navbar() {
             </div>
 
             {/* Social media icons at bottom */}
-            <div className="border-t border-[#e0e0e0] px-6 py-6">
+            <div className="px-6 py-6">
               <div className="flex justify-center gap-5">
                 <a href="https://github.com/Tpekins" target="_blank" rel="noreferrer" className="text-[#1a1a1c] hover:text-[#2e7d32] transition-colors">
                   <Github size={20} />

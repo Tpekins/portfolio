@@ -81,7 +81,7 @@ export default function Projects() {
       </Helmet>
 
       {/* Projects Hero - Pink Banner */}
-      <section className="bg-[#ffb5b5] pt-24 pb-12 md:pt-48 md:pb-24 px-6 md:px-12">
+      <section className="bg-[#ffb5b5] pt-32 md:pt-48 pb-12 md:pb-24 px-6 md:px-12">
         <div className="max-w-7xl mx-auto text-center space-y-6 md:space-y-10 pt-8 md:pt-14">
           <h1 className="heading-hero text-[#1a1a1c]">
             {t("projects.heroTitle")}
