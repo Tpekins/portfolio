@@ -76,12 +76,12 @@ function PostCard({ post }: { post: BlogPost }) {
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      className="group relative py-10 md:py-12 border-b border-[#eeeeee] hover:bg-[#2e7d32]/5 transition-colors duration-700 cursor-pointer"
+      className="group relative py-8 md:py-10 lg:py-12 border-b border-[#eeeeee] hover:bg-[#2e7d32]/5 transition-colors duration-700 cursor-pointer"
     >
-      <div className="px-6 max-w-6xl mx-auto">
-        <div className="grid md:grid-cols-12 gap-6 md:gap-12 items-start">
+      <div className="px-4 md:px-6 max-w-6xl mx-auto">
+        <div className="flex flex-col md:grid md:grid-cols-12 gap-4 md:gap-6 lg:gap-12 items-start">
           {/* Left: Date + Category stacked vertically */}
-          <div className="md:col-span-2 flex flex-col gap-2">
+          <div className="flex flex-row md:flex-col gap-2 md:gap-2 items-center md:items-start">
             <div className={`text-[10px] font-black uppercase tracking-[0.3em] ${config.textClass}`}>
               {formatDate(post.publishedAt, locale)}
             </div>
@@ -89,8 +89,8 @@ function PostCard({ post }: { post: BlogPost }) {
           </div>
 
           {/* Middle: Content */}
-          <div className="md:col-span-8">
-            <h3 className="section-title !text-xl md:!text-2xl group-hover:opacity-80 transition-opacity duration-500">
+          <div className="md:col-span-8 w-full">
+            <h3 className="text-lg md:text-xl lg:text-2xl font-display font-black tracking-tight group-hover:opacity-80 transition-opacity duration-500">
               {post.title}
             </h3>
             {post.excerpt && (
@@ -114,7 +114,7 @@ function PostCard({ post }: { post: BlogPost }) {
 
           {/* Right: Arrow */}
           <div className="md:col-span-2 flex justify-end items-center">
-            <div className="w-11 h-11 rounded-xl bg-white shadow-xl shadow-[#2e7d32]/10 flex items-center justify-center text-[#2e7d32] group-hover:bg-[#2e7d32] group-hover:text-white transition-all duration-500 group-hover:scale-110">
+            <div className="w-10 h-10 md:w-11 md:h-11 rounded-xl bg-white shadow-xl shadow-[#2e7d32]/10 flex items-center justify-center text-[#2e7d32] group-hover:bg-[#2e7d32] group-hover:text-white transition-all duration-500 group-hover:scale-110">
               <ArrowRight size={18} />
             </div>
           </div>
@@ -203,7 +203,7 @@ export default function Blog() {
       </Helmet>
 
       {/* Blog Hero */}
-      <section className="pt-48 pb-24 px-6 bg-white">
+      <section className="pt-24 pb-12 md:pt-48 md:pb-24 px-6 bg-white">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-end gap-8 mb-16 pb-8 border-b border-[#eeeeee]">
             <div className="space-y-3 max-w-3xl">
@@ -217,12 +217,12 @@ export default function Blog() {
             </div>
           </div>
 
-          <div className="flex flex-wrap items-center gap-3 pt-4">
+          <div className="flex flex-col md:flex-row flex-wrap items-start md:items-center gap-3 pt-4">
             {categories.map((cat) => (
               <button
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
-                className={`text-[10px] font-black uppercase tracking-widest px-8 py-4 rounded-full border transition-all ${
+                className={`text-[10px] font-black uppercase tracking-widest px-6 py-3 md:px-8 md:py-4 rounded-full border transition-all ${
                   activeCategory === cat
                     ? "bg-[#2e7d32] text-white border-[#2e7d32]"
                     : "bg-white text-[#333333] border-[#eeeeee] hover:border-[#2e7d32] hover:text-[#2e7d32]"
@@ -231,17 +231,17 @@ export default function Blog() {
                 {categoryLabels[cat]}
               </button>
             ))}
-            <div className="flex-grow md:max-w-xs ml-auto relative">
+            <div className="w-full md:w-auto md:flex-grow md:max-w-xs mt-2 md:mt-0 relative">
               <input
                 type="text"
                 placeholder={t("blog.search")}
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="w-full bg-white border border-[#eeeeee] rounded-full py-4 px-12 focus:outline-none focus:border-[#2e7d32] text-sm font-medium"
+                className="w-full bg-white border border-[#eeeeee] rounded-full py-3 md:py-4 px-10 md:px-12 focus:outline-none focus:border-[#2e7d32] text-sm font-medium"
               />
               <Search
                 size={18}
-                className="absolute left-5 top-1/2 -translate-y-1/2 text-[#333333] opacity-40"
+                className="absolute left-4 top-1/2 -translate-y-1/2 text-[#333333] opacity-40"
               />
             </div>
           </div>
@@ -249,15 +249,15 @@ export default function Blog() {
       </section>
 
       {/* Post list */}
-      <section className="pb-48 px-6">
+      <section className="pb-24 md:pb-48 px-6">
         <div
-          className="max-w-7xl mx-auto flex gap-4"
+          className="max-w-7xl mx-auto flex flex-col md:flex-row gap-4"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
-          {/* Left vertical progress bar */}
+          {/* Left vertical progress bar - hidden on mobile */}
           <div
-            className="relative flex-shrink-0 w-[3px] rounded-full overflow-hidden"
+            className="relative flex-shrink-0 w-[3px] rounded-full overflow-hidden hidden md:block"
             style={{
               height: "640px",
               backgroundColor: barVisible ? "#eeeeee" : "transparent",
@@ -276,12 +276,12 @@ export default function Blog() {
             />
           </div>
 
-          {/* Scrollable articles */}
+          {/* Scrollable articles - stack on mobile, scroll on desktop */}
           <div
             ref={listRef}
             onScroll={handleListScroll}
             className="flex-grow overflow-y-auto scrollbar-hide"
-            style={{ height: "640px" }}
+            style={{ height: "auto" }}
           >
             {loading ? (
               <div className="py-32 text-center text-[#333333] font-medium">

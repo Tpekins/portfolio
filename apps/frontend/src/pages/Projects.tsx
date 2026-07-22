@@ -81,16 +81,16 @@ export default function Projects() {
       </Helmet>
 
       {/* Projects Hero - Pink Banner */}
-      <section className="bg-[#ffb5b5] pt-48 pb-24 px-6 md:px-12">
-        <div className="max-w-7xl mx-auto text-center space-y-10 pt-14">
+      <section className="bg-[#ffb5b5] pt-24 pb-12 md:pt-48 md:pb-24 px-6 md:px-12">
+        <div className="max-w-7xl mx-auto text-center space-y-6 md:space-y-10 pt-8 md:pt-14">
           <h1 className="heading-hero text-[#1a1a1c]">
             {t("projects.heroTitle")}
           </h1>
-          <p className="text-[#333333] font-medium max-w-xl mx-auto">
+          <p className="text-sm md:text-base text-[#333333] font-medium max-w-xl mx-auto">
             {t("projects.heroSubtitle")}
           </p>
 
-          <div className="pt-20 flex flex-col md:flex-row justify-between items-center gap-8 border-t border-[#1a1a1c]/10 mt-10">
+          <div className="pt-10 md:pt-20 flex flex-col md:flex-row justify-between items-center gap-6 md:gap-8 border-t border-[#1a1a1c]/10 mt-6 md:mt-10">
             <div className="flex items-center gap-3 ">
               <span className="text-base font-bold">{t("projects.reachOut")}</span>
               <Link
@@ -124,9 +124,9 @@ export default function Projects() {
         </div>
       </section>
 
-      <div className="max-w-7xl mx-auto py-24 px-6 md:px-12">
+      <div className="max-w-7xl mx-auto py-16 md:py-24 px-6 md:px-12">
         {/* Project List */}
-        <div className="space-y-40 md:space-y-60">
+        <div className="space-y-20 md:space-y-40 lg:space-y-60">
           {projects.map((project, i) => (
             <motion.div
               key={i}
@@ -134,29 +134,29 @@ export default function Projects() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 1 }}
-              className={`grid lg:grid-cols-2 gap-20 items-start ${i % 2 !== 0 ? "lg:flex-row-reverse" : ""}`}
+              className={`grid lg:grid-cols-2 gap-12 md:gap-20 items-start ${i % 2 !== 0 ? "lg:flex-row-reverse" : ""}`}
             >
               {/* Content */}
               <div
-                className={`space-y-12 ${i % 2 !== 0 ? "lg:order-2" : "lg:order-1"}`}
+                className={`space-y-8 md:space-y-12 ${i % 2 !== 0 ? "lg:order-2" : "lg:order-1"}`}
               >
-                <div className="space-y-4">
-                  <h2 className="section-title text-[#1a1a1c]">
+                <div className="space-y-3 md:space-y-4">
+                  <h2 className="text-2xl md:text-3xl lg:text-4xl font-display font-black tracking-tight text-[#1a1a1c]">
                     {project.name}
                   </h2>
-                  <p className="text-[#333333] font-bold">
+                  <p className="text-sm md:text-base text-[#333333] font-bold">
                     {project.subtitle}
                   </p>
                 </div>
 
-                <p className="text-[#333333]">
+                <p className="text-sm md:text-base text-[#333333]">
                   {project.description}
                 </p>
 
-                <div className="space-y-8">
+                <div className="space-y-6 md:space-y-8">
                   {/* Responsibilities */}
-                  <div className="space-y-6">
-                    <h4 className="text-lg font-bold text-[#1a1a1c]">
+                  <div className="space-y-4 md:space-y-6">
+                    <h4 className="text-base md:text-lg font-bold text-[#1a1a1c]">
                       {t("projects.responsibilities")}
                     </h4>
                     <div className="space-y-0">
@@ -184,8 +184,8 @@ export default function Projects() {
                   </div>
 
                   {/* Tools */}
-                  <div className="space-y-6">
-                    <h4 className="text-lg font-bold text-[#1a1a1c]">{t("projects.tools")}</h4>
+                  <div className="space-y-4 md:space-y-6">
+                    <h4 className="text-base md:text-lg font-bold text-[#1a1a1c]">{t("projects.tools")}</h4>
                     <div className="space-y-0">
                       {project.tools.map((item, idx) => {
                         const parts = item.split(": ");
@@ -213,12 +213,12 @@ export default function Projects() {
                   </div>
                 </div>
 
-                <div className="pt-4">
+                <div className="pt-2 md:pt-4">
                   <a
                     href={project.isLive ? project.live : project.github}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex bg-black text-white py-4 px-8 rounded-xl font-bold hover:bg-[#ffb5b5] transition-all duration-300"
+                    className="inline-flex bg-black text-white py-3 px-6 md:py-4 md:px-8 rounded-lg md:rounded-xl font-bold text-sm md:text-base hover:bg-[#ffb5b5] transition-all duration-300"
                   >
                     {t("projects.goToWebsite")}
                   </a>

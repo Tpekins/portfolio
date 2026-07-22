@@ -170,10 +170,10 @@ function PhotoLightbox({
           e.stopPropagation();
           onClose();
         }}
-        className="fixed top-4 right-4 md:top-6 md:right-6 w-14 h-14 rounded-full bg-white flex items-center justify-center text-black shadow-2xl hover:bg-gray-100 hover:scale-110 transition-all duration-300 z-[10000]"
+        className="fixed top-2 right-2 md:top-6 md:right-6 w-10 h-10 md:w-14 md:h-14 rounded-full bg-white flex items-center justify-center text-black shadow-2xl hover:bg-gray-100 hover:scale-110 transition-all duration-300 z-[10000]"
         aria-label="Close"
       >
-        <X size={28} strokeWidth={2.5} />
+        <X size={20} strokeWidth={2.5} />
       </button>
 
       {hasMultiple && (
@@ -183,23 +183,23 @@ function PhotoLightbox({
               e.stopPropagation();
               goPrev();
             }}
-            className="fixed left-4 md:left-6 top-1/2 -translate-y-1/2 w-14 h-14 rounded-full bg-white flex items-center justify-center text-black shadow-2xl hover:bg-gray-100 hover:scale-110 transition-all duration-300 z-[10000]"
+            className="fixed left-2 md:left-6 top-1/2 -translate-y-1/2 w-10 h-10 md:w-14 md:h-14 rounded-full bg-white flex items-center justify-center text-black shadow-2xl hover:bg-gray-100 hover:scale-110 transition-all duration-300 z-[10000]"
             aria-label="Previous photo"
           >
-            <ChevronLeft size={28} strokeWidth={2.5} />
+            <ChevronLeft size={20} strokeWidth={2.5} />
           </button>
           <button
             onClick={(e) => {
               e.stopPropagation();
               goNext();
             }}
-            className="fixed right-4 md:right-6 top-1/2 -translate-y-1/2 w-14 h-14 rounded-full bg-white flex items-center justify-center text-black shadow-2xl hover:bg-gray-100 hover:scale-110 transition-all duration-300 z-[10000]"
+            className="fixed right-2 md:right-6 top-1/2 -translate-y-1/2 w-10 h-10 md:w-14 md:h-14 rounded-full bg-white flex items-center justify-center text-black shadow-2xl hover:bg-gray-100 hover:scale-110 transition-all duration-300 z-[10000]"
             aria-label="Next photo"
           >
-            <ChevronRight size={28} strokeWidth={2.5} />
+            <ChevronRight size={20} strokeWidth={2.5} />
           </button>
 
-          <div className="fixed top-4 left-4 md:top-6 md:left-6 px-4 py-2 rounded-full bg-white/90 text-black text-xs font-black tracking-widest z-[10000]">
+          <div className="fixed top-2 left-2 md:top-6 md:left-6 px-3 py-1.5 md:px-4 md:py-2 rounded-full bg-white/90 text-black text-[10px] md:text-xs font-black tracking-widest z-[10000]">
             {index + 1} / {photos.length}
           </div>
         </>
@@ -268,8 +268,9 @@ function PhotoBox({
         </div>
       ) : (
         <div className="absolute inset-0 bg-black/0 group-hover/photo:bg-black/20 transition-colors duration-500 flex items-center justify-center">
-          <div className="w-16 h-16 rounded-full bg-white/90 flex items-center justify-center text-emerald-600 opacity-0 group-hover/photo:opacity-100 transition-opacity duration-500 scale-75 group-hover/photo:scale-100">
-            <ImageIcon size={28} />
+          <div className="w-10 h-10 md:w-16 md:h-16 rounded-full bg-white/90 flex items-center justify-center text-emerald-600 opacity-0 group-hover/photo:opacity-100 transition-opacity duration-500 scale-75 group-hover/photo:scale-100">
+            <ImageIcon size={18} className="md:hidden" />
+            <ImageIcon size={28} className="hidden md:block" />
           </div>
         </div>
       )}
@@ -483,13 +484,13 @@ function FeedItemCard({
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      className="group group/grid relative py-12 md:py-16 border-b border-[#eeeeee] hover:bg-[#2e7d32]/5 transition-colors duration-700"
+      className="group group/grid relative py-8 md:py-12 lg:py-16 border-b border-[#eeeeee] hover:bg-[#2e7d32]/5 transition-colors duration-700"
     >
-      <div className="max-w-7xl mx-auto px-6">
+      <div className="max-w-7xl mx-auto px-4 md:px-6">
         {/* Header row: date + badge + location/time | title + desc | arrow */}
-        <div className="grid md:grid-cols-12 gap-6 md:gap-12 items-start">
+        <div className="flex flex-col md:grid md:grid-cols-12 gap-4 md:gap-6 lg:gap-12 items-start">
           {/* Left: Date + Badge + Location/Time same slot for every type */}
-          <div className="md:col-span-2 flex flex-col gap-3">
+          <div className="flex flex-row md:flex-col gap-2 md:gap-3 items-center md:items-start">
             <div className={`text-[10px] font-black uppercase tracking-[0.3em] ${config.dateClass}`}>
               {formatDate(item.date, locale)}
             </div>
@@ -498,7 +499,7 @@ function FeedItemCard({
           </div>
 
           {/* Middle: Content */}
-          <div className="md:col-span-8">
+          <div className="md:col-span-8 w-full">
             {item.type === "note" ? (
               <div className={`border-l-2 ${config.borderClass} pl-6`}>
                 <p className="text-lg md:text-xl text-[#1a1a1c] italic leading-relaxed font-medium">
@@ -530,7 +531,7 @@ function FeedItemCard({
           </div>
 
           {/* Right: Arrow */}
-          <div className="md:col-span-2 flex justify-end items-start pt-2">
+          <div className="md:col-span-2 flex justify-end items-center pt-2">
             {item.type === "video" && item.youtubeId ? (
               <a
                 href={`https://www.youtube.com/watch?v=${item.youtubeId}`}
@@ -559,7 +560,7 @@ function FeedItemCard({
 
         {/* Inline media for Video */}
         {item.type === "video" && item.youtubeId && (
-          <div className="mt-8 md:mt-10 md:pl-[calc(16.666%+3rem)] max-w-3xl">
+          <div className="mt-6 md:mt-8 md:pl-[calc(16.666%+3rem)] max-w-3xl">
             <div className="relative w-full rounded-2xl overflow-hidden shadow-xl bg-black aspect-video">
               <iframe
                 src={`https://www.youtube.com/embed/${item.youtubeId}`}
@@ -576,7 +577,7 @@ function FeedItemCard({
         {/* Inline media for Photos reaction bar hidden by default,
             fades in on hovering anywhere over the card (group/grid). */}
         {hasPhotos && (
-          <div className="mt-8 md:mt-10 md:pl-[calc(16.666%+3rem)] max-w-3xl">
+          <div className="mt-6 md:mt-8 md:pl-[calc(16.666%+3rem)] max-w-3xl">
             <PhotoGrid
               photos={photos}
               title={item.title ?? ""}
@@ -654,7 +655,7 @@ export default function Feed() {
         <meta name="twitter:image" content="https://tianipekins.com/og-image.svg" />
       </Helmet>
 
-      <section className="pt-48 pb-24 px-6 bg-[#f5f5f0]">
+      <section className="pt-24 pb-12 md:pt-48 md:pb-24 px-6 bg-[#f5f5f0]">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-end gap-8 mb-16 pb-8 border-b border-[#eeeeee]">
             <div className="space-y-3 max-w-3xl">
@@ -668,12 +669,12 @@ export default function Feed() {
             </div>
           </div>
 
-          <div className="flex flex-wrap items-center gap-3 pt-4">
+          <div className="flex flex-col md:flex-row flex-wrap items-start md:items-center gap-3 pt-4">
             {filterValues.map((f) => (
               <button
                 key={f}
                 onClick={() => setActiveFilter(f)}
-                className={`text-[10px] font-black uppercase tracking-widest px-8 py-4 rounded-full border transition-all ${
+                className={`text-[10px] font-black uppercase tracking-widest px-6 py-3 md:px-8 md:py-4 rounded-full border transition-all ${
                   activeFilter === f
                     ? "bg-[#2e7d32] text-white border-[#2e7d32]"
                     : "bg-white text-[#333333] border-[#eeeeee] hover:border-[#2e7d32] hover:text-[#2e7d32]"
@@ -682,24 +683,24 @@ export default function Feed() {
                 {filterLabels[f]}
               </button>
             ))}
-            <div className="flex-grow md:max-w-xs ml-auto relative">
+            <div className="w-full md:w-auto md:flex-grow md:max-w-xs mt-2 md:mt-0 relative">
               <input
                 type="text"
                 placeholder={t("feed.search")}
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="w-full bg-white border border-[#eeeeee] rounded-full py-4 px-12 focus:outline-none focus:border-[#2e7d32] text-sm font-medium"
+                className="w-full bg-white border border-[#eeeeee] rounded-full py-3 md:py-4 px-10 md:px-12 focus:outline-none focus:border-[#2e7d32] text-sm font-medium"
               />
               <Search
                 size={18}
-                className="absolute left-5 top-1/2 -translate-y-1/2 text-[#333333] opacity-40"
+                className="absolute left-4 top-1/2 -translate-y-1/2 text-[#333333] opacity-40"
               />
             </div>
           </div>
         </div>
       </section>
 
-      <section className="pb-48 px-6">
+      <section className="pb-24 md:pb-48 px-4 md:px-6">
         <div className="max-w-7xl mx-auto">
             {loading ? (
             <div className="py-32 text-center text-[#333333] font-medium">

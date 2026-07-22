@@ -61,12 +61,12 @@ export default function About() {
       </Helmet>
 
       {/* Hero */}
-      <section className="pt-32 pb-20 px-6 bg-[#f5f0eb]">
+      <section className="pt-24 pb-12 md:pt-32 md:pb-20 px-6 bg-[#f5f0eb]">
         <div className="max-w-7xl mx-auto flex flex-col items-center text-center space-y-16">
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-3xl md:text-4xl lg:text-[50px] font-display font-black tracking-tight leading-tight text-[#1a1a1c]"
+            className="text-2xl md:text-3xl lg:text-4xl xl:text-[50px] font-display font-black tracking-tight leading-tight text-[#1a1a1c]"
           >
             {t("about.heroTitle")}
           </motion.h1>
@@ -75,7 +75,7 @@ export default function About() {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.2 }}
-            className="w-full max-w-5xl aspect-[16/10] bg-white rounded-2xl border border-[#eeeeee] overflow-hidden relative shadow-sm flex items-center justify-center p-0"
+            className="w-full max-w-5xl aspect-[16/10] bg-white rounded-xl md:rounded-2xl border border-[#eeeeee] overflow-hidden relative shadow-sm flex items-center justify-center p-0"
           >
             {/* Complex Illustration Mockup to match the image */}
             <div className="relative w-full h-full flex items-center justify-center bg-white overflow-hidden">
@@ -122,8 +122,8 @@ export default function About() {
       </section>
 
       {/* About Me & Stats */}
-      <section className="py-24 px-6 md:px-12">
-        <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-start">
+      <section className="py-16 md:py-24 px-6 md:px-12">
+        <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-10 md:gap-16 items-start">
           <div className="space-y-10">
             <span className="section-label">{t("about.aboutMe")}</span>
               <div className="space-y-5 text-sm md:text-base font..... leading-relaxed text-[#1a1a1c]">
@@ -136,30 +136,32 @@ export default function About() {
             </div>
           </div>
 
-          <div className="flex flex-col gap-12 lg:pl-20 pt-2">
-            <div className="flex items-center gap-8">
-              <div className="w-16 h-16 bg-[#6366f1] rounded-xl flex items-center justify-center shadow-lg shadow-indigo-100">
-                <Linkedin size={32} className="text-white" fill="white" />
+          <div className="flex flex-col gap-8 md:gap-12 lg:pl-20 pt-2">
+            <div className="flex items-center gap-6 md:gap-8">
+              <div className="w-12 h-12 md:w-16 md:h-16 bg-[#6366f1] rounded-xl flex items-center justify-center shadow-lg shadow-indigo-100">
+                <Linkedin size={24} className="text-white md:hidden" fill="white" />
+                <Linkedin size={32} className="text-white hidden md:block" fill="white" />
               </div>
               <div className="space-y-0.5">
-                <p className="text-4xl md:text-5xl font-display font-black tracking-tighter text-[#1a1a1c]">
+                <p className="text-3xl md:text-4xl lg:text-5xl font-display font-black tracking-tighter text-[#1a1a1c]">
                   70+
                 </p>
-                <p className="text-[11px] font-bold uppercase tracking-widest text-[#333333]">
+                <p className="text-[10px] md:text-[11px] font-bold uppercase tracking-widest text-[#333333]">
                   {t("about.connections")}
                 </p>
               </div>
             </div>
 
-            <div className="flex items-center gap-8">
-              <div className="w-16 h-16 bg-[#22c55e] rounded-xl flex items-center justify-center shadow-lg shadow-green-100">
-                <HelpingHand size={32} className="text-white" />
+            <div className="flex items-center gap-6 md:gap-8">
+              <div className="w-12 h-12 md:w-16 md:h-16 bg-[#22c55e] rounded-xl flex items-center justify-center shadow-lg shadow-green-100">
+                <HelpingHand size={24} className="text-white md:hidden" />
+                <HelpingHand size={32} className="text-white hidden md:block" />
               </div>
               <div className="space-y-0.5">
-                <p className="text-4xl md:text-5xl font-display font-black tracking-tighter text-[#1a1a1c]">
+                <p className="text-3xl md:text-4xl lg:text-5xl font-display font-black tracking-tighter text-[#1a1a1c]">
                   25+
                 </p>
-                <p className="text-[11px] font-bold uppercase tracking-widest text-[#333333] ">
+                <p className="text-[10px] md:text-[11px] font-bold uppercase tracking-widest text-[#333333] ">
                   {t("about.peopleMentored")}
                 </p>
               </div>
@@ -168,7 +170,7 @@ export default function About() {
         </div>
       </section>
 
-      <section className="pt-24 pb-16 px-6 md:px-12 border-t border-[#eeeeee]">
+      <section className="pt-16 md:pt-24 pb-12 md:pb-16 px-6 md:px-12 border-t border-[#eeeeee]">
         <div className="max-w-7xl mx-auto flex flex-col items-start text-left">
           <span className="section-label">{t("about.myExperience")}</span>
           <h2 className="text-3xl md:text-4xl font-display font-black tracking-tight text-[#1a1a1c] mt-8">
@@ -178,8 +180,8 @@ export default function About() {
       </section>
 
       {/* Experience List Cards */}
-      <section className="pb-32 px-6 md:px-12">
-        <div className="max-w-7xl mx-auto flex flex-col gap-24">
+      <section className="pb-20 md:pb-32 px-6 md:px-12">
+        <div className="max-w-7xl mx-auto flex flex-col gap-16 md:gap-24">
           {experiences.map((exp, i) => (
             <motion.div
               key={i}
@@ -187,11 +189,11 @@ export default function About() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
-              className="grid lg:grid-cols-12 gap-12 items-start"
+              className="grid lg:grid-cols-12 gap-8 md:gap-12 items-start"
             >
               {/* Logo */}
               <div className="lg:col-span-2 flex justify-center lg:justify-start">
-                <div className={`w-32 h-32 rounded-lg ${exp.logoBg} flex items-center justify-center shadow-lg overflow-hidden group relative`}>
+                <div className={`w-20 h-20 md:w-32 md:h-32 rounded-lg ${exp.logoBg} flex items-center justify-center shadow-lg overflow-hidden group relative`}>
                   <img
                     src="/ub.jpg"
                     alt="University of Buea Logo"
@@ -221,7 +223,7 @@ export default function About() {
 
               {/* Quote */}
               <div className="lg:col-span-4 lg:pl-8">
-                <div className="bg-[#f8f9fb] p-8 rounded-2xl relative">
+                <div className="bg-[#f8f9fb] p-5 md:p-8 rounded-xl md:rounded-2xl relative">
                   <div className="absolute -top-4 -left-2 text-indigo-600">
                     <svg
                       width="40"

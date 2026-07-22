@@ -55,20 +55,20 @@ export default function Contact() {
         <meta name="twitter:image" content="https://tianipekins.com/og-image.svg" />
       </Helmet>
 
-      <div className="flex-grow pt-40 pb-20 px-6">
+      <div className="flex-grow pt-24 md:pt-40 pb-12 md:pb-20 px-4 md:px-6">
         <div className="max-w-7xl mx-auto flex flex-col items-center">
           {/* Main Heading */}
-          <div className="text-center space-y-4 mb-20">
-            <h1 className="text-4xl md:text-[50px] font-display font-black text-[#1a1a1c] tracking-tight leading-tight">
+          <div className="text-center space-y-3 md:space-y-4 mb-12 md:mb-20">
+            <h1 className="text-2xl md:text-3xl lg:text-4xl xl:text-[50px] font-display font-black text-[#1a1a1c] tracking-tight leading-tight">
               {t("contact.heroTitle")}
             </h1>
-            <p className="text-xs md:text-sm font-medium text-[#1a1a1c] opacity-70">
+            <p className="text-[10px] md:text-xs lg:text-sm font-medium text-[#1a1a1c] opacity-70">
               {t("contact.heroSubtitle")}
             </p>
           </div>
 
           {/* Form Container */}
-          <div className="w-full max-w-6xl mx-auto mb-24">
+          <div className="w-full max-w-6xl mx-auto mb-16 md:mb-24">
             <form ref={form} onSubmit={handleSubmit} className="space-y-8">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <input
@@ -121,7 +121,7 @@ export default function Contact() {
               <button
                 type="submit"
                 disabled={status === "sending" || status === "success"}
-                className="w-full bg-[#1c1c1c] text-white py-5 rounded-lg font-bold text-lg hover:bg-[#333434] hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 disabled:opacity-50"
+                className="w-full bg-[#1c1c1c] text-white py-4 md:py-5 rounded-lg font-bold text-base md:text-lg hover:bg-[#333434] hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 disabled:opacity-50"
               >
                 {status === "sending"
                   ? t("contact.sending")
@@ -135,8 +135,8 @@ export default function Contact() {
           </div>
 
           {/* Profile Card */}
-          <div className="w-full max-w-5xl flex flex-col md:flex-row items-center justify-center gap-15 px-35 py-22  hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 rounded-3xl">
-            <div className="w-85 h-125 shrink-0 overflow-hidden rounded-2xl relative, group">
+          <div className="w-full max-w-5xl flex flex-col md:flex-row items-center justify-center gap-8 md:gap-15 px-4 md:px-35 py-8 md:py-22 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 rounded-2xl md:rounded-3xl">
+            <div className="w-full h-64 md:w-85 md:h-125 shrink-0 overflow-hidden rounded-xl md:rounded-2xl relative group">
               <img
                 src="/Tiani.jpg"
                 alt="Tiani Pekins"
@@ -144,21 +144,21 @@ export default function Contact() {
                 referrerPolicy="no-referrer"
               />
             </div>
-            <div className="flex flex-col justify-center gap-8">
-              <div className="space-y-3">
-                <h2 className="text-5xl font-display font-small... text-[#1a1a1c]">
+            <div className="flex flex-col justify-center gap-5 md:gap-8">
+              <div className="space-y-2 md:space-y-3 text-center md:text-left">
+                <h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-[#1a1a1c]">
                   Tiani Pekins
                 </h2>
-                <p className="text-lg text-[#1a1a1c]/60 font-medium">
+                <p className="text-base md:text-lg text-[#1a1a1c]/60 font-medium">
                   {t("contact.role")}
                 </p>
               </div>
-              <p className="text-xl leading-relaxed text-[#1a1a1c] max-w-md">
+              <p className="text-base md:text-xl leading-relaxed text-[#1a1a1c] max-w-md text-center md:text-left">
                 {t("contact.bio")}
               </p>
               <a
                 href="mailto:tiani@tianipekins.com"
-                className="text-xl font-bold text-[#1a1a1c] hover:underline pt-2"
+                className="text-base md:text-xl font-bold text-[#1a1a1c] hover:underline pt-1 md:pt-2 text-center md:text-left"
               >
                 tiani@tianipekins.com
               </a>
