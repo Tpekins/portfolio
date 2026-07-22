@@ -655,10 +655,10 @@ export default function Feed() {
         <meta name="twitter:image" content="https://tianipekins.com/og-image.svg" />
       </Helmet>
 
-      <section className="pt-24 pb-12 md:pt-48 md:pb-24 px-6 bg-[#f5f5f0]">
+      <section className="pt-24 pb-8 md:pt-48 md:pb-24 px-4 md:px-6 bg-[#f5f5f0]">
         <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col md:flex-row justify-between items-end gap-8 mb-16 pb-8 border-b border-[#eeeeee]">
-            <div className="space-y-3 max-w-3xl">
+          <div className="flex flex-col md:flex-row justify-between items-end gap-8 mb-10 md:mb-16 pb-6 md:pb-8 border-b border-[#eeeeee]">
+            <div className="space-y-2 md:space-y-3 max-w-3xl">
               <span className="section-label">{t("feed.updates")}</span>
               <h1 className="heading-hero">{t("feed.theFeed")}</h1>
             </div>
@@ -669,12 +669,12 @@ export default function Feed() {
             </div>
           </div>
 
-          <div className="flex flex-col md:flex-row flex-wrap items-start md:items-center gap-3 pt-4">
+          <div className="flex flex-row flex-wrap items-center gap-2 md:gap-3 pt-2 md:pt-4">
             {filterValues.map((f) => (
               <button
                 key={f}
                 onClick={() => setActiveFilter(f)}
-                className={`text-[10px] font-black uppercase tracking-widest px-6 py-3 md:px-8 md:py-4 rounded-full border transition-all ${
+                className={`text-[9px] md:text-[10px] font-black uppercase tracking-widest px-4 py-2 md:px-8 md:py-4 rounded-full border transition-all ${
                   activeFilter === f
                     ? "bg-[#2e7d32] text-white border-[#2e7d32]"
                     : "bg-white text-[#333333] border-[#eeeeee] hover:border-[#2e7d32] hover:text-[#2e7d32]"
@@ -683,13 +683,13 @@ export default function Feed() {
                 {filterLabels[f]}
               </button>
             ))}
-            <div className="w-full md:w-auto md:flex-grow md:max-w-xs mt-2 md:mt-0 relative">
+            <div className="w-full md:w-auto md:flex-grow md:max-w-xs mt-0 relative">
               <input
                 type="text"
                 placeholder={t("feed.search")}
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="w-full bg-white border border-[#eeeeee] rounded-full py-3 md:py-4 px-10 md:px-12 focus:outline-none focus:border-[#2e7d32] text-sm font-medium"
+                className="w-full bg-white border border-[#eeeeee] rounded-full py-2 md:py-4 px-8 md:px-12 focus:outline-none focus:border-[#2e7d32] text-xs md:text-sm font-medium"
               />
               <Search
                 size={18}
