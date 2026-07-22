@@ -53,7 +53,7 @@ export class ReactionsService {
     }
 
     const myReaction = visitorId
-      ? reactions.find((r) => r.visitorId === visitorId)?.emoji ?? null
+      ? (reactions.find((r) => r.visitorId === visitorId)?.emoji ?? null)
       : null;
 
     // Since we ordered by createdAt desc, the first row (if any) is the

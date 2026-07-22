@@ -5,10 +5,14 @@ import {
   Globe,
   ChevronLeft,
   ChevronRight,
+  Github,
+  Linkedin,
+  Twitter,
 } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { useTranslation } from "./i18n";
+import { MediumIcon, DevToIcon, OrcidIcon } from "./icons";
 
 const LANGUAGES = [
   { code: "EN", label: "English" },
@@ -114,6 +118,7 @@ export function Navbar() {
   };
 
   return ( 
+    <>
     <nav className="fixed top-0 left-0 w-full z-50 bg-white/60 backdrop-blur-xl border-b border-[#eeeeee]/50 px-1">
       <div className="w-full px-6 xl:px-12 h-28 flex items-center justify-between">
         <Link to="/" className="group">
@@ -144,7 +149,7 @@ export function Navbar() {
           </div>
           {/* Vertical divider */}
           <div className="hidden md:block h-6 w-[2px] shrink-0 bg-[#1a1a1a] rounded-full" />
-          {/* Hamburger menu button */}
+          {/* Hamburger menu button - visible on all screen sizes */}
           <div className="relative" ref={dropdownRef}>
             <button
               className="w-12 h-12 flex items-center justify-center bg-white border border-[#eeeeee] rounded-lg text-[#1a1a1c] hover:bg-[#2e7d32] hover:text-white hover:border-[#2e7d32] transition-all duration-300"
@@ -161,7 +166,7 @@ export function Navbar() {
               {isOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
 
-            {/* Dropdown panel */}
+            {/* Desktop Dropdown - Language selector only */}
             <AnimatePresence>
               {isOpen && (
                 <motion.div
@@ -169,96 +174,40 @@ export function Navbar() {
                   animate={{ opacity: 1, scale: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.95, y: -8 }}
                   transition={{ duration: 0.15 }}
-                  className="absolute top-full right-0 mt-2 w-[160px] bg-white border border-[#eeeeee] rounded-xl shadow-2xl overflow-hidden z-50"
+                  className="hidden md:block absolute top-full right-0 mt-2 w-[160px] bg-white border border-[#eeeeee] rounded-xl shadow-2xl overflow-hidden z-50"
                   role="menu"
                 >
-                  <AnimatePresence mode="wait">
-                    {showLanguageMenu ? (
-                      <motion.div
-                        key="language-menu"
-                        initial={{ opacity: 0, x: 20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 0, x: 20 }}
-                        transition={{ duration: 0.15 }}
-                        className="p-1.5"
-                      >
-                        <div className="flex flex-col gap-0.5">
-                          {LANGUAGES.map((lang) => (
-                            <button
-                              key={lang.code}
-                              className={`group flex items-center justify-between w-full px-3 py-1.5 text-xs font-bold border-b border-[#eeeeee] last:border-b-0 hover:bg-[#2e7d32] hover:text-white transition-all duration-300 ${
-                                selectedLanguage === lang.code
-                                  ? "bg-[#f1f8f1] text-[#2e7d32]"
-                                  : "text-[#1a1a1c]"
-                              }`}
-                              onClick={() => handleLanguageSelect(lang.code)}
-                              role="menuitem"
-                            >
-                              <div className="flex items-center gap-1.5">
-                                {(() => {
-                                  const FlagIcon = FLAGS[lang.code];
-                                  return FlagIcon ? <FlagIcon /> : null;
-                                })()}
-                                <span className="text-[10px] font-black group-hover:text-white transition-colors duration-300">
-                                  {lang.code}
-                                </span>
-                              </div>
-                              {selectedLanguage === lang.code && (
-                                <span className="text-[8px] font-bold text-[#2e7d32] group-hover:text-white">
-                                  ✓
-                                </span>
-                              )}
-                            </button>
-                          ))}
-                        </div>
-                      </motion.div>
-                    ) : (
-                      <motion.div
-                        key="main-menu"
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 0, x: -20 }}
-                        transition={{ duration: 0.15 }}
-                        className="p-1.5"
-                      >
-                        <div className="flex flex-col gap-0.5">
-                          {/* Navigation Links - Mobile Only */}
-                          <div className="md:hidden">
-                            {navLinks.map((link) => {
-                              const isActive = location.pathname === link.path;
-                              return (
-                                <Link
-                                  key={link.path}
-                                  to={link.path}
-                                  onClick={() => setIsOpen(false)}
-                                  className={`flex items-center w-full px-2 py-2 text-sm font-bold rounded-lg transition-all duration-300 ${
-                                    isActive
-                                      ? "bg-[#f1f8f1] text-[#2e7d32]"
-                                      : "text-[#1a1a1c] hover:bg-[#f5f5f5] hover:text-[#2e7d32]"
-                                  }`}
-                                  role="menuitem"
-                                >
-                                  {link.name}
-                                </Link>
-                              );
-                            })}
-                            <div className="my-1 border-t border-[#eeeeee]"></div>
-                          </div>
+                  <div className="p-1.5">
+                    <div className="flex flex-col gap-0.5">
+                      {LANGUAGES.map((lang) => {
+                        const FlagIcon = FLAGS[lang.code];
+                        return (
                           <button
-                            className="flex items-center justify-between w-full px-2 py-2 text-sm font-bold text-[#1a1a1c] hover:bg-[#f5f5f5] hover:text-[#2e7d32] rounded-lg transition-all duration-300"
-                            onClick={() => setShowLanguageMenu(true)}
+                            key={lang.code}
+                            className={`group flex items-center justify-between w-full px-3 py-2 text-xs font-bold border-b border-[#eeeeee] last:border-b-0 hover:bg-[#2e7d32] hover:text-white transition-all duration-300 ${
+                              selectedLanguage === lang.code
+                                ? "bg-[#f1f8f1] text-[#2e7d32]"
+                                : "text-[#1a1a1c]"
+                            }`}
+                            onClick={() => handleLanguageSelect(lang.code)}
                             role="menuitem"
                           >
                             <div className="flex items-center gap-1.5">
-                              <Globe size={14} />
-                              <span>Language</span>
+                              {FlagIcon && <FlagIcon />}
+                              <span className="text-[10px] font-black group-hover:text-white transition-colors duration-300">
+                                {lang.code}
+                              </span>
                             </div>
-                            <ChevronRight size={14} className="text-[#333333] group-hover:text-[#2e7d32]" />
+                            {selectedLanguage === lang.code && (
+                              <span className="text-[8px] font-bold text-[#2e7d32] group-hover:text-white">
+                                ✓
+                              </span>
+                            )}
                           </button>
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
+                        );
+                      })}
+                    </div>
+                  </div>
                 </motion.div>
               )}
             </AnimatePresence>
@@ -266,5 +215,170 @@ export function Navbar() {
         </div>
       </div>
     </nav>
+
+    {/* Mobile Slide-in Menu */}
+    <AnimatePresence>
+      {isOpen && (
+        <>
+          {/* Backdrop overlay */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="md:hidden fixed inset-0 z-40 bg-black/40"
+            onClick={() => {
+              setIsOpen(false);
+              setShowLanguageMenu(false);
+            }}
+          />
+
+          {/* Slide-in panel from right */}
+          <motion.div
+            initial={{ x: "100%" }}
+            animate={{ x: 0 }}
+            exit={{ x: "100%" }}
+            transition={{ type: "spring", damping: 25, stiffness: 200 }}
+            className="md:hidden fixed top-0 right-0 z-50 h-full w-[75%] max-w-[320px] bg-white shadow-2xl flex flex-col"
+          >
+            {/* Close button */}
+            <div className="flex justify-end p-6">
+              <button
+                onClick={() => {
+                  setIsOpen(false);
+                  setShowLanguageMenu(false);
+                }}
+                className="w-10 h-10 flex items-center justify-center text-[#1a1a1c] hover:text-[#2e7d32] transition-colors"
+                aria-label="Close menu"
+              >
+                <X size={24} />
+              </button>
+            </div>
+
+            {/* Menu content */}
+            <div className="flex-1 overflow-y-auto px-8 pb-8">
+              <AnimatePresence mode="wait">
+                {showLanguageMenu ? (
+                  <motion.div
+                    key="language-menu"
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: 20 }}
+                    transition={{ duration: 0.15 }}
+                  >
+                    {/* Back button */}
+                    <button
+                      onClick={() => setShowLanguageMenu(false)}
+                      className="flex items-center gap-2 text-sm font-bold text-[#1a1a1c] hover:text-[#2e7d32] transition-colors mb-8"
+                    >
+                      <ChevronLeft size={16} />
+                      <span>Back</span>
+                    </button>
+
+                    {/* Language options */}
+                    <div className="flex flex-col gap-1">
+                      {LANGUAGES.map((lang) => {
+                        const FlagIcon = FLAGS[lang.code];
+                        return (
+                          <button
+                            key={lang.code}
+                            className={`group flex items-center justify-between w-full px-4 py-3 text-sm font-bold rounded-lg transition-all duration-300 ${
+                              selectedLanguage === lang.code
+                                ? "bg-[#f1f8f1] text-[#2e7d32]"
+                                : "text-[#1a1a1c] hover:bg-[#f5f5f5] hover:text-[#2e7d32]"
+                            }`}
+                            onClick={() => handleLanguageSelect(lang.code)}
+                          >
+                            <div className="flex items-center gap-3">
+                              {FlagIcon && <FlagIcon />}
+                              <span>{lang.label}</span>
+                            </div>
+                            {selectedLanguage === lang.code && (
+                              <span className="text-[#2e7d32]">✓</span>
+                            )}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key="main-menu"
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -20 }}
+                    transition={{ duration: 0.15 }}
+                  >
+                    {/* Navigation Links */}
+                    <div className="flex flex-col gap-1">
+                      {navLinks.map((link) => {
+                        const isActive = location.pathname === link.path;
+                        return (
+                          <Link
+                            key={link.path}
+                            to={link.path}
+                            onClick={() => {
+                              setIsOpen(false);
+                              setShowLanguageMenu(false);
+                            }}
+                            className={`flex items-center w-full px-4 py-3 text-base font-bold rounded-lg transition-all duration-300 ${
+                              isActive
+                                ? "bg-[#f1f8f1] text-[#2e7d32]"
+                                : "text-[#1a1a1c] hover:bg-[#f5f5f5] hover:text-[#2e7d32]"
+                            }`}
+                          >
+                            {link.name}
+                          </Link>
+                        );
+                      })}
+                    </div>
+
+                    {/* Divider */}
+                    <div className="my-6 border-t border-[#eeeeee]" />
+
+                    {/* Language selector */}
+                    <button
+                      onClick={() => setShowLanguageMenu(true)}
+                      className="flex items-center justify-between w-full px-4 py-3 text-base font-bold text-[#1a1a1c] hover:bg-[#f5f5f5] hover:text-[#2e7d32] rounded-lg transition-all duration-300"
+                    >
+                      <div className="flex items-center gap-3">
+                        <Globe size={18} />
+                        <span>Language</span>
+                      </div>
+                      <ChevronRight size={18} className="text-[#333333]" />
+                    </button>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
+            {/* Social media icons at bottom */}
+            <div className="border-t border-[#eeeeee] px-8 py-6">
+              <div className="flex justify-center gap-5">
+                <a href="https://github.com/Tpekins" target="_blank" rel="noreferrer" className="text-[#1a1a1c] hover:text-[#2e7d32] transition-colors">
+                  <Github size={20} />
+                </a>
+                <a href="https://www.linkedin.com/in/tiani-pekins-ebika/" target="_blank" rel="noreferrer" className="text-[#1a1a1c] hover:text-[#2e7d32] transition-colors">
+                  <Linkedin size={20} />
+                </a>
+                <a href="https://medium.com/@TianiPekinsEbika" target="_blank" rel="noreferrer" className="text-[#1a1a1c] hover:text-[#2e7d32] transition-colors">
+                  <MediumIcon size={20} />
+                </a>
+                <a href="https://dev.to/tianipekinsebika" target="_blank" rel="noreferrer" className="text-[#1a1a1c] hover:text-[#2e7d32] transition-colors">
+                  <DevToIcon size={20} />
+                </a>
+                <a href="https://orcid.org/0009-0007-2550-3797" target="_blank" rel="noreferrer" className="text-[#1a1a1c] hover:text-[#2e7d32] transition-colors">
+                  <OrcidIcon size={20} />
+                </a>
+                <a href="https://x.com/TianiPekins" target="_blank" rel="noreferrer" className="text-[#1a1a1c] hover:text-[#2e7d32] transition-colors">
+                  <Twitter size={20} />
+                </a>
+              </div>
+            </div>
+          </motion.div>
+        </>
+      )}
+    </AnimatePresence>
+    </>
   );
 }

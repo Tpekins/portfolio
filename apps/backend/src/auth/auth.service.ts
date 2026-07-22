@@ -1,8 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
+
 import {
   Injectable,
   UnauthorizedException,
@@ -52,7 +49,7 @@ export class AuthService {
     const hashedPassword = await this.hashPassword(password);
 
     // Create user
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+
     const user = await this.prisma.user.create({
       data: {
         email,
@@ -74,7 +71,6 @@ export class AuthService {
    * Validate user credentials and return user if valid
    */
   async validateUser(email: string, password: string) {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const user = await this.prisma.user.findUnique({
       where: { email },
     });
@@ -93,7 +89,7 @@ export class AuthService {
     }
 
     // Return user without password
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+
     const { password: _, ...userWithoutPassword } = user;
     return userWithoutPassword;
   }
@@ -102,12 +98,11 @@ export class AuthService {
    * Login - validate credentials and generate JWT
    */
   async login(loginDto: LoginDto) {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const user = await this.validateUser(loginDto.email, loginDto.password);
 
     const payload = {
       sub: user.id,
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+
       email: user.email,
       name: user.name,
     };
@@ -115,11 +110,10 @@ export class AuthService {
     return {
       access_token: this.jwtService.sign(payload),
       user: {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         id: user.id,
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+
         email: user.email,
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+
         name: user.name,
       },
     };

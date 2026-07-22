@@ -1,11 +1,4 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Param,
-  Body,
-  Query,
-} from '@nestjs/common';
+import { Controller, Get, Post, Param, Body, Query } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { ReactionsService } from './reactions.service';
 import { ToggleReactionDto } from './reactions.dto';

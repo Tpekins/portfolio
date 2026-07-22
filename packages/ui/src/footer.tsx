@@ -14,7 +14,7 @@ export function Footer() {
   };
 
   return (
-    <footer className="fixed bottom-0 left-0 right-0 z-20 min-h-[520px] bg-white border-t border-[#eeeeee] pt-2 pb-12 px-2 w-full flex flex-col items-center">
+    <footer className="relative md:fixed md:bottom-0 md:left-0 md:right-0 z-20 bg-white border-t border-[#eeeeee] pt-24 pb-12 px-6 w-full flex flex-col items-center">
       <div className="max-w-7xl mx-auto w-full flex-grow flex flex-col justify-between">
         <div className="mt-10 grid grid-cols-1 md:grid-cols-12 gap-12 items-start text-center md:text-left">
           {/* Logo Section */}
