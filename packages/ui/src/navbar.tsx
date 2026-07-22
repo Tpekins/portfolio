@@ -239,7 +239,7 @@ export function Navbar() {
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ type: "spring", damping: 25, stiffness: 200 }}
-            className="md:hidden fixed top-0 right-0 z-50 h-full w-[75%] max-w-[320px] bg-white shadow-2xl flex flex-col"
+            className="md:hidden fixed top-0 right-0 z-50 h-full w-[80%] max-w-[340px] bg-white shadow-2xl flex flex-col"
           >
             {/* Close button */}
             <div className="flex justify-end p-6">
@@ -248,7 +248,7 @@ export function Navbar() {
                   setIsOpen(false);
                   setShowLanguageMenu(false);
                 }}
-                className="w-10 h-10 flex items-center justify-center text-[#1a1a1c] hover:text-[#2e7d32] transition-colors"
+                className="w-12 h-12 flex items-center justify-center bg-[#2e7d32] text-white hover:bg-[#1b5e20] transition-colors rounded-lg"
                 aria-label="Close menu"
               >
                 <X size={24} />
@@ -256,7 +256,7 @@ export function Navbar() {
             </div>
 
             {/* Menu content */}
-            <div className="flex-1 overflow-y-auto px-8 pb-8">
+            <div className="flex-1 overflow-y-auto px-6 pb-8">
               <AnimatePresence mode="wait">
                 {showLanguageMenu ? (
                   <motion.div
@@ -276,27 +276,28 @@ export function Navbar() {
                     </button>
 
                     {/* Language options */}
-                    <div className="flex flex-col gap-1">
-                      {LANGUAGES.map((lang) => {
+                    <div className="flex flex-col">
+                      {LANGUAGES.map((lang, index) => {
                         const FlagIcon = FLAGS[lang.code];
                         return (
-                          <button
-                            key={lang.code}
-                            className={`group flex items-center justify-between w-full px-4 py-3 text-sm font-bold rounded-lg transition-all duration-300 ${
-                              selectedLanguage === lang.code
-                                ? "bg-[#f1f8f1] text-[#2e7d32]"
-                                : "text-[#1a1a1c] hover:bg-[#f5f5f5] hover:text-[#2e7d32]"
-                            }`}
-                            onClick={() => handleLanguageSelect(lang.code)}
-                          >
-                            <div className="flex items-center gap-3">
-                              {FlagIcon && <FlagIcon />}
-                              <span>{lang.label}</span>
-                            </div>
-                            {selectedLanguage === lang.code && (
-                              <span className="text-[#2e7d32]">✓</span>
+                          <div key={lang.code}>
+                            <button
+                              className={`group flex items-center justify-between w-full py-4 text-sm font-bold transition-all duration-300 ${
+                                selectedLanguage === lang.code
+                                  ? "bg-[#2e7d32] text-white"
+                                  : "text-[#1a1a1c] hover:bg-[#f1f8f1] hover:text-[#2e7d32]"
+                              }`}
+                              onClick={() => handleLanguageSelect(lang.code)}
+                            >
+                              <div className="flex items-center justify-center gap-3 w-full">
+                                {FlagIcon && <FlagIcon />}
+                                <span>{lang.label}</span>
+                              </div>
+                            </button>
+                            {index < LANGUAGES.length - 1 && (
+                              <div className="border-t border-[#e0e0e0] mx-4" />
                             )}
-                          </button>
+                          </div>
                         );
                       })}
                     </div>
@@ -310,50 +311,57 @@ export function Navbar() {
                     transition={{ duration: 0.15 }}
                   >
                     {/* Navigation Links */}
-                    <div className="flex flex-col gap-1">
-                      {navLinks.map((link) => {
+                    <div className="flex flex-col">
+                      {navLinks.map((link, index) => {
                         const isActive = location.pathname === link.path;
                         return (
-                          <Link
-                            key={link.path}
-                            to={link.path}
-                            onClick={() => {
-                              setIsOpen(false);
-                              setShowLanguageMenu(false);
-                            }}
-                            className={`flex items-center w-full px-4 py-3 text-base font-bold rounded-lg transition-all duration-300 ${
-                              isActive
-                                ? "bg-[#f1f8f1] text-[#2e7d32]"
-                                : "text-[#1a1a1c] hover:bg-[#f5f5f5] hover:text-[#2e7d32]"
-                            }`}
-                          >
-                            {link.name}
-                          </Link>
+                          <div key={link.path}>
+                            <Link
+                              to={link.path}
+                              onClick={() => {
+                                setIsOpen(false);
+                                setShowLanguageMenu(false);
+                              }}
+                              className={`flex items-center justify-center w-full py-4 text-base font-bold transition-all duration-300 ${
+                                isActive
+                                  ? "bg-[#2e7d32] text-white"
+                                  : "text-[#1a1a1c] hover:bg-[#f1f8f1] hover:text-[#2e7d32]"
+                              }`}
+                            >
+                              {link.name}
+                            </Link>
+                            {index < navLinks.length - 1 && (
+                              <div className="border-t border-[#e0e0e0] mx-4" />
+                            )}
+                          </div>
                         );
                       })}
                     </div>
 
                     {/* Divider */}
-                    <div className="my-6 border-t border-[#eeeeee]" />
+                    <div className="border-t border-[#e0e0e0] mx-4 my-6" />
 
                     {/* Language selector */}
                     <button
                       onClick={() => setShowLanguageMenu(true)}
-                      className="flex items-center justify-between w-full px-4 py-3 text-base font-bold text-[#1a1a1c] hover:bg-[#f5f5f5] hover:text-[#2e7d32] rounded-lg transition-all duration-300"
+                      className="flex items-center justify-center w-full py-4 text-base font-bold text-[#1a1a1c] hover:bg-[#f1f8f1] hover:text-[#2e7d32] transition-all duration-300"
                     >
                       <div className="flex items-center gap-3">
                         <Globe size={18} />
                         <span>Language</span>
+                        <ChevronRight size={18} className="text-[#333333]" />
                       </div>
-                      <ChevronRight size={18} className="text-[#333333]" />
                     </button>
+
+                    {/* Divider */}
+                    <div className="border-t border-[#e0e0e0] mx-4" />
                   </motion.div>
                 )}
               </AnimatePresence>
             </div>
 
             {/* Social media icons at bottom */}
-            <div className="border-t border-[#eeeeee] px-8 py-6">
+            <div className="border-t border-[#e0e0e0] px-6 py-6">
               <div className="flex justify-center gap-5">
                 <a href="https://github.com/Tpekins" target="_blank" rel="noreferrer" className="text-[#1a1a1c] hover:text-[#2e7d32] transition-colors">
                   <Github size={20} />
