@@ -46,12 +46,15 @@ export default function App() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [isMobile]);
 
+  const location = useLocation();
+  const isContactPage = location.pathname === "/contact";
+
   return (
     <HelmetProvider>
       <ScrollToTop />
       <div className="min-h-screen flex flex-col relative bg-white">
         <Navbar />
-        <main className="site-wrapper flex-grow" style={{ pointerEvents: footerOpacity > 0.95 ? "none" : "auto" }}>
+        <main className={`site-wrapper flex-grow ${isContactPage ? "contact-page" : ""}`} style={{ pointerEvents: footerOpacity > 0.95 ? "none" : "auto" }}>
           <Outlet />
         </main>
         {isMobile ? (

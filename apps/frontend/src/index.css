@@ -75,7 +75,7 @@
 .site-wrapper {
   position: relative;
   z-index: 20;
-  padding-bottom: 40px;
+  padding-bottom: 10px;
 }
 
 @media (min-width: 768px) {
@@ -129,9 +129,9 @@
   display: none;
 }
 
-/* ── Remove bottom padding on mobile for Contact page ── */
+/* ── Remove footer border on Contact page (mobile only) ── */
 @media (max-width: 767px) {
-  .remove-bottom-padding {
-    padding-bottom: 0 !important;
+  .contact-page ~ div footer {
+    border-top: none !important;
   }
 }
