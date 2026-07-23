@@ -253,7 +253,7 @@ export function Navbar() {
 
             {/* Menu content */}
             <div className="flex-1 overflow-y-auto px-6 pb-8">
-              <AnimatePresence mode="wait">
+              <AnimatePresence>
                 {showLanguageMenu ? (
                   <motion.div
                     key="language-menu"

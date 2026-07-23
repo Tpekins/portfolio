@@ -484,13 +484,13 @@ function FeedItemCard({
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      className="group group/grid relative py-8 md:py-12 lg:py-16 border-b border-[#eeeeee] hover:bg-[#2e7d32]/5 transition-colors duration-700"
+      className="group group/grid relative py-12 md:py-16 border-b border-[#eeeeee] hover:bg-[#2e7d32]/5 transition-colors duration-700"
     >
       <div className="max-w-7xl mx-auto px-4 md:px-6">
         {/* Header row: date + badge + location/time | title + desc | arrow */}
         <div className="flex flex-col md:grid md:grid-cols-12 gap-4 md:gap-6 lg:gap-12 items-start">
           {/* Left: Date + Badge + Location/Time same slot for every type */}
-          <div className="flex flex-row md:flex-col gap-2 md:gap-3 items-center md:items-start">
+          <div className="md:col-span-2 flex flex-row md:flex-col gap-2 md:gap-3 items-center md:items-start">
             <div className={`text-[10px] font-black uppercase tracking-[0.3em] ${config.dateClass}`}>
               {formatDate(item.date, locale)}
             </div>
@@ -531,7 +531,7 @@ function FeedItemCard({
           </div>
 
           {/* Right: Arrow */}
-          <div className="md:col-span-2 flex justify-end items-center pt-2">
+          <div className="md:col-span-2 flex justify-end items-start pt-2">
             {item.type === "video" && item.youtubeId ? (
               <a
                 href={`https://www.youtube.com/watch?v=${item.youtubeId}`}

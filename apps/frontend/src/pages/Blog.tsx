@@ -76,12 +76,12 @@ function PostCard({ post }: { post: BlogPost }) {
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      className="group relative py-8 md:py-10 lg:py-12 border-b border-[#eeeeee] hover:bg-[#2e7d32]/5 transition-colors duration-700 cursor-pointer"
+      className="group relative py-10 md:py-12 border-b border-[#eeeeee] hover:bg-[#2e7d32]/5 transition-colors duration-700 cursor-pointer"
     >
       <div className="px-4 md:px-6 max-w-6xl mx-auto">
         <div className="flex flex-col md:grid md:grid-cols-12 gap-4 md:gap-6 lg:gap-12 items-start">
           {/* Left: Date + Category stacked vertically */}
-          <div className="flex flex-row md:flex-col gap-2 md:gap-2 items-center md:items-start">
+          <div className="md:col-span-2 flex flex-row md:flex-col gap-2 items-center md:items-start">
             <div className={`text-[10px] font-black uppercase tracking-[0.3em] ${config.textClass}`}>
               {formatDate(post.publishedAt, locale)}
             </div>
@@ -90,7 +90,7 @@ function PostCard({ post }: { post: BlogPost }) {
 
           {/* Middle: Content */}
           <div className="md:col-span-8 w-full">
-            <h3 className="text-lg md:text-xl lg:text-2xl font-display font-black tracking-tight group-hover:opacity-80 transition-opacity duration-500">
+            <h3 className="section-title !text-xl md:!text-2xl group-hover:opacity-80 transition-opacity duration-500">
               {post.title}
             </h3>
             {post.excerpt && (

@@ -374,7 +374,7 @@ export default function Home() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-end gap-6 md:gap-8 pb-6 md:pb-8 border-b border-[#eeeeee]/50"
+          className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center md:items-end gap-4 md:gap-8 pb-6 md:pb-8 border-b border-[#eeeeee]/50"
         >
           <div className="space-y-3 max-w-3xl">
             <span className="section-label">{t("home.selectedWork")}</span>
@@ -396,7 +396,7 @@ export default function Home() {
             transition={{ duration: 1, ease: "easeOut" }}
             className="grid md:grid-cols-2 gap-8 md:gap-16 items-center group"
           >
-            <div className="bg-[#fafafa] border border-[#eeeeee] rounded-2xl md:rounded-[3rem] overflow-hidden aspect-[4/3] md:aspect-square relative flex items-center justify-center p-6 md:p-16 shadow-inner group-hover:scale-[1.01] transition-transform duration-1000">
+            <div className="bg-[#fafafa] border border-[#eeeeee] rounded-2xl md:rounded-[3rem] overflow-hidden aspect-[3/2] md:aspect-square relative flex items-center justify-center p-4 md:p-16 shadow-inner group-hover:scale-[1.01] transition-transform duration-1000">
               <img
                 src="/logo.png"
                 alt="LocalHands logo"
