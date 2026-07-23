@@ -287,7 +287,7 @@ export default function Home() {
       </section>
 
       {/* Quick Summary Section */}
-      <section className="py-12 md:py-25 px-6 bg-white/60 backdrop-blur-md border-y border-[#eeeeee]">
+      <section className="py-12 md:py-25 px-6 bg-white/60 backdrop-blur-md border-t border-[#eeeeee]">
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -426,7 +426,7 @@ export default function Home() {
       <ArrowDivider />
 
       {/* Blog Preview Section */}
-      <section className="py-12 md:py-24 px-6 md:px-12 bg-[#fafafa]/30 border-y border-[#eeeeee]/50">
+      <section className="py-12 md:py-24 px-6 md:px-12 bg-[#fafafa]/30 border-t border-[#eeeeee]/50">
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
