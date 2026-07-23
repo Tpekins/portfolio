@@ -39,7 +39,7 @@ export default function Contact() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#8ecc91]">
+    <div className="min-h-screen flex flex-col bg-[#8ecc91] remove-bottom-padding">
       <Helmet>
         <title>Contact - Tiani Pekins</title>
         <meta name="description" content="Hi there! Open to projects and collaboration. I'm a full-stack software engineer and founder of LocalHands.Africa based in Cameroon." />

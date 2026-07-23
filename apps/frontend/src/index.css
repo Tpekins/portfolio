@@ -128,3 +128,10 @@
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
+
+/* ── Remove bottom padding on mobile for Contact page ── */
+@media (max-width: 767px) {
+  .remove-bottom-padding {
+    padding-bottom: 0 !important;
+  }
+}
