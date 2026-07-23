@@ -75,7 +75,7 @@
 .site-wrapper {
   position: relative;
   z-index: 20;
-  padding-bottom: 10px;
+  padding-bottom: 0;
 }
 
 @media (min-width: 768px) {
@@ -134,4 +134,13 @@
   .contact-page ~ div footer {
     border-top: none !important;
   }
+}
+
+/* ── Fade in animation for mobile menu ── */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateX(10px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+.animate-fadeIn {
+  animation: fadeIn 0.15s ease-out;
 }
